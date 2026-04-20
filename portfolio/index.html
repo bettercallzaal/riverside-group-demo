@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio - Riverside Group</title>
+<meta name="description" content="Selected landscape design and construction projects across Mount Desert Island and the Maine coast.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css">
+<style>
+  .page-header { padding: 160px 0 80px; background: var(--bone); }
+  .page-header .eyebrow { color: var(--brass); }
+  .page-header h1 { font-size: clamp(48px, 6vw, 80px); max-width: 800px; color: var(--moss); }
+  .page-header h1 em { color: var(--brass); font-style: italic; }
+  .page-header p { max-width: 640px; margin-top: 24px; font-family: var(--font-display); font-size: clamp(18px, 2vw, 22px); font-weight: 300; color: var(--stone); }
+  .filter-bar { display: flex; gap: 12px; flex-wrap: wrap; margin: 48px 0 0; padding-top: 32px; border-top: 1px solid var(--rule); }
+  .filter-chip {
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--charcoal);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-chip.active { background: var(--moss); color: var(--bone-light); border-color: var(--moss); }
+  .filter-chip:hover { border-color: var(--moss); }
+  .portfolio-full { background: var(--bone-light); padding: 80px 0 140px; }
+  .portfolio-full .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .portfolio-full .project-card { aspect-ratio: 5/4; }
+  @media (max-width: 880px) {
+    .portfolio-full .portfolio-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="/" class="nav-logo">Riverside<span>.</span></a>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#process">Process</a></li>
+    <li><a href="/portfolio/">Portfolio</a></li>
+    <li><a href="/#area">Service Area</a></li>
+    <li><a href="/journal/">Journal</a></li>
+    <li><a href="/#team">Team</a></li>
+    <li><a href="/#inquiry" class="nav-cta">Start a project</a></li>
+  </ul>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Portfolio</span>
+    <h1>Selected <em>work</em> from<br>the Maine coast.</h1>
+    <p>A dozen-plus years of design, build, and stewardship. Each project begins with a deep reading of the site - here's a glimpse of what comes after.</p>
+    <div class="filter-bar">
+      <button class="filter-chip active" data-filter="all">All projects</button>
+      <button class="filter-chip" data-filter="estate">Coastal estates</button>
+      <button class="filter-chip" data-filter="garden">Private gardens</button>
+      <button class="filter-chip" data-filter="hardscape">Hardscape</button>
+      <button class="filter-chip" data-filter="restoration">Restoration</button>
+    </div>
+  </div>
+</header>
+
+<section class="portfolio-full">
+  <div class="container">
+    <div class="portfolio-grid" id="projectGrid">
+      <a href="coastal-estate.html" class="project-card" data-category="estate">
+        <img src="https://images.unsplash.com/photo-1585128792020-803d29415281?q=80&w=1600&auto=format&fit=crop" alt="Schooner Head Estate">
+        <div class="project-card-overlay">
+          <span class="location">Bar Harbor, ME - 2024</span>
+          <h3>Schooner Head Estate</h3>
+          <p>4-acre ocean-facing property with granite terraces and native coastal plantings.</p>
+        </div>
+      </a>
+      <a href="meadow-garden.html" class="project-card" data-category="restoration garden">
+        <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=1600&auto=format&fit=crop" alt="Inland Meadow">
+        <div class="project-card-overlay">
+          <span class="location">Blue Hill, ME - 2024</span>
+          <h3>Inland Meadow</h3>
+          <p>Invasive removal and pollinator meadow at a 1920s farmhouse.</p>
+        </div>
+      </a>
+      <a href="stone-courtyard.html" class="project-card" data-category="hardscape">
+        <img src="https://images.unsplash.com/photo-1598902108854-10e335adac99?q=80&w=1600&auto=format&fit=crop" alt="Courtyard & Fire Terrace">
+        <div class="project-card-overlay">
+          <span class="location">Mount Desert, ME - 2023</span>
+          <h3>Courtyard &amp; Fire Terrace</h3>
+          <p>Granite courtyard and outdoor fire terrace between carriage house and residence.</p>
+        </div>
+      </a>
+      <a href="#" class="project-card" data-category="garden">
+        <img src="https://images.unsplash.com/photo-1524598171353-ce84a57ea86b?q=80&w=1600&auto=format&fit=crop" alt="Pollinator garden">
+        <div class="project-card-overlay">
+          <span class="location">Southwest Harbor, ME - 2023</span>
+          <h3>Pollinator Border</h3>
+          <p>350-foot native perennial border replacing lawn along a working stone wall.</p>
+        </div>
+      </a>
+      <a href="#" class="project-card" data-category="estate hardscape">
+        <img src="https://images.unsplash.com/photo-1558293842-c0fd3db86157?q=80&w=1600&auto=format&fit=crop" alt="Terraced estate">
+        <div class="project-card-overlay">
+          <span class="location">Camden, ME - 2022</span>
+          <h3>Terraced Hill Estate</h3>
+          <p>Three-tier stone terracing on a steep grade with year-round ornamental plantings.</p>
+        </div>
+      </a>
+      <a href="#" class="project-card" data-category="restoration">
+        <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=1600&auto=format&fit=crop" alt="Historic garden restoration">
+        <div class="project-card-overlay">
+          <span class="location">Castine, ME - 2022</span>
+          <h3>Olmsted-Era Restoration</h3>
+          <p>Careful reconstruction of a turn-of-the-century private garden using historical drawings.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="container text-center">
+    <span class="eyebrow" style="color: var(--brass-light);">Start a project</span>
+    <h2>Ready to talk about <em>your property</em>?</h2>
+    <p>Share a few details and Cameron will reply personally within two business days.</p>
+    <a href="/#inquiry" class="btn btn-primary btn-arrow">Start a project</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Riverside Group</h3>
+        <p>Multidisciplinary landscape design and construction. Rooted in Maine's coast since 2013.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/#services">Design &amp; Planning</a></li>
+          <li><a href="/#services">Construction</a></li>
+          <li><a href="/#services">Stewardship</a></li>
+          <li><a href="/#process">Process</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="/#team">Team</a></li>
+          <li><a href="/portfolio/">Portfolio</a></li>
+          <li><a href="/journal/">Journal</a></li>
+          <li><a href="/#area">Service area</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li>61 Beech Hill Cross Rd<br>Mount Desert, ME</li>
+          <li><a href="tel:+12079512525">(207) 951-2525</a></li>
+          <li><a href="mailto:cameron@riversidegroupme.com">cameron@riversidegroupme.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 Riverside Group LLC</div>
+      <div>Maine-built since 2013</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/app.js"></script>
+<script>
+  document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter;
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      document.querySelectorAll('.project-card[data-category]').forEach(card => {
+        const cats = card.dataset.category.split(' ');
+        card.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>

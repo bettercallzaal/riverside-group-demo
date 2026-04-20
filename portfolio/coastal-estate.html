@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schooner Head Estate - Portfolio - Riverside Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css">
+<style>
+  .case-hero {
+    min-height: 80vh;
+    padding: 180px var(--gutter) 80px;
+    color: var(--bone-light);
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .case-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(20, 29, 17, 0.3) 0%, rgba(20, 29, 17, 0.8) 100%),
+      url('https://images.unsplash.com/photo-1585128792020-803d29415281?q=80&w=2400&auto=format&fit=crop') center/cover;
+    z-index: -1;
+  }
+  .case-hero h1 { color: var(--bone-light); }
+  .case-hero h1 em { color: var(--brass-light); font-style: italic; }
+  .case-meta { display: flex; gap: 48px; flex-wrap: wrap; margin-top: 40px; color: rgba(232, 228, 216, 0.9); }
+  .case-meta div { min-width: 120px; }
+  .case-meta-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brass-light); font-weight: 600; margin-bottom: 6px; }
+  .case-meta-value { font-size: 16px; font-family: var(--font-display); font-weight: 400; }
+
+  .case-body { background: var(--bone-light); padding: 100px 0; }
+  .case-body .section-narrow p { font-size: 17px; margin-bottom: 24px; color: var(--charcoal); }
+  .case-body h2 { margin: 60px 0 20px; color: var(--moss); }
+  .case-body h2 em { color: var(--brass); font-style: italic; }
+
+  .case-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 40px 0; }
+  .case-gallery img { width: 100%; aspect-ratio: 3/2; object-fit: cover; border-radius: 6px; }
+  .case-gallery img:nth-child(3n) { grid-column: span 2; aspect-ratio: 16/9; }
+  @media (max-width: 680px) {
+    .case-gallery { grid-template-columns: 1fr; }
+    .case-gallery img, .case-gallery img:nth-child(3n) { grid-column: auto; aspect-ratio: 3/2; }
+  }
+
+  .case-pullquote {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--moss);
+    padding: 40px 0;
+    margin: 40px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    max-width: 720px;
+  }
+  .case-pullquote::before { content: '"'; color: var(--brass); }
+  .case-pullquote::after { content: '"'; color: var(--brass); }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="/" class="nav-logo">Riverside<span>.</span></a>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#process">Process</a></li>
+    <li><a href="/portfolio/">Portfolio</a></li>
+    <li><a href="/#area">Service Area</a></li>
+    <li><a href="/journal/">Journal</a></li>
+    <li><a href="/#team">Team</a></li>
+    <li><a href="/#inquiry" class="nav-cta">Start a project</a></li>
+  </ul>
+</nav>
+
+<header class="case-hero">
+  <div class="hero-inner">
+    <span class="eyebrow" style="color: var(--brass-light);">Portfolio - Coastal Estate</span>
+    <h1>Schooner Head <em>Estate</em></h1>
+    <div class="case-meta">
+      <div>
+        <div class="case-meta-label">Location</div>
+        <div class="case-meta-value">Bar Harbor, ME</div>
+      </div>
+      <div>
+        <div class="case-meta-label">Year</div>
+        <div class="case-meta-value">2024</div>
+      </div>
+      <div>
+        <div class="case-meta-label">Size</div>
+        <div class="case-meta-value">4 acres</div>
+      </div>
+      <div>
+        <div class="case-meta-label">Scope</div>
+        <div class="case-meta-value">Design + Build + Steward</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="case-body">
+  <div class="container">
+    <div class="section-narrow">
+      <p class="lede">A four-acre oceanfront property on the east side of Mount Desert Island, reimagined around native coastal plantings, carefully sited granite terraces, and the light and weather of Frenchman Bay.</p>
+
+      <h2>The brief</h2>
+      <p>The owners - a young family returning to the Maine coast after years in New York - asked for a landscape that felt like it had always been there. The existing property was a patchwork of lawn, builder-spec foundation plantings, and a failing deck that had never quite made peace with the grade. Every view wanted editing. The shoreline wanted protecting. And the family wanted to feel the ocean from every room.</p>
+
+      <h2>Reading the <em>site</em></h2>
+      <p>Mount Desert's east-facing shoreline is a particular kind of place - morning sun, afternoon fog, wind off the water six months of the year, and soil that varies from decomposed granite to pocket loam within fifteen feet. Our first month was pure observation: where does water move after a storm, which native plants had already established themselves, which sightlines from inside the house were worth protecting, and which could open up.</p>
+    </div>
+
+    <div class="case-gallery">
+      <img src="https://images.unsplash.com/photo-1524598171353-ce84a57ea86b?q=80&w=1200&auto=format&fit=crop" alt="Native coastal plantings">
+      <img src="https://images.unsplash.com/photo-1598902108854-10e335adac99?q=80&w=1200&auto=format&fit=crop" alt="Granite terraces">
+      <img src="https://images.unsplash.com/photo-1441906363162-903afd0d3d52?q=80&w=2000&auto=format&fit=crop" alt="Oceanfront garden">
+    </div>
+
+    <div class="section-narrow">
+      <div class="case-pullquote">
+        Every design begins with a deep reading of the site - its ecology, its light, its weather, its history.
+      </div>
+
+      <h2>Design decisions</h2>
+      <p>The master plan centered on three moves: a sequence of three granite terraces stepping down to the shoreline, a native coastal meadow reclaiming the lawn between house and ledge, and a restoration of the existing sugar maple avenue that had been thinned by decades of salt and wind. Hardscape was kept deliberately quiet - Deer Isle granite, dry-laid where it could be, mortar-set where loads demanded - to let the native plantings lead.</p>
+
+      <h2>Build &amp; install</h2>
+      <p>Eighteen weeks from first excavator bucket to final mulch. Our in-house carpentry crew (Tim and Keith) hand-fitted every terrace stone. Our landscape team (Phil leading, Daniel coordinating, Archer operating) installed more than 3,200 individual plants across 42 species. Sustainability-first: no synthetic fertilizers, no imported topsoil, all planting stock grown within 100 miles.</p>
+
+      <h2>Stewardship</h2>
+      <p>A landscape of this complexity isn't finished when the last plant is in. We're now three seasons into a stewardship contract: seasonal pruning, perennial division as the meadow matures, and an annual review with the owners where we adjust based on what's thriving and what's asking for change.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="container text-center">
+    <span class="eyebrow" style="color: var(--brass-light);">Next steps</span>
+    <h2>Have a property with <em>similar scope</em>?</h2>
+    <p>We take on a limited number of estate-scale projects each year. Share a few details and we'll tell you honestly if we're the right team.</p>
+    <a href="/#inquiry" class="btn btn-primary btn-arrow">Start a project</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+      <div>&copy; 2026 Riverside Group LLC - Mount Desert, ME - (207) 951-2525</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

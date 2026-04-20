@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal - Riverside Group</title>
+<meta name="description" content="Notes from the garden. Field observations, design thinking, and case studies from Mount Desert Island.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css">
+<style>
+  .page-header { padding: 160px 0 80px; background: var(--bone); }
+  .page-header .eyebrow { color: var(--brass); }
+  .page-header h1 { font-size: clamp(48px, 6vw, 80px); max-width: 800px; color: var(--moss); }
+  .page-header h1 em { color: var(--brass); font-style: italic; }
+  .page-header p { max-width: 640px; margin-top: 24px; font-family: var(--font-display); font-size: clamp(18px, 2vw, 22px); font-weight: 300; color: var(--stone); }
+  .journal-body { background: var(--bone-light); padding: 80px 0 140px; }
+  .journal-body .journal-grid { grid-template-columns: repeat(3, 1fr); }
+  .category-bar { display: flex; gap: 12px; flex-wrap: wrap; margin: 48px 0 0; padding-top: 32px; border-top: 1px solid var(--rule); }
+  .filter-chip {
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--charcoal);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-chip.active { background: var(--moss); color: var(--bone-light); border-color: var(--moss); }
+  @media (max-width: 880px) { .journal-body .journal-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="/" class="nav-logo">Riverside<span>.</span></a>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#process">Process</a></li>
+    <li><a href="/portfolio/">Portfolio</a></li>
+    <li><a href="/#area">Service Area</a></li>
+    <li><a href="/journal/">Journal</a></li>
+    <li><a href="/#team">Team</a></li>
+    <li><a href="/#inquiry" class="nav-cta">Start a project</a></li>
+  </ul>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">The Journal</span>
+    <h1>Notes from <em>the garden</em>.</h1>
+    <p>Field observations, design thinking, and case studies from Mount Desert Island and the coast of Maine.</p>
+    <div class="category-bar">
+      <button class="filter-chip active" data-filter="all">All posts</button>
+      <button class="filter-chip" data-filter="design">Design</button>
+      <button class="filter-chip" data-filter="horticulture">Horticulture</button>
+      <button class="filter-chip" data-filter="case-study">Case studies</button>
+      <button class="filter-chip" data-filter="stewardship">Stewardship</button>
+    </div>
+  </div>
+</header>
+
+<section class="journal-body">
+  <div class="container">
+    <div class="journal-grid" id="journalGrid">
+      <a href="designing-for-maine-winters.html" class="article-card" data-cat="design">
+        <div class="article-card-img" style="background-image: url('https://images.unsplash.com/photo-1455218873509-8097305ee378?q=80&w=1200&auto=format&fit=crop');"></div>
+        <div class="article-card-body">
+          <div class="article-meta">Design - 6 min read - Jan 2026</div>
+          <h3>Designing for Maine winters</h3>
+          <p>The structural elements - stonework, evergreens, seed heads - that carry a coastal garden through four feet of snow.</p>
+          <span class="article-card-link">Read article &rarr;</span>
+        </div>
+      </a>
+      <a href="native-plants-coastal-estates.html" class="article-card" data-cat="horticulture">
+        <div class="article-card-img" style="background-image: url('https://images.unsplash.com/photo-1524598171353-ce84a57ea86b?q=80&w=1200&auto=format&fit=crop');"></div>
+        <div class="article-card-body">
+          <div class="article-meta">Horticulture - 8 min read - Dec 2025</div>
+          <h3>Why native plants matter on coastal estates</h3>
+          <p>The case for building Maine gardens around the species that already know how to thrive here.</p>
+          <span class="article-card-link">Read article &rarr;</span>
+        </div>
+      </a>
+      <a href="restoring-1920s-garden.html" class="article-card" data-cat="case-study">
+        <div class="article-card-img" style="background-image: url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=1200&auto=format&fit=crop');"></div>
+        <div class="article-card-body">
+          <div class="article-meta">Case study - 12 min read - Nov 2025</div>
+          <h3>Restoring a 1920s inland garden</h3>
+          <p>How we reversed 40 years of lawn-first decisions and returned a Blue Hill farmhouse to its original plan.</p>
+          <span class="article-card-link">Read article &rarr;</span>
+        </div>
+      </a>
+      <a href="#" class="article-card" data-cat="stewardship">
+        <div class="article-card-img" style="background-image: url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=1200&auto=format&fit=crop');"></div>
+        <div class="article-card-body">
+          <div class="article-meta">Stewardship - 5 min read - Oct 2025</div>
+          <h3>The fall stewardship punch list</h3>
+          <p>What we do in October on every garden we care for, and why the work done now shapes next May.</p>
+          <span class="article-card-link">Read article &rarr;</span>
+        </div>
+      </a>
+      <a href="#" class="article-card" data-cat="horticulture">
+        <div class="article-card-img" style="background-image: url('https://images.unsplash.com/photo-1558293842-c0fd3db86157?q=80&w=1200&auto=format&fit=crop');"></div>
+        <div class="article-card-body">
+          <div class="article-meta">Horticulture - 7 min read - Sep 2025</div>
+          <h3>Salt, wind, and the plants that shrug</h3>
+          <p>A field guide to the coastal perennials and shrubs that actually earn their place on Mount Desert Island.</p>
+          <span class="article-card-link">Read article &rarr;</span>
+        </div>
+      </a>
+      <a href="#" class="article-card" data-cat="design">
+        <div class="article-card-img" style="background-image: url('https://images.unsplash.com/photo-1598902108854-10e335adac99?q=80&w=1200&auto=format&fit=crop');"></div>
+        <div class="article-card-body">
+          <div class="article-meta">Design - 9 min read - Aug 2025</div>
+          <h3>Working in granite</h3>
+          <p>Notes on sourcing, siting, and setting Deer Isle and Penobscot granite in a modern landscape.</p>
+          <span class="article-card-link">Read article &rarr;</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+      <div>&copy; 2026 Riverside Group LLC - Mount Desert, ME - (207) 951-2525</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/app.js"></script>
+<script>
+  document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter;
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      document.querySelectorAll('.article-card[data-cat]').forEach(card => {
+        card.style.display = (filter === 'all' || card.dataset.cat === filter) ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
