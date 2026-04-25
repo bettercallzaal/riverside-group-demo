@@ -564,6 +564,14 @@ section { padding: clamp(72px, 10vw, 140px) 0; }
   color: var(--brass-light);
   font-size: 48px;
   border: 3px solid var(--brass);
+  overflow: hidden;
+}
+.team-avatar--photo { background: var(--bone); }
+.team-avatar--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .team-member h4 { font-family: var(--font-display); text-transform: none; letter-spacing: -0.01em; font-size: 22px; font-weight: 400; color: var(--moss); margin-bottom: 4px; }
 .team-role { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--brass); font-weight: 600; margin-bottom: 12px; }
@@ -644,7 +652,8 @@ section { padding: clamp(72px, 10vw, 140px) 0; }
 }
 
 /* Inquiry form (multi-step) */
-.inquiry-form {
+.inquiry-form,
+.simple-contact {
   max-width: 640px;
   margin: 0 auto;
   background: var(--bone-light);
@@ -652,6 +661,8 @@ section { padding: clamp(72px, 10vw, 140px) 0; }
   padding: clamp(28px, 4vw, 48px);
   box-shadow: 0 4px 24px rgba(20, 29, 17, 0.08);
 }
+.simple-contact .btn { width: 100%; justify-content: center; }
+.simple-contact a { text-decoration: underline; }
 .form-progress {
   display: flex;
   gap: 8px;
