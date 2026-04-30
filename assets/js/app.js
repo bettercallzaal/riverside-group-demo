@@ -53,35 +53,23 @@
     });
   });
 
-  // Multi-step form
+  // Single-page inquiry form
   const form = document.querySelector('.inquiry-form');
   if (form) {
-    const steps = Array.from(form.querySelectorAll('.form-step'));
-    const progress = Array.from(form.querySelectorAll('.form-progress-step'));
     const btnNext = form.querySelector('.btn-next');
-    const btnBack = form.querySelector('.btn-back');
     const complete = form.querySelector('.form-complete');
     const formNav = form.querySelector('.form-nav');
+    const steps = Array.from(form.querySelectorAll('.form-step'));
     const answers = {};
-    let current = 0;
 
-    function render() {
-      steps.forEach((s, i) => s.classList.toggle('active', i === current));
-      progress.forEach((p, i) => p.classList.toggle('active', i <= current));
-      btnBack.style.visibility = current === 0 ? 'hidden' : 'visible';
-      btnNext.textContent = current === steps.length - 1 ? 'Send inquiry' : 'Continue';
-      validateStep();
-    }
-
-    function validateStep() {
-      const active = steps[current];
-      const required = active.querySelectorAll('[data-required]');
+    function validate() {
+      const required = form.querySelectorAll('[data-required]');
       let ok = true;
       required.forEach(el => {
-        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
           if (!el.value.trim()) ok = false;
         } else if (el.classList.contains('option-grid')) {
-          if (!active.querySelector('.option.selected')) ok = false;
+          if (!el.querySelector('.option.selected')) ok = false;
         }
       });
       btnNext.disabled = !ok;
@@ -100,38 +88,27 @@
         }
         const values = Array.from(grid.querySelectorAll('.option.selected')).map(o => o.dataset.value);
         answers[grid.dataset.name] = multi ? values : values[0];
-        validateStep();
+        validate();
       });
     });
 
     form.querySelectorAll('input, textarea, select').forEach(el => {
       el.addEventListener('input', () => {
         answers[el.name] = el.value;
-        validateStep();
+        validate();
       });
     });
 
-    btnNext.addEventListener('click', (e) => {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
       if (btnNext.disabled) return;
-      if (current < steps.length - 1) {
-        current += 1;
-        render();
-      } else {
-        steps.forEach(s => s.classList.remove('active'));
-        progress.forEach(p => p.classList.add('active'));
-        formNav.style.display = 'none';
-        complete.classList.add('show');
-        console.log('Inquiry submitted:', answers);
-      }
+      steps.forEach(s => s.classList.remove('active'));
+      formNav.style.display = 'none';
+      complete.classList.add('show');
+      console.log('Inquiry submitted:', answers);
     });
 
-    btnBack.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (current > 0) { current -= 1; render(); }
-    });
-
-    render();
+    validate();
   }
 
   // ===== Capabilities-page features =====
