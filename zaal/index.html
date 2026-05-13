@@ -4,120 +4,238 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Zaal Tracker - Riverside Group</title>
+<title>Riverside Group - 2026 Engagement Plan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/styles.css">
 <style>
-  /* Zaal tracker - inline so it doesn't bleed into main site */
-  .ztrack { background: var(--bone-light); min-height: 100vh; padding-top: 84px; padding-bottom: 80px; }
-  .ztrack-head { padding: 32px var(--gutter) 24px; max-width: var(--max); margin: 0 auto; border-bottom: 1px solid var(--rule); }
-  .ztrack-head h1 { font-size: clamp(32px, 5vw, 52px); margin-bottom: 8px; }
-  .ztrack-head h1 em { color: var(--brass); font-style: italic; }
-  .ztrack-meta { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; font-size: 13px; color: var(--stone); margin-top: 12px; }
-  .ztrack-meta strong { color: var(--charcoal); font-weight: 600; }
+  body { background: var(--bone-light); }
 
-  .ztrack-body { max-width: var(--max); margin: 0 auto; padding: 32px var(--gutter); }
-  .ztrack-section { margin-bottom: 56px; }
-  .ztrack-section > .eyebrow { display: block; margin-bottom: 6px; }
-  .ztrack-section h2 { font-size: clamp(24px, 3.5vw, 36px); margin-bottom: 20px; }
-
-  /* Agenda block */
-  .agenda { background: var(--moss); color: var(--bone-light); border-radius: 14px; padding: 28px; }
-  .agenda .eyebrow { color: var(--brass-light); }
-  .agenda h2 { color: var(--bone-light); margin-bottom: 16px; }
-  .agenda ol { margin: 0; padding-left: 22px; }
-  .agenda li { color: rgba(232, 228, 216, 0.92); font-size: 15px; line-height: 1.55; margin-bottom: 12px; }
-  .agenda li strong { color: var(--bone-light); font-weight: 600; }
-  .agenda .hot { color: var(--brass-light); font-weight: 600; }
-
-  /* Todo cards */
-  .todo-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
-  .todo {
-    background: white;
-    border: 1px solid var(--rule);
-    border-radius: 12px;
-    padding: 20px 22px;
-    transition: border-color 0.2s, transform 0.2s;
+  .z-hero {
+    padding: 140px var(--gutter) 72px;
+    max-width: var(--max);
+    margin: 0 auto;
   }
-  .todo:hover { border-color: rgba(139, 111, 58, 0.4); }
-  .todo-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; margin-bottom: 10px; }
-  .todo-num { font-family: var(--font-body); font-size: 12px; letter-spacing: 0.18em; color: var(--brass); font-weight: 600; text-transform: uppercase; }
-  .todo h3 { font-size: clamp(20px, 2.3vw, 26px); color: var(--moss); margin: 0; flex: 1 1 auto; }
-  .todo h3 em { color: var(--brass); font-style: italic; }
-
-  .pill {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-family: var(--font-body);
-    white-space: nowrap;
+  .z-hero h1 { font-size: clamp(40px, 7vw, 84px); margin: 18px 0 24px; line-height: 1.05; }
+  .z-hero h1 em { color: var(--brass); font-style: italic; }
+  .z-hero .lede { max-width: 640px; margin-bottom: 0; }
+  .z-hero-meta {
+    display: flex; gap: 28px; flex-wrap: wrap;
+    margin-top: 40px; padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    font-size: 13px; color: var(--stone);
   }
-  .pill-ready    { background: #e4ebd9; color: #3b5a23; }
-  .pill-waiting  { background: #f4e6cf; color: #7a5a1d; }
-  .pill-active   { background: #cde0db; color: #1f4a3e; }
-  .pill-done     { background: #d8d8d0; color: #5a5a4e; }
-  .pill-backlog  { background: #ece9df; color: #7a7a6e; }
+  .z-hero-meta strong { color: var(--charcoal); display: block; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 4px; font-weight: 600; }
+  .z-hero-meta div { font-family: var(--font-display); font-size: 18px; color: var(--moss); font-weight: 400; }
 
-  .todo-row { display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; margin-top: 14px; font-size: 14px; }
-  .todo-row dt { color: var(--stone); font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.12em; padding-top: 3px; }
-  .todo-row dd { color: var(--charcoal); margin: 0; line-height: 1.5; }
-  .todo-row dd.ask { color: #7a5a1d; }
-  .todo-row dd.next { color: var(--moss); font-weight: 500; }
-
-  .todo-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--rule); }
-  .todo-link {
-    font-size: 13px;
-    color: var(--moss);
-    padding: 6px 12px;
-    border: 1px solid var(--rule);
-    border-radius: 999px;
-    font-weight: 500;
+  .z-strip {
+    background: var(--moss);
+    color: var(--bone-light);
+    padding: 56px var(--gutter);
   }
-  .todo-link:hover { background: var(--moss); color: var(--bone-light); opacity: 1; }
-  .todo-link.ext::after { content: ' ↗'; opacity: 0.5; }
-
-  /* Quick decisions block */
-  .decisions { display: grid; grid-template-columns: 1fr; gap: 12px; }
-  .decision {
-    background: var(--bone);
-    border-left: 3px solid var(--brass);
-    padding: 14px 18px;
-    border-radius: 0 8px 8px 0;
-    font-size: 14px;
-    color: var(--charcoal);
+  .z-strip-inner { max-width: var(--max); margin: 0 auto; }
+  .z-strip .eyebrow { color: var(--brass-light); }
+  .z-strip h2 { color: var(--bone-light); font-size: clamp(28px, 4vw, 44px); margin-bottom: 32px; }
+  .z-strip h2 em { color: var(--brass-light); font-style: italic; }
+  .nine-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+    counter-reset: nine;
   }
-  .decision strong { display: block; color: var(--moss); font-family: var(--font-display); font-size: 17px; font-weight: 500; margin-bottom: 4px; }
-
-  /* Resource list */
-  .resources { display: grid; grid-template-columns: 1fr; gap: 8px; }
-  .resource { display: flex; gap: 12px; padding: 10px 14px; background: white; border: 1px solid var(--rule); border-radius: 8px; font-size: 14px; }
-  .resource code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: var(--stone); }
-
-  .back-link {
-    display: inline-flex;
+  .nine-grid a {
+    display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 13px;
+    gap: 16px;
+    padding: 14px 18px;
+    background: rgba(232, 228, 216, 0.06);
+    border: 1px solid rgba(232, 228, 216, 0.14);
+    border-radius: 10px;
+    color: var(--bone-light);
+    font-size: 15px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nine-grid a:hover { background: rgba(232, 228, 216, 0.12); opacity: 1; transform: translateX(4px); }
+  .nine-grid a::before {
+    counter-increment: nine;
+    content: counter(nine, decimal-leading-zero);
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--brass-light);
+    font-weight: 400;
+    min-width: 28px;
+  }
+  .nine-grid a span { flex: 1; }
+  .nine-grid a::after { content: '→'; color: var(--brass-light); opacity: 0.7; }
+
+  .z-items {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 96px var(--gutter);
+  }
+  .z-item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 56px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .z-item:first-child { border-top: none; padding-top: 0; }
+  .z-item-num {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 8vw, 88px);
     color: var(--brass);
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-weight: 300;
+    line-height: 1;
+    font-style: italic;
+  }
+  .z-item-meta {
+    font-size: 11px;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
+    color: var(--stone);
+    font-weight: 600;
+    margin-top: 8px;
+  }
+  .z-item h2 {
+    font-size: clamp(28px, 3.5vw, 40px);
+    color: var(--moss);
     margin-bottom: 16px;
   }
-  .back-link:hover { color: var(--moss); opacity: 1; }
+  .z-item h2 em { color: var(--brass); font-style: italic; }
+  .z-item .heard { font-style: italic; color: var(--stone); font-size: 15px; margin-bottom: 20px; border-left: 2px solid var(--brass); padding-left: 14px; }
+  .z-item p { margin-bottom: 14px; font-size: 16px; line-height: 1.65; color: var(--charcoal); }
+  .z-item .ships {
+    margin-top: 24px;
+    padding: 18px 22px;
+    background: var(--bone);
+    border-radius: 10px;
+  }
+  .z-item .ships strong {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .z-item .ships ul { list-style: none; padding: 0; margin: 0; }
+  .z-item .ships li {
+    padding: 6px 0 6px 22px;
+    position: relative;
+    font-size: 15px;
+    color: var(--charcoal);
+  }
+  .z-item .ships li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 12px;
+    height: 1px;
+    background: var(--brass);
+  }
+  .phase-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--bone);
+    color: var(--moss);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .phase-tag.p1 { background: var(--brass); color: var(--charcoal); }
+  .phase-tag.p2 { background: var(--moss); color: var(--bone-light); }
+  .phase-tag.p3 { background: var(--bone); color: var(--moss); }
+
+  .z-phases {
+    background: var(--moss-deep);
+    color: var(--bone-light);
+    padding: 96px var(--gutter);
+  }
+  .z-phases-inner { max-width: var(--max); margin: 0 auto; }
+  .z-phases .eyebrow { color: var(--brass-light); }
+  .z-phases h2 { color: var(--bone-light); font-size: clamp(32px, 5vw, 56px); margin-bottom: 16px; }
+  .z-phases h2 em { color: var(--brass-light); font-style: italic; }
+  .z-phases .lede { color: rgba(232, 228, 216, 0.75); margin-bottom: 56px; max-width: 640px; }
+  .phases-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .phase-card {
+    background: rgba(232, 228, 216, 0.04);
+    border: 1px solid rgba(232, 228, 216, 0.14);
+    padding: 32px 28px;
+    border-radius: 14px;
+  }
+  .phase-card .label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brass-light);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .phase-card h3 {
+    color: var(--bone-light);
+    font-size: 24px;
+    margin-bottom: 18px;
+    font-weight: 400;
+  }
+  .phase-card h3 em { color: var(--brass-light); font-style: italic; }
+  .phase-card ul { list-style: none; padding: 0; margin: 0; }
+  .phase-card li {
+    color: rgba(232, 228, 216, 0.85);
+    font-size: 14px;
+    padding: 6px 0;
+    border-top: 1px dashed rgba(232, 228, 216, 0.12);
+  }
+  .phase-card li:first-child { border-top: none; }
+
+  .z-close {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 96px var(--gutter);
+    text-align: center;
+  }
+  .z-close h2 { font-size: clamp(32px, 5vw, 56px); margin-bottom: 18px; }
+  .z-close h2 em { color: var(--brass); font-style: italic; }
+  .z-close p { font-size: 17px; color: var(--charcoal); max-width: 560px; margin: 0 auto 32px; line-height: 1.65; }
+  .z-close-asks {
+    text-align: left;
+    background: var(--bone);
+    border-radius: 14px;
+    padding: 28px;
+    margin: 32px 0;
+  }
+  .z-close-asks strong {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .z-close-asks ol { padding-left: 22px; margin: 0; }
+  .z-close-asks li {
+    font-size: 15px;
+    color: var(--charcoal);
+    padding: 6px 0;
+    line-height: 1.55;
+  }
 
   @media (min-width: 720px) {
-    .todo-grid { grid-template-columns: 1fr 1fr; }
-    .resources { grid-template-columns: 1fr 1fr; }
-  }
-  @media (min-width: 1024px) {
-    .agenda { padding: 36px 40px; }
+    .z-item { grid-template-columns: 140px 1fr; gap: 48px; padding: 72px 0; }
+    .nine-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .phases-grid { grid-template-columns: 1fr 1fr 1fr; }
   }
 </style>
 </head>
@@ -126,283 +244,358 @@
 <nav class="nav" id="nav">
   <a href="/" class="nav-logo">Riverside<span>.</span></a>
   <ul class="nav-links">
-    <li><a href="/" style="font-size: 13px; color: var(--stone);">Public site</a></li>
+    <li><a href="/" style="font-size: 13px; color: var(--stone);">Demo home</a></li>
+    <li><a href="/capabilities.html" style="font-size: 13px; color: var(--stone);">Capabilities</a></li>
   </ul>
 </nav>
 
-<main class="ztrack">
-
-  <header class="ztrack-head container">
-    <a href="/" class="back-link">&larr; Riverside public site</a>
-    <span class="eyebrow">Internal - Zaal only</span>
-    <h1>Zaal todo - <em>Riverside Group</em></h1>
-    <p style="color: var(--stone); font-size: 15px; max-width: 600px;">
-      Working tracker for the Riverside engagement with Cameron. Status at a glance, what's blocked on what, and today's call cheat sheet up top.
-    </p>
-    <div class="ztrack-meta">
-      <span><strong>Last updated:</strong> 2026-05-13</span>
-      <span><strong>Client:</strong> Cameron DePaola, Riverside Group LLC</span>
-      <span><strong>Mode:</strong> discovery + first deliverables</span>
+<!-- Hero -->
+<header class="z-hero">
+  <span class="eyebrow">Engagement plan - May 2026</span>
+  <h1>Cameron - here's the <em>plan</em>.</h1>
+  <p class="lede">Nine pieces, one season, one team running it. Mapped to what you sent me, in your order. What ships, when it ships, and what I need from you to start tomorrow.</p>
+  <div class="z-hero-meta">
+    <div>
+      <strong>Client</strong>
+      Riverside Group LLC
     </div>
-  </header>
-
-  <div class="ztrack-body">
-
-    <!-- Today's call agenda -->
-    <section class="ztrack-section">
-      <div class="agenda">
-        <span class="eyebrow">Today's call - 2026-05-13</span>
-        <h2>Agenda for the Cameron call</h2>
-        <ol>
-          <li><strong>Lead with the first question.</strong> <span class="hot">"What apps are you and Josh using today for invoicing, tracking jobs, and talking to clients?"</span> Get the names. QuickBooks, Squarespace, anything else. Don't move on until this is concrete - it shapes half the build.</li>
-          <li><strong>Walk through the 9 asks</strong> (from his SMS). Confirm I have them right, ask him to rank the top 3 for pre-season.</li>
-          <li><strong>Show the demo site</strong> at <a href="/" style="color: var(--bone-light); text-decoration: underline;">riverside-group-demo.vercel.app</a>. Open on the phone. Get reaction. Decide: ship as-is / evolve / scrap.</li>
-          <li><strong>Logo direction.</strong> Ask which of three feels right: refined-coastal (current), heritage-craft (brass + serif crest), or rugged-modern (sans, black + brass). Reference moods coming after call.</li>
-          <li><strong>Take the broken phone.</strong> Confirm carrier. Logged as item 9.</li>
-          <li><strong>Crew + scale gut-check:</strong> how many people on payroll this season vs. last? How many high-value tools? Hour meter on excavator working? Need rough numbers, not exact.</li>
-          <li><strong>Budget reality check.</strong> What's he willing to spend monthly on tools after this is built? Determines build-vs-buy on half the list.</li>
-          <li><strong>Close with deliverable commitment.</strong> Confirm top-3 priorities + when the next checkpoint is.</li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- The 9 workstreams -->
-    <section class="ztrack-section">
-      <span class="eyebrow">Workstreams</span>
-      <h2>Cameron's 9 asks</h2>
-
-      <div class="todo-grid">
-
-        <!-- 1. Tool / inventory -->
-        <article class="todo" id="t1">
-          <div class="todo-head">
-            <span class="todo-num">01 / Tools</span>
-            <span class="pill pill-waiting">Waiting on Cameron</span>
-          </div>
-          <h3>Tool + inventory <em>tracking</em></h3>
-          <p style="font-size: 14px; color: var(--charcoal);">Trackers on high-value tools, easy way for crew to log tool/equipment use on jobsite.</p>
-          <dl class="todo-row">
-            <dt>Ask Cameron</dt>
-            <dd class="ask">How many high-value tools (>$500 each), roughly? Any AirTags in use today?</dd>
-            <dt>Next action</dt>
-            <dd class="next">After call: pick stack. Build options: (a) Sortly or itemit subscription ($30-80/mo), (b) custom QR + DB on Supabase, (c) hybrid AirTag metadata + simple log form.</dd>
-            <dt>Depends on</dt>
-            <dd>Build-vs-buy answer from agenda Q1.</dd>
-          </dl>
-          <div class="todo-links">
-            <a href="#decisions" class="todo-link">Pending decision: build vs buy</a>
-          </div>
-        </article>
-
-        <!-- 2. Daily log -->
-        <article class="todo" id="t2">
-          <div class="todo-head">
-            <span class="todo-num">02 / Daily log</span>
-            <span class="pill pill-waiting">Waiting on Cameron</span>
-          </div>
-          <h3>Daily <em>log</em> + digest</h3>
-          <p style="font-size: 14px; color: var(--charcoal);">One log per crew member per day from phone. Feeds task tracking, purchasing, invoicing. Cameron + company get the shared view.</p>
-          <dl class="todo-row">
-            <dt>Ask Cameron</dt>
-            <dd class="ask">Crew device mix - iPhone vs Android? Will they actually fill a form in the field, or is voice/text the only realistic input?</dd>
-            <dt>Next action</dt>
-            <dd class="next">PWA-installable form on Vercel + Supabase rollup. Or pipe into existing tool if he names one in agenda Q1.</dd>
-            <dt>Tied to</dt>
-            <dd>Item 8 (work orders) - daily log hours roll into job time entries.</dd>
-          </dl>
-        </article>
-
-        <!-- 3. Website refresh -->
-        <article class="todo" id="t3">
-          <div class="todo-head">
-            <span class="todo-num">03 / Website</span>
-            <span class="pill pill-ready">Demo built - show today</span>
-          </div>
-          <h3>Website <em>refresh</em></h3>
-          <p style="font-size: 14px; color: var(--charcoal);">Demo site already built and deployed (vanilla HTML, moss + brass aesthetic). Decision needed: deploy as the new site, evolve into something else, or keep current Squarespace and apply new logo there.</p>
-          <dl class="todo-row">
-            <dt>Decision needed</dt>
-            <dd class="ask">Cameron's reaction to the demo. Then: replace Squarespace, keep both, or scrap demo?</dd>
-            <dt>Next action</dt>
-            <dd class="next">If green-lit: swap placeholder imagery for Cameron's real project photos, wire real Formspree form, point DNS. Roughly 1-2 days work.</dd>
-          </dl>
-          <div class="todo-links">
-            <a href="/" class="todo-link">Open demo home</a>
-            <a href="/capabilities.html" class="todo-link">Open capabilities page</a>
-            <a href="https://www.riversidegroupme.com/" class="todo-link ext" target="_blank" rel="noopener">Current Squarespace</a>
-          </div>
-        </article>
-
-        <!-- 4. Logo -->
-        <article class="todo" id="t4">
-          <div class="todo-head">
-            <span class="todo-num">04 / Logo</span>
-            <span class="pill pill-ready">Can start today</span>
-          </div>
-          <h3>New <em>logo</em> + brand pack</h3>
-          <p style="font-size: 14px; color: var(--charcoal);">Drives shirts, hats, jackets, signage, business cards. The actual blocker for pre-season merch.</p>
-          <dl class="todo-row">
-            <dt>Today's prep</dt>
-            <dd class="next">3 moodboard directions ready before call: (1) refined-coastal (current Riverside polished), (2) heritage-craft (brass serif crest, "Est. 2013"), (3) rugged-modern (sans wordmark + brass accent).</dd>
-            <dt>Ask Cameron</dt>
-            <dd class="ask">Show three. Which direction. Any non-negotiables (river motif? Initials? Color anchor?).</dd>
-            <dt>Pricing anchor</dt>
-            <dd>$3-6K logo package per <a href="/zaal#resources" style="color: var(--brass);">research 455</a>.</dd>
-          </dl>
-          <div class="todo-links">
-            <a href="#" class="todo-link">Moodboard 01 (todo)</a>
-            <a href="#" class="todo-link">Moodboard 02 (todo)</a>
-            <a href="#" class="todo-link">Moodboard 03 (todo)</a>
-          </div>
-        </article>
-
-        <!-- 5+8. Client intake + work orders -->
-        <article class="todo" id="t5">
-          <div class="todo-head">
-            <span class="todo-num">05 + 08 / Jobs</span>
-            <span class="pill pill-waiting">Waiting on Cameron</span>
-          </div>
-          <h3>Client intake + <em>work orders</em></h3>
-          <p style="font-size: 14px; color: var(--charcoal);">Same thing in Cameron's head. Lead intake -> no leads dropped -> work order with budget + PO# -> tracks purchases + hours -> profit margin per job visible.</p>
-          <dl class="todo-row">
-            <dt>Ask Cameron</dt>
-            <dd class="ask">How are leads tracked today? How are estimates made? Is QuickBooks involved? What's Josh actually using?</dd>
-            <dt>Build-vs-buy</dt>
-            <dd>This is the cluster where Jobber / LMN / Aspire could replace 80% of the build for $200/mo. Need agenda Q1 answer to decide.</dd>
-            <dt>Next action</dt>
-            <dd class="next">After call: comparison memo (Jobber vs LMN vs Aspire vs custom) sized to his answer.</dd>
-          </dl>
-        </article>
-
-        <!-- 6. Advertising -->
-        <article class="todo" id="t6">
-          <div class="todo-head">
-            <span class="todo-num">06 / Ads</span>
-            <span class="pill pill-waiting">Waiting on Cameron</span>
-          </div>
-          <h3>Advertising - <em>clients + hiring</em></h3>
-          <p style="font-size: 14px; color: var(--charcoal);">Two parallel funnels: (a) new clients (luxury coastal estates - geo-targeted), (b) new employees (local trade hiring - very different channels).</p>
-          <dl class="todo-row">
-            <dt>Ask Cameron</dt>
-            <dd class="ask">Where do leads come from today - Facebook, referrals, Google, Houzz? Where have past hires come from - Indeed, word of mouth, College of the Atlantic?</dd>
-            <dt>Next action</dt>
-            <dd class="next">Two-page brief: client-acq plan (Meta + local SEO + Houzz) and hiring plan (Indeed + Bar Harbor / MDI bulletin boards + COA channel via Archer).</dd>
-          </dl>
-        </article>
-
-        <!-- 7. Equipment maintenance -->
-        <article class="todo" id="t7">
-          <div class="todo-head">
-            <span class="todo-num">07 / Equipment</span>
-            <span class="pill pill-waiting">Waiting on Cameron</span>
-          </div>
-          <h3>Equipment <em>maintenance</em></h3>
-          <p style="font-size: 14px; color: var(--charcoal);">Excavator grease, oil changes, safety checks. Hour-meter based schedules. Pre-use checklist before deployment.</p>
-          <dl class="todo-row">
-            <dt>Ask Cameron</dt>
-            <dd class="ask">Does the excavator have a working hour meter? Anyone logging readings? Any other tracked machines (trucks, trailers, mowers)?</dd>
-            <dt>Build-vs-buy</dt>
-            <dd>FleetIO has a small-fleet free tier (up to 5 assets). Probably the right answer here. Custom build only if integration with daily log matters.</dd>
-            <dt>Next action</dt>
-            <dd class="next">Spin up FleetIO trial with one asset (the excavator) as proof. ~30 min.</dd>
-          </dl>
-          <div class="todo-links">
-            <a href="https://www.fleetio.com/pricing" class="todo-link ext" target="_blank" rel="noopener">FleetIO pricing</a>
-          </div>
-        </article>
-
-        <!-- 9. Phone IVR -->
-        <article class="todo" id="t9">
-          <div class="todo-head">
-            <span class="todo-num">09 / Phone</span>
-            <span class="pill pill-ready">Easiest win</span>
-          </div>
-          <h3>Business phone + <em>IVR</em></h3>
-          <p style="font-size: 14px; color: var(--charcoal);">Dead phone Cameron is handing off, plus IVR setup ("press 1 for Cameron, press 2 for Josh / billing"). Fastest measurable win on the list.</p>
-          <dl class="todo-row">
-            <dt>Hardware</dt>
-            <dd>Dead battery / charging port. Apple Store Bangor Mall - ~$99 battery, free if AppleCare+. Could also be swollen battery, check first.</dd>
-            <dt>Ask Cameron</dt>
-            <dd class="ask">What carrier is the business line on? Does the number forward anywhere today?</dd>
-            <dt>IVR options</dt>
-            <dd>OpenPhone ($19/mo, easy IVR, web + iOS), Google Voice (free, basic, limited IVR), Grasshopper ($28/mo, classic), Sideline ($10/mo, no real IVR). Recommendation: OpenPhone.</dd>
-            <dt>Next action</dt>
-            <dd class="next">After carrier answer: walk through OpenPhone port-in. ~1 hour setup. Provision Cameron + Josh extensions.</dd>
-          </dl>
-          <div class="todo-links">
-            <a href="https://www.openphone.com/" class="todo-link ext" target="_blank" rel="noopener">OpenPhone</a>
-            <a href="https://voice.google.com/" class="todo-link ext" target="_blank" rel="noopener">Google Voice</a>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- Pending decisions -->
-    <section class="ztrack-section" id="decisions">
-      <span class="eyebrow">Pending decisions</span>
-      <h2>Decisions that unblock everything else</h2>
-      <div class="decisions">
-        <div class="decision">
-          <strong>Build vs buy vs hybrid</strong>
-          Most important call. For tools / daily log / work orders / equipment, mature landscape SaaS (Jobber, LMN, Aspire) covers 80% for ~$200/mo. Custom build means longer timeline + higher cost but full BCZ-branded ownership and unified UX. Hybrid: BCZ public site + intake + light tracker, hand off financials to incumbent SaaS. <em>Resolves after agenda Q1 today.</em>
-        </div>
-        <div class="decision">
-          <strong>Demo site fate</strong>
-          Already-built Vercel demo (vanilla HTML, moss/brass) - keep + evolve, replace Squarespace, or scrap? Cameron's reaction during today's call decides. <em>Affects: scope of website refresh line item.</em>
-        </div>
-        <div class="decision">
-          <strong>QuickBooks integration scope</strong>
-          If Josh is on QuickBooks Online, any custom invoicing / PO tracking has to talk to it or we make his life worse. If Josh is on paper / spreadsheet, we have a clean slate. <em>Resolves after agenda Q1.</em>
-        </div>
-        <div class="decision">
-          <strong>BCZ engagement model</strong>
-          Build-and-handoff vs build-and-operate (BCZ ongoing managed service) vs hourly consulting. Affects how much the architecture should optimize for Cameron self-managing later. <em>Internal decision - Zaal to set before pricing conversation.</em>
-        </div>
-      </div>
-    </section>
-
-    <!-- Resources -->
-    <section class="ztrack-section" id="resources">
-      <span class="eyebrow">Reference material</span>
-      <h2>Context + research</h2>
-      <div class="resources">
-        <div class="resource">
-          <div>
-            <strong>SMS context</strong><br>
-            <code>Maine/Cameron/cameron-riverside-context.md</code><br>
-            Original SMS thread, deliverable framing.
-          </div>
-        </div>
-        <div class="resource">
-          <div>
-            <strong>Research dossier 455</strong><br>
-            <code>ZAO OS V1/research/business/455-bcz-maine-clients-stephen-cameron/</code><br>
-            Profile, team list (Cameron, Archer, Daniel, Tim, Keith, Phil), pricing anchors, original "skip full rebuild" recommendation.
-          </div>
-        </div>
-        <div class="resource">
-          <div>
-            <strong>Demo site</strong><br>
-            <code>Maine/Cameron/riverside-site/</code><br>
-            Vanilla HTML, deployed at riverside-group-demo.vercel.app. Moss / bone / brass palette. Fraunces + Inter.
-          </div>
-        </div>
-        <div class="resource">
-          <div>
-            <strong>Cameron contact</strong><br>
-            +1 (207) 951-2525 / cameron@riversidegroupme.com<br>
-            61 Beech Hill Cross Rd, Mount Desert, ME.
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <div>
+      <strong>Lead</strong>
+      Zaal / BetterCallZaal
+    </div>
+    <div>
+      <strong>Target</strong>
+      Ready by season open
+    </div>
   </div>
-</main>
+</header>
+
+<!-- The nine, at a glance -->
+<section class="z-strip">
+  <div class="z-strip-inner">
+    <span class="eyebrow">From your text - the nine</span>
+    <h2>Everything you asked for, <em>in one place</em>.</h2>
+    <div class="nine-grid">
+      <a href="#one"><span>Tool & inventory tracking</span></a>
+      <a href="#two"><span>Daily log + shared updates</span></a>
+      <a href="#three"><span>Website refresh</span></a>
+      <a href="#four"><span>New logo + merch pack</span></a>
+      <a href="#five"><span>Client intake + work orders</span></a>
+      <a href="#six"><span>Advertising - clients & hiring</span></a>
+      <a href="#seven"><span>Equipment maintenance schedules</span></a>
+      <a href="#eight"><span>Budgets, POs, profit per job</span></a>
+      <a href="#nine"><span>Business phone + call routing</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- The nine, expanded -->
+<section class="z-items">
+
+  <!-- 1 -->
+  <article class="z-item" id="one">
+    <div>
+      <div class="z-item-num">01</div>
+      <div class="z-item-meta">Tools & inventory</div>
+    </div>
+    <div>
+      <span class="phase-tag p2">Phase 2</span>
+      <h2>Tool & inventory <em>tracking</em></h2>
+      <p class="heard">"Trackers on certain high value tools and easy way to log use of tools/equipment on job sites."</p>
+      <p>Every tool gets a QR sticker. High-value gear gets an AirTag tied to the same record. Crew scans on check-out from the shop, scans on return. You see who has what, where, when - on your phone, anywhere.</p>
+      <p>For the things that walk off without anyone noticing: a Sunday-night summary lands in your inbox listing anything not seen in seven days, and anything high-value off-property.</p>
+      <div class="ships">
+        <strong>What ships</strong>
+        <ul>
+          <li>Tool list with QR + AirTag tags, photo, purchase date, value</li>
+          <li>Scan-to-check-in/out from any phone, no app install</li>
+          <li>Weekly "where's the gear" digest to you and Josh</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="z-item" id="two">
+    <div>
+      <div class="z-item-num">02</div>
+      <div class="z-item-meta">Daily log</div>
+    </div>
+    <div>
+      <span class="phase-tag p2">Phase 2</span>
+      <h2>Daily log + <em>6pm digest</em></h2>
+      <p class="heard">"Daily log/update that shares to me and company for task tracking, purchasing, invoicing, etc."</p>
+      <p>One quick form per crew member at end of day - what jobs they were on, hours, what got done, photos if there are any. Takes ninety seconds on a phone.</p>
+      <p>At 6pm every day, you get one email: who logged, who didn't, hours by job, purchases entered, anything flagged. Stops the "what happened today" phone calls at night.</p>
+      <div class="ships">
+        <strong>What ships</strong>
+        <ul>
+          <li>Mobile-first end-of-day form (works on iPhone and Android)</li>
+          <li>Hours roll automatically into the job they were worked on</li>
+          <li>6pm digest email to you - skip anything that looks normal, dig into what's flagged</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="z-item" id="three">
+    <div>
+      <div class="z-item-num">03</div>
+      <div class="z-item-meta">Website</div>
+    </div>
+    <div>
+      <span class="phase-tag p1">Phase 1 - ready now</span>
+      <h2>Website <em>refresh</em></h2>
+      <p class="heard">"Website update/refresh."</p>
+      <p>Already built. Take a look at the <a href="/" style="color: var(--brass); border-bottom: 1px solid var(--brass);">demo home</a> and the <a href="/capabilities.html" style="color: var(--brass); border-bottom: 1px solid var(--brass);">capabilities page</a> - moss and brass, Fraunces type, mobile-first, fast on coastal signal.</p>
+      <p>If the direction is right, the rest is photography, copy polish, and pointing your domain. About a week to a clean launch, faster if your existing project photos are ready to drop in.</p>
+      <div class="ships">
+        <strong>What ships</strong>
+        <ul>
+          <li>Home + capabilities deep-dive + portfolio + journal + service area map</li>
+          <li>Real project photography swapped in for placeholders</li>
+          <li>Inquiry form wired to you and Josh by email</li>
+          <li>riversidegroupme.com pointed at the new site when you give the word</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="z-item" id="four">
+    <div>
+      <div class="z-item-num">04</div>
+      <div class="z-item-meta">Logo & brand</div>
+    </div>
+    <div>
+      <span class="phase-tag p1">Phase 1 - starts this week</span>
+      <h2>New logo + <em>merch pack</em></h2>
+      <p class="heard">"New logo to get shirts, hats, jackets, signage, business cards ordered."</p>
+      <p>This one's the blocker for everything you print. Three directions coming to you this week to react to - refined-coastal, heritage-craft, rugged-modern. Pick one, we refine, you get the full pack: primary mark, secondary, monogram, color system, type pairing.</p>
+      <p>Then print-ready files for shirts, hats, jackets, truck signage, business cards. I coordinate with the printer - you approve proofs, that's it.</p>
+      <div class="ships">
+        <strong>What ships</strong>
+        <ul>
+          <li>3 logo directions to react to (next 5-7 days)</li>
+          <li>Refined final mark + full brand pack</li>
+          <li>Print-ready files for every merch item you listed</li>
+          <li>Vendor coordination through approved proofs</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="z-item" id="five">
+    <div>
+      <div class="z-item-num">05</div>
+      <div class="z-item-meta">Intake & work orders</div>
+    </div>
+    <div>
+      <span class="phase-tag p2">Phase 2</span>
+      <h2>Client intake + <em>work orders</em></h2>
+      <p class="heard">"New client intake info system and work order system to track timing and estimates, and keep new leads from falling through cracks."</p>
+      <p>Lead comes in - website form, phone call, referral, anywhere - it lands in one board. Each lead has a status, a value, a last-touch date. Anything sitting more than two days without action goes red, and you get a morning email so nothing slips.</p>
+      <p>Convert a won lead to a job in one click. Job gets a PO number automatically, ready for purchases and time to start tracking against it.</p>
+      <div class="ships">
+        <strong>What ships</strong>
+        <ul>
+          <li>Lead board with status, value, last touch</li>
+          <li>Stale-lead alerts so nothing sits in limbo</li>
+          <li>One-click lead-to-job with auto PO numbering</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- 6 -->
+  <article class="z-item" id="six">
+    <div>
+      <div class="z-item-num">06</div>
+      <div class="z-item-meta">Advertising</div>
+    </div>
+    <div>
+      <span class="phase-tag p3">Phase 3</span>
+      <h2>Advertising - <em>clients & hiring</em></h2>
+      <p class="heard">"Advertising for both employees and new clients."</p>
+      <p>Two separate funnels, two separate plans. For clients: targeted Meta + Houzz + local SEO around Mount Desert + coastal Hancock County. For hiring: Indeed, MDI community boards, and a College of the Atlantic pipeline through Archer.</p>
+      <p>Built on top of the new brand pack so everything looks like Riverside, not stock contractor ads.</p>
+      <div class="ships">
+        <strong>What ships</strong>
+        <ul>
+          <li>Client acquisition: Meta + Houzz creative + local SEO</li>
+          <li>Hiring: Indeed posting + community board templates + COA outreach</li>
+          <li>Monthly check-in on what's working, what to kill</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- 7 -->
+  <article class="z-item" id="seven">
+    <div>
+      <div class="z-item-num">07</div>
+      <div class="z-item-meta">Equipment</div>
+    </div>
+    <div>
+      <span class="phase-tag p2">Phase 2</span>
+      <h2>Equipment <em>maintenance</em></h2>
+      <p class="heard">"Equipment maintenance schedule, tracking, etc (when and how to grease excavator, oil changes, safety checks)."</p>
+      <p>Each piece of equipment gets a record - excavator, trucks, trailers, mowers. Hour-meter readings come in from the crew. The system computes what's due, what's coming up, what's overdue. Big dashboard tile on the home screen.</p>
+      <p>Before the excavator goes on a job, the operator runs a six-question safety check from their phone. Pass, it goes. Fail, you get notified.</p>
+      <div class="ships">
+        <strong>What ships</strong>
+        <ul>
+          <li>Equipment list with hour meters and service schedules</li>
+          <li>Pre-use safety check form for the excavator (and any other tracked asset)</li>
+          <li>Due / overdue dashboard so service stops being last-minute</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- 8 -->
+  <article class="z-item" id="eight">
+    <div>
+      <div class="z-item-num">08</div>
+      <div class="z-item-meta">Profit per job</div>
+    </div>
+    <div>
+      <span class="phase-tag p2">Phase 2</span>
+      <h2>Budgets, POs, <em>profit per job</em></h2>
+      <p class="heard">"Simple work order system that sets budgets and PO # for tracking purchases, hours, and just keeps better track of profit margins for each job."</p>
+      <p>Every job has a budget you set when you win it. Every purchase the crew makes - Home Depot, suppliers, anywhere - gets snapped on a phone, tagged to the job, the PO follows automatically. Every hour from the daily log adds up against the job.</p>
+      <p>Open the job and you see one number: where you are on margin, live. No spreadsheet. No surprises at the end.</p>
+      <div class="ships">
+        <strong>What ships</strong>
+        <ul>
+          <li>Auto PO numbering at job creation</li>
+          <li>Mobile receipt capture - photo, category, amount, done</li>
+          <li>Live budget vs. spent vs. margin on every job page</li>
+          <li>For you and Josh only - crew sees scope, not money</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- 9 -->
+  <article class="z-item" id="nine">
+    <div>
+      <div class="z-item-num">09</div>
+      <div class="z-item-meta">Business phone</div>
+    </div>
+    <div>
+      <span class="phase-tag p1">Phase 1 - this week</span>
+      <h2>Business phone + <em>call routing</em></h2>
+      <p class="heard">"Set up my new phone number. Press one for Cameron, 2 for billing (Josh) etc."</p>
+      <p>Take the phone you have, fix the battery / charging issue at the Apple Store (about a hundred dollars or free if it's still under AppleCare). Then we set up the business number with a proper menu: press 1 for you, press 2 for Josh, press 3 for general voicemail, all routing to the right person.</p>
+      <p>You can answer from your existing iPhone without juggling a second device. Josh gets billing calls direct.</p>
+      <div class="ships">
+        <strong>What ships</strong>
+        <ul>
+          <li>Phone hardware fixed</li>
+          <li>Business line live with menu routing</li>
+          <li>Calls and voicemails forward to existing devices</li>
+          <li>One business number on signs, cards, ads, everywhere</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+</section>
+
+<!-- Phasing -->
+<section class="z-phases">
+  <div class="z-phases-inner">
+    <span class="eyebrow">How we get there</span>
+    <h2>Three phases. <em>This season.</em></h2>
+    <p class="lede">Order matters. The things that ship first are the things that make your day every day, and the things that need to be done before season opens for real.</p>
+    <div class="phases-grid">
+      <div class="phase-card">
+        <div class="label">Phase 1 - this week</div>
+        <h3>What makes <em>tomorrow</em> easier</h3>
+        <ul>
+          <li>Logo directions + first refinement</li>
+          <li>Website demo decision + photo pull</li>
+          <li>Business phone fixed + menu live</li>
+          <li>Print queue lined up for merch</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <div class="label">Phase 2 - pre-season</div>
+        <h3>The <em>operating system</em></h3>
+        <ul>
+          <li>Tool tracking with QR + AirTag</li>
+          <li>Daily log + 6pm digest</li>
+          <li>Lead board + work orders</li>
+          <li>Budgets, POs, profit per job</li>
+          <li>Equipment maintenance + safety checks</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <div class="label">Phase 3 - during season</div>
+        <h3>Growth & <em>polish</em></h3>
+        <ul>
+          <li>Client acquisition campaigns</li>
+          <li>Hiring pipeline</li>
+          <li>Customer-facing job updates (optional)</li>
+          <li>Quarterly tune-up of the whole system</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Close -->
+<section class="z-close">
+  <span class="eyebrow">What I need from you</span>
+  <h2>To start <em>tomorrow</em>.</h2>
+  <p>Quick answers on a few things. Most of these are five-minute conversations or a single text back. The rest I'll handle.</p>
+  <div class="z-close-asks">
+    <strong>Five things to talk through over lunch</strong>
+    <ol>
+      <li>What apps you and Josh use today - QuickBooks, anything else for invoicing and tracking jobs.</li>
+      <li>Roughly how many high-value tools to track, and how many pieces of equipment beyond the excavator.</li>
+      <li>Your gut on the website demo - keep this direction, push it further, or replace.</li>
+      <li>Logo direction once you see the three options later this week.</li>
+      <li>Carrier on the new business phone, plus the phone itself if you've got it on you.</li>
+    </ol>
+  </div>
+  <p style="font-size: 15px; color: var(--stone);">Pre-season comes up fast. Let's get the easy wins shipped this week and build the operating system through the back half of May.</p>
+</section>
+
+<footer class="footer" style="margin-top: 0;">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Riverside Group</h3>
+        <p>Plan prepared by BetterCallZaal - May 2026.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="/">Demo home</a></li>
+          <li><a href="/capabilities.html">Capabilities</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li>Cameron DePaola</li>
+          <li>(207) 951-2525</li>
+          <li>cameron@riversidegroupme.com</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>Internal preview - May 2026</div>
+      <div>BetterCallZaal x Riverside Group</div>
+    </div>
+  </div>
+</footer>
 
 <script>
-  // tiny nav scroll state, same pattern as main site
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 12);
