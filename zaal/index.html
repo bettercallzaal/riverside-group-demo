@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Riverside Group - 2026 Engagement Plan</title>
+<title>What I'd build as your ops lead - Zaal, May 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,14 +12,11 @@
 <style>
   body { background: var(--bone-light); }
 
-  .z-hero {
-    padding: 140px var(--gutter) 72px;
-    max-width: var(--max);
-    margin: 0 auto;
-  }
-  .z-hero h1 { font-size: clamp(40px, 7vw, 84px); margin: 18px 0 24px; line-height: 1.05; }
+  /* Hero */
+  .z-hero { padding: 140px var(--gutter) 72px; max-width: var(--max); margin: 0 auto; }
+  .z-hero h1 { font-size: clamp(38px, 6.5vw, 76px); margin: 18px 0 24px; line-height: 1.05; }
   .z-hero h1 em { color: var(--brass); font-style: italic; }
-  .z-hero .lede { max-width: 640px; margin-bottom: 0; }
+  .z-hero .lede { max-width: 680px; margin-bottom: 0; }
   .z-hero-meta {
     display: flex; gap: 28px; flex-wrap: wrap;
     margin-top: 40px; padding-top: 28px;
@@ -29,25 +26,22 @@
   .z-hero-meta strong { color: var(--charcoal); display: block; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 4px; font-weight: 600; }
   .z-hero-meta div { font-family: var(--font-display); font-size: 18px; color: var(--moss); font-weight: 400; }
 
-  .z-strip {
-    background: var(--moss);
-    color: var(--bone-light);
-    padding: 56px var(--gutter);
-  }
+  /* Frame paragraph */
+  .z-frame { background: var(--bone); padding: 56px var(--gutter); }
+  .z-frame-inner { max-width: 840px; margin: 0 auto; }
+  .z-frame .eyebrow { display: block; margin-bottom: 12px; }
+  .z-frame p { font-family: var(--font-display); font-weight: 300; font-size: clamp(20px, 2.4vw, 28px); line-height: 1.4; color: var(--moss); }
+
+  /* Strip - the nine at a glance */
+  .z-strip { background: var(--moss); color: var(--bone-light); padding: 64px var(--gutter); }
   .z-strip-inner { max-width: var(--max); margin: 0 auto; }
   .z-strip .eyebrow { color: var(--brass-light); }
-  .z-strip h2 { color: var(--bone-light); font-size: clamp(28px, 4vw, 44px); margin-bottom: 32px; }
+  .z-strip h2 { color: var(--bone-light); font-size: clamp(28px, 4vw, 44px); margin-bottom: 28px; }
   .z-strip h2 em { color: var(--brass-light); font-style: italic; }
-  .nine-grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 10px;
-    counter-reset: nine;
-  }
+  .strip-lede { color: rgba(232, 228, 216, 0.78); max-width: 640px; margin-bottom: 28px; font-size: 16px; }
+  .nine-grid { display: grid; grid-template-columns: 1fr; gap: 10px; counter-reset: nine; }
   .nine-grid a {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    display: flex; align-items: center; gap: 16px;
     padding: 14px 18px;
     background: rgba(232, 228, 216, 0.06);
     border: 1px solid rgba(232, 228, 216, 0.14);
@@ -60,182 +54,185 @@
   .nine-grid a::before {
     counter-increment: nine;
     content: counter(nine, decimal-leading-zero);
-    font-family: var(--font-display);
-    font-size: 18px;
-    color: var(--brass-light);
-    font-weight: 400;
-    min-width: 28px;
+    font-family: var(--font-display); font-size: 18px;
+    color: var(--brass-light); font-weight: 400; min-width: 28px;
   }
   .nine-grid a span { flex: 1; }
   .nine-grid a::after { content: '→'; color: var(--brass-light); opacity: 0.7; }
+  .nine-grid a.extra::before { color: var(--bone-light); }
 
-  .z-items {
-    max-width: var(--max);
-    margin: 0 auto;
-    padding: 96px var(--gutter);
-  }
+  /* Items */
+  .z-items { max-width: var(--max); margin: 0 auto; padding: 96px var(--gutter); }
+  .z-items-head { margin-bottom: 32px; }
+  .z-items-head .eyebrow { display: block; margin-bottom: 6px; }
+  .z-items-head h2 { font-size: clamp(28px, 4vw, 44px); color: var(--moss); }
+  .z-items-head h2 em { color: var(--brass); font-style: italic; }
+  .z-items-head p { color: var(--stone); margin-top: 10px; max-width: 640px; }
+
   .z-item {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: grid; grid-template-columns: 1fr;
     gap: 32px;
-    padding: 56px 0;
+    padding: 48px 0;
     border-top: 1px solid var(--rule);
   }
-  .z-item:first-child { border-top: none; padding-top: 0; }
+  .z-item:first-of-type { border-top: none; padding-top: 16px; }
   .z-item-num {
     font-family: var(--font-display);
-    font-size: clamp(48px, 8vw, 88px);
+    font-size: clamp(48px, 7vw, 76px);
     color: var(--brass);
-    font-weight: 300;
-    line-height: 1;
-    font-style: italic;
+    font-weight: 300; line-height: 1; font-style: italic;
   }
-  .z-item-meta {
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--stone);
-    font-weight: 600;
-    margin-top: 8px;
-  }
-  .z-item h2 {
-    font-size: clamp(28px, 3.5vw, 40px);
-    color: var(--moss);
-    margin-bottom: 16px;
-  }
+  .z-item-meta { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); font-weight: 600; margin-top: 8px; }
+  .z-item h2 { font-size: clamp(26px, 3vw, 36px); color: var(--moss); margin-bottom: 14px; }
   .z-item h2 em { color: var(--brass); font-style: italic; }
-  .z-item .heard { font-style: italic; color: var(--stone); font-size: 15px; margin-bottom: 20px; border-left: 2px solid var(--brass); padding-left: 14px; }
-  .z-item p { margin-bottom: 14px; font-size: 16px; line-height: 1.65; color: var(--charcoal); }
+  .z-item .heard { font-style: italic; color: var(--stone); font-size: 15px; margin-bottom: 16px; border-left: 2px solid var(--brass); padding-left: 14px; }
+  .z-item p { margin-bottom: 12px; font-size: 16px; line-height: 1.65; color: var(--charcoal); }
   .z-item .ships {
-    margin-top: 24px;
-    padding: 18px 22px;
-    background: var(--bone);
-    border-radius: 10px;
+    margin-top: 20px; padding: 16px 20px;
+    background: var(--bone); border-radius: 10px;
   }
   .z-item .ships strong {
-    display: block;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--moss);
-    margin-bottom: 10px;
-    font-weight: 600;
+    display: block; font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--moss);
+    margin-bottom: 10px; font-weight: 600;
   }
   .z-item .ships ul { list-style: none; padding: 0; margin: 0; }
-  .z-item .ships li {
-    padding: 6px 0 6px 22px;
-    position: relative;
-    font-size: 15px;
-    color: var(--charcoal);
-  }
-  .z-item .ships li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 14px;
-    width: 12px;
-    height: 1px;
-    background: var(--brass);
-  }
+  .z-item .ships li { padding: 6px 0 6px 22px; position: relative; font-size: 15px; color: var(--charcoal); }
+  .z-item .ships li::before { content: ''; position: absolute; left: 0; top: 14px; width: 12px; height: 1px; background: var(--brass); }
+
   .phase-tag {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 999px;
-    background: var(--bone);
-    color: var(--moss);
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    font-weight: 600;
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600;
     margin-bottom: 14px;
   }
   .phase-tag.p1 { background: var(--brass); color: var(--charcoal); }
   .phase-tag.p2 { background: var(--moss); color: var(--bone-light); }
   .phase-tag.p3 { background: var(--bone); color: var(--moss); }
+  .extra-tag { background: rgba(139, 111, 58, 0.15); color: var(--brass); margin-left: 8px; }
 
-  .z-phases {
-    background: var(--moss-deep);
-    color: var(--bone-light);
-    padding: 96px var(--gutter);
+  /* Section divider for "what I'd add" */
+  .z-divider {
+    background: var(--bone);
+    padding: 56px var(--gutter);
+    text-align: center;
   }
+  .z-divider-inner { max-width: 720px; margin: 0 auto; }
+  .z-divider .eyebrow { color: var(--brass); }
+  .z-divider h2 { font-size: clamp(26px, 4vw, 40px); color: var(--moss); margin-bottom: 14px; }
+  .z-divider h2 em { color: var(--brass); font-style: italic; }
+  .z-divider p { color: var(--charcoal); font-size: 16px; line-height: 1.6; }
+
+  /* Phases */
+  .z-phases { background: var(--moss-deep); color: var(--bone-light); padding: 96px var(--gutter); }
   .z-phases-inner { max-width: var(--max); margin: 0 auto; }
   .z-phases .eyebrow { color: var(--brass-light); }
-  .z-phases h2 { color: var(--bone-light); font-size: clamp(32px, 5vw, 56px); margin-bottom: 16px; }
+  .z-phases h2 { color: var(--bone-light); font-size: clamp(30px, 5vw, 52px); margin-bottom: 16px; }
   .z-phases h2 em { color: var(--brass-light); font-style: italic; }
-  .z-phases .lede { color: rgba(232, 228, 216, 0.75); margin-bottom: 56px; max-width: 640px; }
-  .phases-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
+  .z-phases .lede { color: rgba(232, 228, 216, 0.75); margin-bottom: 48px; max-width: 640px; }
+  .phases-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
   .phase-card {
     background: rgba(232, 228, 216, 0.04);
     border: 1px solid rgba(232, 228, 216, 0.14);
-    padding: 32px 28px;
+    padding: 28px 26px;
     border-radius: 14px;
   }
   .phase-card .label {
-    font-family: var(--font-body);
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--brass-light);
-    font-weight: 600;
-    margin-bottom: 16px;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--brass-light); font-weight: 600; margin-bottom: 14px;
   }
-  .phase-card h3 {
-    color: var(--bone-light);
-    font-size: 24px;
-    margin-bottom: 18px;
-    font-weight: 400;
-  }
+  .phase-card h3 { color: var(--bone-light); font-size: 22px; margin-bottom: 16px; font-weight: 400; }
   .phase-card h3 em { color: var(--brass-light); font-style: italic; }
   .phase-card ul { list-style: none; padding: 0; margin: 0; }
   .phase-card li {
     color: rgba(232, 228, 216, 0.85);
-    font-size: 14px;
-    padding: 6px 0;
+    font-size: 14px; padding: 6px 0;
     border-top: 1px dashed rgba(232, 228, 216, 0.12);
   }
   .phase-card li:first-child { border-top: none; }
 
-  .z-close {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 96px var(--gutter);
-    text-align: center;
-  }
-  .z-close h2 { font-size: clamp(32px, 5vw, 56px); margin-bottom: 18px; }
-  .z-close h2 em { color: var(--brass); font-style: italic; }
-  .z-close p { font-size: 17px; color: var(--charcoal); max-width: 560px; margin: 0 auto 32px; line-height: 1.65; }
-  .z-close-asks {
-    text-align: left;
-    background: var(--bone);
+  /* The role section */
+  .z-role { max-width: var(--max); margin: 0 auto; padding: 96px var(--gutter); }
+  .z-role-head { margin-bottom: 40px; max-width: 720px; }
+  .z-role-head .eyebrow { display: block; margin-bottom: 8px; }
+  .z-role-head h2 { font-size: clamp(30px, 5vw, 52px); color: var(--moss); }
+  .z-role-head h2 em { color: var(--brass); font-style: italic; }
+  .z-role-head p { font-family: var(--font-display); font-weight: 300; font-size: clamp(18px, 2vw, 22px); color: var(--moss); line-height: 1.5; margin-top: 14px; }
+
+  .role-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  .role-card {
+    background: white;
+    border: 1px solid var(--rule);
     border-radius: 14px;
-    padding: 28px;
-    margin: 32px 0;
+    padding: 28px 26px;
+    transition: border-color 0.2s;
   }
-  .z-close-asks strong {
-    display: block;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+  .role-card:hover { border-color: rgba(139, 111, 58, 0.4); }
+  .role-card .label {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--brass); font-weight: 600; margin-bottom: 10px;
+  }
+  .role-card h3 { font-size: 22px; color: var(--moss); margin-bottom: 14px; font-weight: 400; }
+  .role-card h3 em { color: var(--brass); font-style: italic; }
+  .role-card p { font-size: 15px; color: var(--charcoal); line-height: 1.6; margin-bottom: 10px; }
+  .role-card ul { list-style: none; padding: 0; margin: 12px 0 0; }
+  .role-card li {
+    font-size: 14px; color: var(--charcoal);
+    padding: 6px 0 6px 18px; position: relative; line-height: 1.5;
+  }
+  .role-card li::before { content: ''; position: absolute; left: 0; top: 13px; width: 10px; height: 1px; background: var(--brass); }
+  .role-card .anchor {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 28px;
     color: var(--moss);
+    font-weight: 400;
+    margin-top: 4px;
+  }
+  .role-card .anchor em { color: var(--brass); font-style: italic; }
+
+  /* Checklist close */
+  .z-close { background: var(--moss); color: var(--bone-light); padding: 96px var(--gutter); }
+  .z-close-inner { max-width: 860px; margin: 0 auto; }
+  .z-close .eyebrow { color: var(--brass-light); }
+  .z-close h2 { color: var(--bone-light); font-size: clamp(30px, 5vw, 48px); margin-bottom: 18px; }
+  .z-close h2 em { color: var(--brass-light); font-style: italic; }
+  .z-close p { color: rgba(232, 228, 216, 0.78); font-size: 16px; line-height: 1.6; max-width: 640px; margin-bottom: 32px; }
+  .checklist {
+    background: rgba(232, 228, 216, 0.05);
+    border: 1px solid rgba(232, 228, 216, 0.14);
+    border-radius: 14px;
+    padding: 28px 30px;
+  }
+  .checklist h3 {
+    color: var(--bone-light);
+    font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase;
+    font-family: var(--font-body); font-weight: 600;
     margin-bottom: 16px;
-    font-weight: 600;
   }
-  .z-close-asks ol { padding-left: 22px; margin: 0; }
-  .z-close-asks li {
-    font-size: 15px;
-    color: var(--charcoal);
-    padding: 6px 0;
-    line-height: 1.55;
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li {
+    color: var(--bone-light);
+    font-size: 15px; padding: 10px 0 10px 32px;
+    position: relative; line-height: 1.5;
+    border-top: 1px dashed rgba(232, 228, 216, 0.12);
   }
+  .checklist li:first-child { border-top: none; }
+  .checklist li::before {
+    content: ''; position: absolute; left: 0; top: 14px;
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--brass-light); border-radius: 4px;
+  }
+  .checklist li strong { color: var(--bone-light); font-weight: 600; }
+  .checklist li span { color: rgba(232, 228, 216, 0.6); font-size: 13px; display: block; margin-top: 3px; }
 
   @media (min-width: 720px) {
-    .z-item { grid-template-columns: 140px 1fr; gap: 48px; padding: 72px 0; }
+    .z-item { grid-template-columns: 140px 1fr; gap: 48px; padding: 64px 0; }
     .nine-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
     .phases-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .role-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 1024px) {
+    .role-grid { grid-template-columns: 1fr 1fr 1fr; }
   }
 </style>
 </head>
@@ -251,30 +248,39 @@
 
 <!-- Hero -->
 <header class="z-hero">
-  <span class="eyebrow">Engagement plan - May 2026</span>
-  <h1>Cameron - here's the <em>plan</em>.</h1>
-  <p class="lede">Nine pieces, one season, one team running it. Mapped to what you sent me, in your order. What ships, when it ships, and what I need from you to start tomorrow.</p>
+  <span class="eyebrow">For Cameron - May 2026</span>
+  <h1>What I'd build as your <em>ops lead</em>.</h1>
+  <p class="lede">Lunch agenda. The work I'd take on if I came onboard full-time, and the terms we'd want to nail down before I give notice at JAX.</p>
   <div class="z-hero-meta">
     <div>
-      <strong>Client</strong>
-      Riverside Group LLC
+      <strong>Author</strong>
+      Zaal
     </div>
     <div>
-      <strong>Lead</strong>
-      Zaal / BetterCallZaal
+      <strong>For</strong>
+      Cameron DePaola - Riverside Group
     </div>
     <div>
-      <strong>Target</strong>
-      Ready by season open
+      <strong>Date</strong>
+      May 2026
     </div>
   </div>
 </header>
 
-<!-- The nine, at a glance -->
+<!-- The frame -->
+<section class="z-frame">
+  <div class="z-frame-inner">
+    <span class="eyebrow">How I'm thinking about this</span>
+    <p>This isn't a vendor pitch. It's the role I'd want to step into - building and running the operating system Riverside needs to grow without things slipping through the cracks. I want to walk you through what I'd build, what I'd add that you didn't list but you need, and the terms of the role itself.</p>
+  </div>
+</section>
+
+<!-- The nine + extras at a glance -->
 <section class="z-strip">
   <div class="z-strip-inner">
-    <span class="eyebrow">From your text - the nine</span>
-    <h2>Everything you asked for, <em>in one place</em>.</h2>
+    <span class="eyebrow">The map - 13 things</span>
+    <h2>Everything we're walking through, <em>in one place</em>.</h2>
+    <p class="strip-lede">First nine are from your text - in your order. Last four are the infrastructure I'd add to make the system actually hold up. Tap any to jump.</p>
     <div class="nine-grid">
       <a href="#one"><span>Tool & inventory tracking</span></a>
       <a href="#two"><span>Daily log + shared updates</span></a>
@@ -285,12 +291,21 @@
       <a href="#seven"><span>Equipment maintenance schedules</span></a>
       <a href="#eight"><span>Budgets, POs, profit per job</span></a>
       <a href="#nine"><span>Business phone + call routing</span></a>
+      <a href="#ten" class="extra"><span>Insurance, COIs, compliance</span></a>
+      <a href="#eleven" class="extra"><span>Books + financial integration</span></a>
+      <a href="#twelve" class="extra"><span>Client communication & updates</span></a>
+      <a href="#thirteen" class="extra"><span>Document & contract library</span></a>
     </div>
   </div>
 </section>
 
 <!-- The nine, expanded -->
 <section class="z-items">
+  <div class="z-items-head">
+    <span class="eyebrow">Part one - your nine asks</span>
+    <h2>What you asked for, <em>mapped out</em>.</h2>
+    <p>Your SMS list, in your order. Each one with what I'd actually build, what ships, and which phase it lands in.</p>
+  </div>
 
   <!-- 1 -->
   <article class="z-item" id="one">
@@ -302,8 +317,8 @@
       <span class="phase-tag p2">Phase 2</span>
       <h2>Tool & inventory <em>tracking</em></h2>
       <p class="heard">"Trackers on certain high value tools and easy way to log use of tools/equipment on job sites."</p>
-      <p>Every tool gets a QR sticker. High-value gear gets an AirTag tied to the same record. Crew scans on check-out from the shop, scans on return. You see who has what, where, when - on your phone, anywhere.</p>
-      <p>For the things that walk off without anyone noticing: a Sunday-night summary lands in your inbox listing anything not seen in seven days, and anything high-value off-property.</p>
+      <p>Every tool gets a QR sticker. High-value gear gets an AirTag tied to the same record. Crew scans on check-out from the shop, scans on return. You see who has what, where, anytime - on your phone.</p>
+      <p>For the things that walk off without anyone noticing: a weekly summary lands in your inbox listing anything not seen in seven days, plus anything high-value off-property.</p>
       <div class="ships">
         <strong>What ships</strong>
         <ul>
@@ -325,14 +340,14 @@
       <span class="phase-tag p2">Phase 2</span>
       <h2>Daily log + <em>6pm digest</em></h2>
       <p class="heard">"Daily log/update that shares to me and company for task tracking, purchasing, invoicing, etc."</p>
-      <p>One quick form per crew member at end of day - what jobs they were on, hours, what got done, photos if there are any. Takes ninety seconds on a phone.</p>
-      <p>At 6pm every day, you get one email: who logged, who didn't, hours by job, purchases entered, anything flagged. Stops the "what happened today" phone calls at night.</p>
+      <p>One quick form per crew member at end of day - what jobs they were on, hours, what got done, photos if any. Takes ninety seconds on a phone.</p>
+      <p>At 6pm every day, you get one email: who logged, who didn't, hours by job, purchases entered, anything flagged. Stops the "what happened today" phone calls.</p>
       <div class="ships">
         <strong>What ships</strong>
         <ul>
-          <li>Mobile-first end-of-day form (works on iPhone and Android)</li>
-          <li>Hours roll automatically into the job they were worked on</li>
-          <li>6pm digest email to you - skip anything that looks normal, dig into what's flagged</li>
+          <li>Mobile-first end-of-day form (iPhone and Android)</li>
+          <li>Hours roll into the job they were worked on</li>
+          <li>6pm digest email - skip the normal, dig into what's flagged</li>
         </ul>
       </div>
     </div>
@@ -349,14 +364,14 @@
       <h2>Website <em>refresh</em></h2>
       <p class="heard">"Website update/refresh."</p>
       <p>Already built. Take a look at the <a href="/" style="color: var(--brass); border-bottom: 1px solid var(--brass);">demo home</a> and the <a href="/capabilities.html" style="color: var(--brass); border-bottom: 1px solid var(--brass);">capabilities page</a> - moss and brass, Fraunces type, mobile-first, fast on coastal signal.</p>
-      <p>If the direction is right, the rest is photography, copy polish, and pointing your domain. About a week to a clean launch, faster if your existing project photos are ready to drop in.</p>
+      <p>If the direction is right, the rest is real photography, copy polish, and DNS. About a week to a clean launch.</p>
       <div class="ships">
         <strong>What ships</strong>
         <ul>
-          <li>Home + capabilities deep-dive + portfolio + journal + service area map</li>
-          <li>Real project photography swapped in for placeholders</li>
-          <li>Inquiry form wired to you and Josh by email</li>
-          <li>riversidegroupme.com pointed at the new site when you give the word</li>
+          <li>Home + capabilities deep-dive + portfolio + journal + service area</li>
+          <li>Real project photography swapped for placeholders</li>
+          <li>Inquiry form wired to you and Josh</li>
+          <li>riversidegroupme.com pointed at the new site when you say go</li>
         </ul>
       </div>
     </div>
@@ -369,17 +384,17 @@
       <div class="z-item-meta">Logo & brand</div>
     </div>
     <div>
-      <span class="phase-tag p1">Phase 1 - starts this week</span>
+      <span class="phase-tag p1">Phase 1 - this week</span>
       <h2>New logo + <em>merch pack</em></h2>
       <p class="heard">"New logo to get shirts, hats, jackets, signage, business cards ordered."</p>
-      <p>This one's the blocker for everything you print. Three directions coming to you this week to react to - refined-coastal, heritage-craft, rugged-modern. Pick one, we refine, you get the full pack: primary mark, secondary, monogram, color system, type pairing.</p>
-      <p>Then print-ready files for shirts, hats, jackets, truck signage, business cards. I coordinate with the printer - you approve proofs, that's it.</p>
+      <p>The blocker for everything you print. Three directions to react to - refined-coastal, heritage-craft, rugged-modern. Pick one, we refine. Full pack: primary mark, secondary, monogram, color system, type pairing.</p>
+      <p>Then print-ready files for shirts, hats, jackets, truck signage, business cards. I coordinate the printer. You approve proofs.</p>
       <div class="ships">
         <strong>What ships</strong>
         <ul>
-          <li>3 logo directions to react to (next 5-7 days)</li>
+          <li>3 logo directions in the next 5-7 days</li>
           <li>Refined final mark + full brand pack</li>
-          <li>Print-ready files for every merch item you listed</li>
+          <li>Print-ready files for every merch item</li>
           <li>Vendor coordination through approved proofs</li>
         </ul>
       </div>
@@ -396,13 +411,13 @@
       <span class="phase-tag p2">Phase 2</span>
       <h2>Client intake + <em>work orders</em></h2>
       <p class="heard">"New client intake info system and work order system to track timing and estimates, and keep new leads from falling through cracks."</p>
-      <p>Lead comes in - website form, phone call, referral, anywhere - it lands in one board. Each lead has a status, a value, a last-touch date. Anything sitting more than two days without action goes red, and you get a morning email so nothing slips.</p>
-      <p>Convert a won lead to a job in one click. Job gets a PO number automatically, ready for purchases and time to start tracking against it.</p>
+      <p>Lead comes in - website form, phone call, referral, anywhere - lands in one board. Each has status, value, last-touch date. Anything sitting more than two days without action goes red. Morning email so nothing slips.</p>
+      <p>Convert a won lead to a job in one click. Auto PO number, ready for purchases and time to start tracking.</p>
       <div class="ships">
         <strong>What ships</strong>
         <ul>
           <li>Lead board with status, value, last touch</li>
-          <li>Stale-lead alerts so nothing sits in limbo</li>
+          <li>Stale-lead alerts</li>
           <li>One-click lead-to-job with auto PO numbering</li>
         </ul>
       </div>
@@ -419,8 +434,8 @@
       <span class="phase-tag p3">Phase 3</span>
       <h2>Advertising - <em>clients & hiring</em></h2>
       <p class="heard">"Advertising for both employees and new clients."</p>
-      <p>Two separate funnels, two separate plans. For clients: targeted Meta + Houzz + local SEO around Mount Desert + coastal Hancock County. For hiring: Indeed, MDI community boards, and a College of the Atlantic pipeline through Archer.</p>
-      <p>Built on top of the new brand pack so everything looks like Riverside, not stock contractor ads.</p>
+      <p>Two separate funnels. For clients: targeted Meta + Houzz + local SEO around Mount Desert and coastal Hancock County. For hiring: Indeed, MDI community channels, and a College of the Atlantic pipeline.</p>
+      <p>Built on the new brand pack so everything looks like Riverside, not stock contractor ads.</p>
       <div class="ships">
         <strong>What ships</strong>
         <ul>
@@ -442,13 +457,13 @@
       <span class="phase-tag p2">Phase 2</span>
       <h2>Equipment <em>maintenance</em></h2>
       <p class="heard">"Equipment maintenance schedule, tracking, etc (when and how to grease excavator, oil changes, safety checks)."</p>
-      <p>Each piece of equipment gets a record - excavator, trucks, trailers, mowers. Hour-meter readings come in from the crew. The system computes what's due, what's coming up, what's overdue. Big dashboard tile on the home screen.</p>
-      <p>Before the excavator goes on a job, the operator runs a six-question safety check from their phone. Pass, it goes. Fail, you get notified.</p>
+      <p>Each piece of equipment gets a record - excavator, trucks, trailers, mowers. Hour-meter readings come in from the crew. The system computes what's due, coming up, overdue. Big dashboard tile on the home screen.</p>
+      <p>Before the excavator goes on a job, the operator runs a short safety check from their phone. Pass, it goes. Fail, you get notified.</p>
       <div class="ships">
         <strong>What ships</strong>
         <ul>
-          <li>Equipment list with hour meters and service schedules</li>
-          <li>Pre-use safety check form for the excavator (and any other tracked asset)</li>
+          <li>Equipment list with hour meters + service schedules</li>
+          <li>Pre-use safety check form for the excavator and tracked assets</li>
           <li>Due / overdue dashboard so service stops being last-minute</li>
         </ul>
       </div>
@@ -465,15 +480,15 @@
       <span class="phase-tag p2">Phase 2</span>
       <h2>Budgets, POs, <em>profit per job</em></h2>
       <p class="heard">"Simple work order system that sets budgets and PO # for tracking purchases, hours, and just keeps better track of profit margins for each job."</p>
-      <p>Every job has a budget you set when you win it. Every purchase the crew makes - Home Depot, suppliers, anywhere - gets snapped on a phone, tagged to the job, the PO follows automatically. Every hour from the daily log adds up against the job.</p>
-      <p>Open the job and you see one number: where you are on margin, live. No spreadsheet. No surprises at the end.</p>
+      <p>Every job has a budget you set when you win it. Every purchase the crew makes - Home Depot, suppliers - gets snapped on a phone, tagged to the job, PO attaches automatically. Every hour from the daily log adds against the job.</p>
+      <p>Open the job, see one number: where you are on margin, live. No spreadsheet. No surprises at the end.</p>
       <div class="ships">
         <strong>What ships</strong>
         <ul>
           <li>Auto PO numbering at job creation</li>
           <li>Mobile receipt capture - photo, category, amount, done</li>
           <li>Live budget vs. spent vs. margin on every job page</li>
-          <li>For you and Josh only - crew sees scope, not money</li>
+          <li>You and Josh see the money - crew sees scope, configurable</li>
         </ul>
       </div>
     </div>
@@ -489,15 +504,124 @@
       <span class="phase-tag p1">Phase 1 - this week</span>
       <h2>Business phone + <em>call routing</em></h2>
       <p class="heard">"Set up my new phone number. Press one for Cameron, 2 for billing (Josh) etc."</p>
-      <p>Take the phone you have, fix the battery / charging issue at the Apple Store (about a hundred dollars or free if it's still under AppleCare). Then we set up the business number with a proper menu: press 1 for you, press 2 for Josh, press 3 for general voicemail, all routing to the right person.</p>
-      <p>You can answer from your existing iPhone without juggling a second device. Josh gets billing calls direct.</p>
+      <p>Fix the battery / charging issue at the Apple Store first. Then we set up the business number with a proper menu: press 1 for you, press 2 for Josh. You can answer from your existing iPhone without juggling a second device.</p>
+      <p>One business number on signs, cards, ads, everywhere. Calls route to the right person without you in the middle.</p>
       <div class="ships">
         <strong>What ships</strong>
         <ul>
           <li>Phone hardware fixed</li>
           <li>Business line live with menu routing</li>
           <li>Calls and voicemails forward to existing devices</li>
-          <li>One business number on signs, cards, ads, everywhere</li>
+          <li>Unified number across all marketing surfaces</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+</section>
+
+<!-- Divider into "what I'd add" -->
+<section class="z-divider">
+  <div class="z-divider-inner">
+    <span class="eyebrow">Part two - what I'd add</span>
+    <h2>Four more <em>I'd build in</em>.</h2>
+    <p>Your nine cover the surfaces you feel every day. These four cover what bites you when you least expect it - audits, accountant requests, missing certificates of insurance, clients asking where their project is. Quietly important. Below the waterline.</p>
+  </div>
+</section>
+
+<!-- Items 10-13: additions -->
+<section class="z-items">
+
+  <!-- 10 -->
+  <article class="z-item" id="ten">
+    <div>
+      <div class="z-item-num">10</div>
+      <div class="z-item-meta">Compliance <span class="extra-tag phase-tag">Added</span></div>
+    </div>
+    <div>
+      <span class="phase-tag p2">Phase 2</span>
+      <h2>Insurance, COIs, <em>compliance</em></h2>
+      <p class="heard">Why this matters: high-end clients ask for certificates of insurance before letting you on the property. Workers comp lapses cost real money. OSHA has rules for excavator operators. Right now this lives in your inbox and your head.</p>
+      <p>One place for every certificate: workers comp, general liability, auto, umbrella. Expiry dates with 30/60/90-day alerts so nothing lapses. Client COI requests answered in under 5 minutes by you, Josh, or a project manager.</p>
+      <p>Same place: contractor license, equipment operator certifications, sub-contractor 1099 records, safety incident log (in case you ever need it).</p>
+      <div class="ships">
+        <strong>What ships</strong>
+        <ul>
+          <li>Insurance vault with COIs ready to send by job or by client</li>
+          <li>Expiry alerts before lapses bite</li>
+          <li>Sub-contractor + license + cert tracking in one drawer</li>
+          <li>Lightweight incident log for OSHA cover</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- 11 -->
+  <article class="z-item" id="eleven">
+    <div>
+      <div class="z-item-num">11</div>
+      <div class="z-item-meta">Books <span class="extra-tag phase-tag">Added</span></div>
+    </div>
+    <div>
+      <span class="phase-tag p2">Phase 2</span>
+      <h2>Books + <em>financial integration</em></h2>
+      <p class="heard">Why this matters: whatever Josh uses for the books (QuickBooks, Wave, accountant spreadsheet), the new system has to feed it cleanly. Otherwise Josh is doing double entry and hates everything we built.</p>
+      <p>Every PO, purchase, invoice, time entry exports clean to the accounting tool. End-of-month: one button, one export file, books closed without re-keying. End-of-year: 1099s for subs, tax-ready summary by job, by category.</p>
+      <p>This is the boring layer that decides if Josh actually adopts the system or quietly keeps using his spreadsheet.</p>
+      <div class="ships">
+        <strong>What ships</strong>
+        <ul>
+          <li>QBO / accounting export per cadence Josh wants</li>
+          <li>1099 tracking for sub-contractors</li>
+          <li>Tax-ready year-end packet by job and category</li>
+          <li>Josh's existing flow respected, not replaced</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- 12 -->
+  <article class="z-item" id="twelve">
+    <div>
+      <div class="z-item-num">12</div>
+      <div class="z-item-meta">Client comms <span class="extra-tag phase-tag">Added</span></div>
+    </div>
+    <div>
+      <span class="phase-tag p3">Phase 3</span>
+      <h2>Client communication + <em>job updates</em></h2>
+      <p class="heard">Why this matters: high-ticket landscape clients want to know what's happening on their property. Right now that's you texting photos at the end of long days. Doesn't scale, and you forget some.</p>
+      <p>Weekly client update goes out automatically per active job - this week's photos from the daily log, what got done, what's next. Branded, looks like Riverside. Cuts the "what's going on at my place" calls in half.</p>
+      <p>Change orders go out the same way - signed digitally, no chasing paper. Customers approve, work continues, money's tracked.</p>
+      <div class="ships">
+        <strong>What ships</strong>
+        <ul>
+          <li>Weekly auto-generated client photo update per active job</li>
+          <li>Digital change-order signoff (one-click approve)</li>
+          <li>Public job-progress page if a client wants to share with family</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- 13 -->
+  <article class="z-item" id="thirteen">
+    <div>
+      <div class="z-item-num">13</div>
+      <div class="z-item-meta">Documents <span class="extra-tag phase-tag">Added</span></div>
+    </div>
+    <div>
+      <span class="phase-tag p2">Phase 2</span>
+      <h2>Document + <em>contract library</em></h2>
+      <p class="heard">Why this matters: every job has a folder of stuff - signed proposal, change orders, permits, plant lists, irrigation as-builts, final photos, warranty info. Right now that's scattered across email, Google Drive, Cameron's truck, and Josh's filing cabinet.</p>
+      <p>One library, organized per job. Every document searchable. Every photo geotagged. Every permit linked to the city it came from. The next time a client asks "what kind of stone did you use on our terrace in 2024" - you find it in five seconds.</p>
+      <p>Also: estimate templates and material catalogs reusable across jobs, so you're not rebuilding from scratch each time.</p>
+      <div class="ships">
+        <strong>What ships</strong>
+        <ul>
+          <li>Per-job document library, searchable</li>
+          <li>Reusable estimate templates + material catalog</li>
+          <li>Photo archive geotagged + tied to job</li>
+          <li>Permit / contract / signoff archive</li>
         </ul>
       </div>
     </div>
@@ -509,21 +633,22 @@
 <section class="z-phases">
   <div class="z-phases-inner">
     <span class="eyebrow">How we get there</span>
-    <h2>Three phases. <em>This season.</em></h2>
-    <p class="lede">Order matters. The things that ship first are the things that make your day every day, and the things that need to be done before season opens for real.</p>
+    <h2>Three phases. <em>One season.</em></h2>
+    <p class="lede">Order matters. Phase 1 ships in the first two weeks - the things that make tomorrow easier. Phase 2 ships through May and June - the operating system. Phase 3 ships into the season - the growth layer.</p>
     <div class="phases-grid">
       <div class="phase-card">
-        <div class="label">Phase 1 - this week</div>
+        <div class="label">Phase 1 - first 2 weeks</div>
         <h3>What makes <em>tomorrow</em> easier</h3>
         <ul>
           <li>Logo directions + first refinement</li>
           <li>Website demo decision + photo pull</li>
           <li>Business phone fixed + menu live</li>
           <li>Print queue lined up for merch</li>
+          <li>Day-one setup: shared drives, accounts, basics</li>
         </ul>
       </div>
       <div class="phase-card">
-        <div class="label">Phase 2 - pre-season</div>
+        <div class="label">Phase 2 - May & June</div>
         <h3>The <em>operating system</em></h3>
         <ul>
           <li>Tool tracking with QR + AirTag</li>
@@ -531,15 +656,19 @@
           <li>Lead board + work orders</li>
           <li>Budgets, POs, profit per job</li>
           <li>Equipment maintenance + safety checks</li>
+          <li>Insurance / COI vault</li>
+          <li>Books integration with Josh's flow</li>
+          <li>Document + contract library</li>
         </ul>
       </div>
       <div class="phase-card">
-        <div class="label">Phase 3 - during season</div>
+        <div class="label">Phase 3 - into the season</div>
         <h3>Growth & <em>polish</em></h3>
         <ul>
           <li>Client acquisition campaigns</li>
           <li>Hiring pipeline</li>
-          <li>Customer-facing job updates (optional)</li>
+          <li>Weekly client photo updates</li>
+          <li>Change-order digital signoff</li>
           <li>Quarterly tune-up of the whole system</li>
         </ul>
       </div>
@@ -547,22 +676,108 @@
   </div>
 </section>
 
-<!-- Close -->
-<section class="z-close">
-  <span class="eyebrow">What I need from you</span>
-  <h2>To start <em>tomorrow</em>.</h2>
-  <p>Quick answers on a few things. Most of these are five-minute conversations or a single text back. The rest I'll handle.</p>
-  <div class="z-close-asks">
-    <strong>Five things to talk through over lunch</strong>
-    <ol>
-      <li>What apps you and Josh use today - QuickBooks, anything else for invoicing and tracking jobs.</li>
-      <li>Roughly how many high-value tools to track, and how many pieces of equipment beyond the excavator.</li>
-      <li>Your gut on the website demo - keep this direction, push it further, or replace.</li>
-      <li>Logo direction once you see the three options later this week.</li>
-      <li>Carrier on the new business phone, plus the phone itself if you've got it on you.</li>
-    </ol>
+<!-- The role -->
+<section class="z-role">
+  <div class="z-role-head">
+    <span class="eyebrow">Part three - the role</span>
+    <h2>The terms <em>I'd want</em>.</h2>
+    <p>What I'd take on, how I'd want it structured, and what I need from you to walk in clean. Open conversation - I'd rather we be direct about all of it now than figure it out month three.</p>
   </div>
-  <p style="font-size: 15px; color: var(--stone);">Pre-season comes up fast. Let's get the easy wins shipped this week and build the operating system through the back half of May.</p>
+
+  <div class="role-grid">
+
+    <div class="role-card">
+      <div class="label">Position</div>
+      <h3>Operations <em>lead</em></h3>
+      <p>Build and run the 13-piece operating system above. Day-to-day ops point for the system, with you and Josh as the human escalation layer.</p>
+      <ul>
+        <li>Title: Operations Manager or Operations Lead</li>
+        <li>Reports to: you</li>
+        <li>Direct interface with Josh on the books side</li>
+      </ul>
+    </div>
+
+    <div class="role-card">
+      <div class="label">Compensation</div>
+      <h3>$40<em>/hr</em> W-2</h3>
+      <p>Annualized roughly $83,200 at 40 hours a week year-round. W-2 (not 1099) - clean for both of us tax-wise.</p>
+      <ul>
+        <li>$40/hr, W-2 employee</li>
+        <li>Payroll cadence to confirm - weekly or bi-weekly</li>
+        <li>Overtime treatment past 40hrs/wk - matters during build</li>
+        <li>90-day review built in - re-evaluate scope and rate once you've seen the system run</li>
+      </ul>
+    </div>
+
+    <div class="role-card">
+      <div class="label">Healthcare</div>
+      <h3>Health <em>stipend</em></h3>
+      <p>I lose my JAX coverage the day I leave. Need a plan from day one at Riverside. Standard small-business move: monthly stipend toward a marketplace plan I buy myself.</p>
+      <ul>
+        <li>Ask: $500-800/mo stipend toward a CoverME.gov plan</li>
+        <li>Cheaper for you than a group plan, real money for me</li>
+        <li>Tax-friendly if we structure as a QSEHRA (decide later)</li>
+        <li>I'll bring a specific plan price to the next conversation</li>
+      </ul>
+    </div>
+
+    <div class="role-card">
+      <div class="label">Retirement</div>
+      <h3>Year-one <em>bridge</em></h3>
+      <p>I walk away from match dollars at JAX when I leave. To make year-one work, I'd want some bridge structure - we figure out the exact shape, but the principle is "don't lose ground on long-term savings."</p>
+      <ul>
+        <li>Signing bonus, employer SEP-IRA contribution, or comp bump</li>
+        <li>Amount tied to what I leave behind at JAX (I'll confirm)</li>
+        <li>Sized to bridge the gap, not replicate full match forever</li>
+      </ul>
+    </div>
+
+    <div class="role-card">
+      <div class="label">Transition</div>
+      <h3>Clean <em>handoff</em></h3>
+      <p>Two-week notice at JAX, start at Riverside immediately after. No overlap - keeps things ethical and lets me focus.</p>
+      <ul>
+        <li>~2-3 week gap from today to start date</li>
+        <li>Any Riverside work I do before my JAX last-day stays on my own time</li>
+        <li>Written offer letter from you before I give notice</li>
+      </ul>
+    </div>
+
+    <div class="role-card">
+      <div class="label">Scope</div>
+      <h3>This <em>is</em> the job</h3>
+      <p>The 13-piece system is the role - not a bonus expectation on top of crew work. Build hours and run hours both count. Confirming this so we're aligned on what success looks like.</p>
+      <ul>
+        <li>Ops platform IS the job, not extra</li>
+        <li>Build phase and run phase both compensated</li>
+        <li>90-day check-in on whether scope needs rebalancing</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- Checklist close -->
+<section class="z-close">
+  <div class="z-close-inner">
+    <span class="eyebrow">What we want in writing</span>
+    <h2>To walk away with, <em>same day</em>.</h2>
+    <p>Not a contract yet, just a same-day follow-up email that summarizes what we agreed on. Puts it on paper without making anyone sign anything. Real offer letter follows in the next few days.</p>
+
+    <div class="checklist">
+      <h3>Confirmed today</h3>
+      <ul>
+        <li><strong>Start date</strong><span>Roughly 2-3 weeks out, after clean JAX notice</span></li>
+        <li><strong>Hourly rate and W-2 status</strong><span>$40/hr, W-2 employee, payroll cadence</span></li>
+        <li><strong>Title</strong><span>Operations Manager / Operations Lead</span></li>
+        <li><strong>Healthcare arrangement</strong><span>Stipend amount or specific plan path - confirm direction at minimum</span></li>
+        <li><strong>Retirement bridge structure</strong><span>Direction, not exact number - signing, contribution, or bump</span></li>
+        <li><strong>90-day review built in</strong><span>Comp and scope re-evaluated once you've seen the system live</span></li>
+        <li><strong>Scope confirmed</strong><span>The 13-piece system is the role, not a side expectation</span></li>
+        <li><strong>Offer letter timeline</strong><span>Written offer in hand before I give notice at JAX</span></li>
+      </ul>
+    </div>
+  </div>
 </section>
 
 <footer class="footer" style="margin-top: 0;">
@@ -570,7 +785,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <h3>Riverside Group</h3>
-        <p>Plan prepared by BetterCallZaal - May 2026.</p>
+        <p>Prepared by Zaal for Cameron - May 2026.</p>
       </div>
       <div class="footer-col">
         <h4>Pages</h4>
@@ -589,8 +804,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <div>Internal preview - May 2026</div>
-      <div>BetterCallZaal x Riverside Group</div>
+      <div>Lunch agenda - May 2026</div>
+      <div>Zaal x Riverside Group</div>
     </div>
   </div>
 </footer>
