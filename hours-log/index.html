@@ -19,17 +19,6 @@
   .h-hero h1 { font-size: clamp(36px, 6vw, 64px); margin: 18px 0 22px; line-height: 1.05; }
   .h-hero h1 em { color: var(--brass); font-style: italic; }
   .h-hero .lede { max-width: 680px; color: var(--charcoal); }
-  .h-hero .deal {
-    margin-top: 22px;
-    padding: 18px 22px;
-    background: white;
-    border: 1px solid var(--rule);
-    border-radius: 12px;
-    font-size: 14px;
-    color: var(--charcoal);
-    line-height: 1.55;
-  }
-  .h-hero .deal strong { color: var(--moss); }
 
   /* Stats strip */
   .h-stats { background: var(--moss); color: var(--bone-light); padding: 48px var(--gutter); }
@@ -210,17 +199,14 @@
 <header class="h-hero">
   <span class="crumb"><a href="/zaal/">/zaal</a> &rsaquo; Hours log</span>
   <h1>Hours <em>log</em>.</h1>
-  <p class="lede">Every hour I spend on Riverside, what it produced, and a link to the artifact. Live - updates as I work. The numbers below are the running total of your monthly invoice.</p>
-  <div class="deal">
-    <strong>The deal:</strong> $40/hr for all hours logged here, invoiced monthly. Status describes the piece state - planned, in-progress, demo-ready, live, shelved - but does not affect billing. Flex-hours employment, not piece-rate. You can re-rank or shelve any piece at any check-in; the work already logged still counts.
-  </div>
+  <p class="lede">Every work session logged with what it produced and a link to the artifact. Updates as pieces ship.</p>
 </header>
 
 <!-- Stats -->
 <section class="h-stats">
   <div class="h-stats-inner">
     <span class="eyebrow">This month</span>
-    <h2>Running <em>total</em>.</h2>
+    <h2>Where the <em>work went</em>.</h2>
     <div class="stats-grid">
       <div class="stat-card">
         <div class="label">Hours this month</div>
@@ -228,19 +214,19 @@
         <div class="sub" id="stat-month-label">May 2026</div>
       </div>
       <div class="stat-card">
-        <div class="label">Invoice this month</div>
-        <div class="value" id="stat-invoice-month">$0</div>
-        <div class="sub">at $40/hr</div>
+        <div class="label">Sessions this month</div>
+        <div class="value" id="stat-sessions-month">0</div>
+        <div class="sub">work blocks</div>
       </div>
       <div class="stat-card">
         <div class="label">Lifetime hours</div>
         <div class="value" id="stat-hours-total">0.00</div>
-        <div class="sub" id="stat-rows">0 sessions</div>
+        <div class="sub" id="stat-rows">0 sessions total</div>
       </div>
       <div class="stat-card">
-        <div class="label">Lifetime billed</div>
-        <div class="value" id="stat-billed-total">$0</div>
-        <div class="sub">all sessions</div>
+        <div class="label">Pieces touched</div>
+        <div class="value" id="stat-pieces">0</div>
+        <div class="sub">of 16 in the system</div>
       </div>
     </div>
   </div>
@@ -354,12 +340,13 @@
   const monthRows = rows.filter(r => isThisMonth(r['Date']));
   const monthHours = monthRows.reduce((s, r) => s + (parseFloat(r['Hours']) || 0), 0);
   const totalHours = rows.reduce((s, r) => s + (parseFloat(r['Hours']) || 0), 0);
+  const uniquePieces = new Set(rows.map(r => r['Piece #']).filter(p => p && p !== '-')).size;
   document.getElementById('stat-hours-month').textContent = monthHours.toFixed(2);
-  document.getElementById('stat-invoice-month').textContent = '$' + (monthHours * 40).toFixed(0);
+  document.getElementById('stat-sessions-month').textContent = monthRows.length;
   document.getElementById('stat-hours-total').textContent = totalHours.toFixed(2);
-  document.getElementById('stat-billed-total').textContent = '$' + (totalHours * 40).toFixed(0);
+  document.getElementById('stat-pieces').textContent = uniquePieces;
   document.getElementById('stat-month-label').textContent = currentMonthLabel();
-  document.getElementById('stat-rows').textContent = rows.length + ' session' + (rows.length === 1 ? '' : 's');
+  document.getElementById('stat-rows').textContent = rows.length + ' session' + (rows.length === 1 ? '' : 's') + ' total';
 
   // Log list
   const listEl = document.getElementById('log-list');
