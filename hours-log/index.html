@@ -22,37 +22,39 @@
   .h-hero .lede { max-width: 680px; color: var(--charcoal); }
 
   /* Stats strip */
-  .h-stats { background: var(--moss); color: var(--bone-light); padding: 48px var(--gutter); }
+  .h-stats { background: var(--bone-light); padding: 56px var(--gutter); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
   .h-stats-inner { max-width: var(--max); margin: 0 auto; }
-  .h-stats .eyebrow { color: var(--brass-light); display: block; margin-bottom: 14px; }
-  .h-stats h2 { color: var(--bone-light); font-size: clamp(24px, 4vw, 34px); margin-bottom: 22px; }
-  .h-stats h2 em { color: var(--brass-light); font-style: italic; }
+  .h-stats .eyebrow { color: var(--brass); display: block; margin-bottom: 12px; }
+  .h-stats h2 { color: var(--moss); font-size: clamp(24px, 4vw, 34px); margin-bottom: 28px; }
+  .h-stats h2 em { color: var(--brass); font-style: italic; }
   .stats-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border-top: 1px solid var(--rule);
   }
   .stat-card {
-    background: rgba(232, 228, 216, 0.06);
-    border: 1px solid rgba(232, 228, 216, 0.14);
-    border-radius: 10px;
-    padding: 18px 20px;
+    padding: 22px 18px 22px 0;
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
   }
+  .stat-card:nth-child(even) { border-right: none; padding-left: 18px; padding-right: 0; }
   .stat-card .label {
     font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: rgba(232, 228, 216, 0.7); font-weight: 600;
-    margin-bottom: 6px;
+    color: var(--stone); font-weight: 600;
+    margin-bottom: 8px;
   }
   .stat-card .value {
     font-family: var(--font-display);
-    font-size: clamp(28px, 4vw, 40px);
-    color: var(--brass-light);
+    font-size: clamp(32px, 5vw, 46px);
+    color: var(--moss);
     font-style: italic;
     font-weight: 400;
-    line-height: 1.1;
+    line-height: 1.05;
   }
+  .stat-card .value .accent { color: var(--brass); }
   .stat-card .sub {
     font-size: 12px;
-    color: rgba(232, 228, 216, 0.55);
-    margin-top: 4px;
+    color: var(--stone);
+    margin-top: 6px;
   }
 
   /* Table section */
@@ -171,13 +173,13 @@
   .wave-row .whours { color: var(--moss); font-family: var(--font-display); font-style: italic; font-size: 16px; }
 
   /* CTA back */
-  .h-cta { background: var(--moss); color: var(--bone-light); padding: 64px var(--gutter); text-align: center; }
+  .h-cta { background: var(--bone-light); padding: 80px var(--gutter); text-align: center; border-top: 1px solid var(--rule); }
   .h-cta-inner { max-width: 640px; margin: 0 auto; }
-  .h-cta .eyebrow { color: var(--brass-light); display: block; margin-bottom: 14px; }
-  .h-cta h2 { color: var(--bone-light); font-size: clamp(24px, 4vw, 34px); margin-bottom: 14px; }
-  .h-cta h2 em { color: var(--brass-light); font-style: italic; }
-  .h-cta p { color: rgba(232, 228, 216, 0.78); font-size: 15px; line-height: 1.55; }
-  .h-cta a { color: var(--brass-light); border-bottom: 1px solid rgba(184, 147, 98, 0.4); padding-bottom: 2px; display: inline-block; margin-top: 14px; font-size: 14px; }
+  .h-cta .eyebrow { color: var(--brass); display: block; margin-bottom: 14px; }
+  .h-cta h2 { color: var(--moss); font-size: clamp(24px, 4vw, 34px); margin-bottom: 14px; }
+  .h-cta h2 em { color: var(--brass); font-style: italic; }
+  .h-cta p { color: var(--charcoal); font-size: 15px; line-height: 1.55; }
+  .h-cta a { color: var(--brass); border-bottom: 1px solid rgba(139, 111, 58, 0.4); padding-bottom: 2px; display: inline-block; margin-top: 14px; font-size: 14px; }
 
   @media (min-width: 720px) {
     .stats-grid { grid-template-columns: repeat(4, 1fr); }

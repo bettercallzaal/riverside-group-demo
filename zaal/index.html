@@ -34,33 +34,31 @@
   .z-frame p { font-family: var(--font-display); font-weight: 300; font-size: clamp(20px, 2.4vw, 28px); line-height: 1.4; color: var(--moss); }
 
   /* Strip - the nine at a glance */
-  .z-strip { background: var(--moss); color: var(--bone-light); padding: 64px var(--gutter); }
+  .z-strip { background: var(--bone-light); padding: 80px var(--gutter); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
   .z-strip-inner { max-width: var(--max); margin: 0 auto; }
-  .z-strip .eyebrow { color: var(--brass-light); }
-  .z-strip h2 { color: var(--bone-light); font-size: clamp(28px, 4vw, 44px); margin-bottom: 28px; }
-  .z-strip h2 em { color: var(--brass-light); font-style: italic; }
-  .strip-lede { color: rgba(232, 228, 216, 0.78); max-width: 640px; margin-bottom: 28px; font-size: 16px; }
-  .nine-grid { display: grid; grid-template-columns: 1fr; gap: 10px; counter-reset: nine; }
+  .z-strip .eyebrow { color: var(--brass); }
+  .z-strip h2 { color: var(--moss); font-size: clamp(28px, 4vw, 44px); margin-bottom: 18px; }
+  .z-strip h2 em { color: var(--brass); font-style: italic; }
+  .strip-lede { color: var(--stone); max-width: 640px; margin-bottom: 32px; font-size: 16px; line-height: 1.55; }
+  .nine-grid { display: grid; grid-template-columns: 1fr; gap: 0; counter-reset: nine; border-top: 1px solid var(--rule); }
   .nine-grid a {
-    display: flex; align-items: center; gap: 16px;
-    padding: 14px 18px;
-    background: rgba(232, 228, 216, 0.06);
-    border: 1px solid rgba(232, 228, 216, 0.14);
-    border-radius: 10px;
-    color: var(--bone-light);
+    display: flex; align-items: center; gap: 18px;
+    padding: 18px 4px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--charcoal);
     font-size: 15px;
-    transition: background 0.2s, transform 0.2s;
+    transition: padding 0.2s, color 0.2s;
   }
-  .nine-grid a:hover { background: rgba(232, 228, 216, 0.12); opacity: 1; transform: translateX(4px); }
+  .nine-grid a:hover { padding-left: 12px; color: var(--moss); opacity: 1; }
   .nine-grid a::before {
     counter-increment: nine;
     content: counter(nine, decimal-leading-zero);
-    font-family: var(--font-display); font-size: 18px;
-    color: var(--brass-light); font-weight: 400; min-width: 28px;
+    font-family: var(--font-display); font-style: italic; font-size: 20px;
+    color: var(--brass); font-weight: 400; min-width: 32px;
   }
   .nine-grid a span { flex: 1; }
-  .nine-grid a::after { content: '→'; color: var(--brass-light); opacity: 0.7; }
-  .nine-grid a.extra::before { color: var(--bone-light); }
+  .nine-grid a::after { content: '→'; color: var(--brass); opacity: 0.6; }
+  .nine-grid a.extra::before { color: var(--stone); }
 
   /* Items */
   .z-items { max-width: var(--max); margin: 0 auto; padding: 96px var(--gutter); }
@@ -901,6 +899,28 @@
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 12);
   });
+
+  // Scroll-triggered fade-in for items, phase cards, wave-summary cards
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
+    const targets = document.querySelectorAll('.z-item, .phase-card, .wave-summary, .nine-grid a');
+    if (!targets.length) return;
+    targets.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(16px)';
+      el.style.transition = 'opacity 0.7s cubic-bezier(.22,.61,.36,1), transform 0.7s cubic-bezier(.22,.61,.36,1)';
+    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach(el => io.observe(el));
+  })();
 </script>
 
 </body>
