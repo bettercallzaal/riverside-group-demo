@@ -13,6 +13,51 @@
 <style>
   body { background: var(--bone-light); }
 
+  /* Pending-from-Cameron callout */
+  .z-pending {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 14px;
+    align-items: center;
+    margin-top: 32px;
+    padding: 18px 22px;
+    background: white;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--brass);
+    border-radius: 10px;
+    color: var(--charcoal);
+    text-decoration: none;
+    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  }
+  .z-pending:hover {
+    transform: translateY(-1px);
+    border-color: var(--brass);
+    box-shadow: 0 4px 16px rgba(31, 46, 26, 0.06);
+    opacity: 1;
+  }
+  .z-pending-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--brass);
+    box-shadow: 0 0 0 4px rgba(184, 147, 98, 0.18);
+    flex-shrink: 0;
+  }
+  .z-pending-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brass);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .z-pending-text { color: var(--charcoal); font-size: 14px; line-height: 1.5; }
+  .z-pending-text strong { color: var(--moss); font-weight: 600; }
+  .z-pending-arrow { color: var(--brass); font-size: 18px; flex-shrink: 0; }
+  @media (max-width: 540px) {
+    .z-pending { grid-template-columns: auto 1fr; }
+    .z-pending-arrow { display: none; }
+  }
+
   /* Hero */
   .z-hero { padding: 140px var(--gutter) 72px; max-width: var(--max); margin: 0 auto; }
   .z-hero h1 { font-size: clamp(38px, 6.5vw, 76px); margin: 18px 0 24px; line-height: 1.05; }
@@ -196,39 +241,36 @@
   .role-card .anchor em { color: var(--brass); font-style: italic; }
 
   /* Checklist close */
-  .z-close { background: var(--moss); color: var(--bone-light); padding: 96px var(--gutter); }
+  .z-close { background: var(--bone-light); padding: 96px var(--gutter); border-top: 1px solid var(--rule); }
   .z-close-inner { max-width: 860px; margin: 0 auto; }
-  .z-close .eyebrow { color: var(--brass-light); }
-  .z-close h2 { color: var(--bone-light); font-size: clamp(30px, 5vw, 48px); margin-bottom: 18px; }
-  .z-close h2 em { color: var(--brass-light); font-style: italic; }
-  .z-close p { color: rgba(232, 228, 216, 0.78); font-size: 16px; line-height: 1.6; max-width: 640px; margin-bottom: 32px; }
+  .z-close .eyebrow { color: var(--brass); }
+  .z-close h2 { color: var(--moss); font-size: clamp(30px, 5vw, 48px); margin-bottom: 18px; }
+  .z-close h2 em { color: var(--brass); font-style: italic; }
+  .z-close p { color: var(--charcoal); font-size: 16px; line-height: 1.6; max-width: 640px; margin-bottom: 36px; }
   .checklist {
-    background: rgba(232, 228, 216, 0.05);
-    border: 1px solid rgba(232, 228, 216, 0.14);
-    border-radius: 14px;
-    padding: 28px 30px;
+    border-top: 1px solid var(--rule);
   }
   .checklist h3 {
-    color: var(--bone-light);
-    font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--brass);
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
     font-family: var(--font-body); font-weight: 600;
-    margin-bottom: 16px;
+    margin: 20px 0 12px;
   }
-  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule); }
   .checklist li {
-    color: var(--bone-light);
-    font-size: 15px; padding: 10px 0 10px 32px;
+    color: var(--charcoal);
+    font-size: 15px; padding: 18px 0 18px 36px;
     position: relative; line-height: 1.5;
-    border-top: 1px dashed rgba(232, 228, 216, 0.12);
+    border-bottom: 1px solid var(--rule);
   }
-  .checklist li:first-child { border-top: none; }
   .checklist li::before {
-    content: ''; position: absolute; left: 0; top: 14px;
+    content: ''; position: absolute; left: 0; top: 19px;
     width: 18px; height: 18px;
-    border: 1.5px solid var(--brass-light); border-radius: 4px;
+    border: 1.5px solid var(--brass); border-radius: 4px;
+    background: transparent;
   }
-  .checklist li strong { color: var(--bone-light); font-weight: 600; }
-  .checklist li span { color: rgba(232, 228, 216, 0.6); font-size: 13px; display: block; margin-top: 3px; }
+  .checklist li strong { color: var(--moss); font-weight: 600; display: block; margin-bottom: 2px; }
+  .checklist li span { color: var(--stone); font-size: 13px; display: block; }
 
   @media (min-width: 720px) {
     .z-item { grid-template-columns: 140px 1fr; gap: 48px; padding: 64px 0; }
@@ -246,8 +288,9 @@
 <nav class="nav" id="nav">
   <a href="/" class="nav-logo">Riverside<span>.</span></a>
   <ul class="nav-links">
-    <li><a href="/" style="font-size: 13px; color: var(--stone);">Demo home</a></li>
-    <li><a href="/capabilities.html" style="font-size: 13px; color: var(--stone);">Capabilities</a></li>
+    <li><a href="/zaal/" class="nav-page nav-page-active" aria-current="page">/zaal</a></li>
+    <li><a href="/materials/" class="nav-page">/materials</a></li>
+    <li><a href="/hours-log/" class="nav-page">/hours-log</a></li>
   </ul>
 </nav>
 
@@ -270,6 +313,16 @@
       May 2026
     </div>
   </div>
+
+  <!-- Pending from Cameron callout -->
+  <a class="z-pending" href="#handoff">
+    <div class="z-pending-dot" aria-hidden="true"></div>
+    <div class="z-pending-body">
+      <div class="z-pending-label">Pending from you</div>
+      <div class="z-pending-text"><strong>5 items</strong> are waiting on inputs from your side - FB invite, supplier names, project photos, logo direction, domain access.</div>
+    </div>
+    <div class="z-pending-arrow" aria-hidden="true">&rarr;</div>
+  </a>
 </header>
 
 
@@ -851,7 +904,7 @@
 
 
 <!-- Checklist close -->
-<section class="z-close">
+<section class="z-close" id="handoff">
   <div class="z-close-inner">
     <span class="eyebrow">Doors I need open to ship Phase 1</span>
     <h2>What's needed to <em>unblock</em>.</h2>

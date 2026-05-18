@@ -82,6 +82,59 @@
   }
   .empty-state h3 { font-size: 22px; color: var(--moss); font-weight: 400; font-family: var(--font-display); margin-bottom: 10px; }
   .empty-state p { color: var(--stone); font-size: 15px; max-width: 480px; margin: 0 auto 6px; line-height: 1.55; }
+  .empty-preview {
+    margin: 28px auto 0;
+    max-width: 480px;
+    text-align: left;
+    background: #f5f2e8;
+    border: 1px dashed var(--rule);
+    border-radius: 10px;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: var(--stone);
+    line-height: 1.55;
+  }
+  .empty-preview strong { color: var(--brass); font-family: var(--font-body); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-bottom: 8px; }
+  .empty-preview .row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    padding: 8px 0;
+    border-top: 1px dashed var(--rule);
+    color: var(--charcoal);
+  }
+  .empty-preview .row:first-of-type { border-top: none; }
+  .empty-preview .row em { color: var(--moss); font-style: italic; font-family: var(--font-display); }
+
+  /* Skeleton loader */
+  .skeleton {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .skel-row {
+    background: white;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--rule);
+    border-radius: 10px;
+    padding: 18px 20px;
+    display: grid;
+    gap: 10px;
+  }
+  .skel-line {
+    height: 12px;
+    background: linear-gradient(90deg, rgba(42, 42, 36, 0.06) 0%, rgba(42, 42, 36, 0.12) 50%, rgba(42, 42, 36, 0.06) 100%);
+    background-size: 200% 100%;
+    border-radius: 4px;
+    animation: skel-shimmer 1.4s ease-in-out infinite;
+  }
+  .skel-line.short { width: 40%; }
+  .skel-line.medium { width: 70%; }
+  @keyframes skel-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
 
   /* Row cards (mobile-first) */
   .log-row {
@@ -193,8 +246,9 @@
 <nav class="nav" id="nav">
   <a href="/" class="nav-logo">Riverside<span>.</span></a>
   <ul class="nav-links">
-    <li><a href="/zaal/" style="font-size: 13px; color: var(--stone);">/zaal</a></li>
-    <li><a href="/materials/" style="font-size: 13px; color: var(--stone);">/materials</a></li>
+    <li><a href="/zaal/" class="nav-page">/zaal</a></li>
+    <li><a href="/materials/" class="nav-page">/materials</a></li>
+    <li><a href="/hours-log/" class="nav-page nav-page-active" aria-current="page">/hours-log</a></li>
   </ul>
 </nav>
 
@@ -240,7 +294,13 @@
   <span class="eyebrow">Every session, every artifact</span>
   <h2>The <em>log</em>.</h2>
   <p class="tlede">Each row is one work session. Most recent at the top. Tap an artifact link to see exactly what got built.</p>
-  <div id="log-list"></div>
+  <div id="log-list">
+    <div class="skeleton" aria-hidden="true">
+      <div class="skel-row"><div class="skel-line"></div><div class="skel-line medium"></div><div class="skel-line short"></div></div>
+      <div class="skel-row"><div class="skel-line"></div><div class="skel-line medium"></div><div class="skel-line short"></div></div>
+      <div class="skel-row"><div class="skel-line"></div><div class="skel-line medium"></div><div class="skel-line short"></div></div>
+    </div>
+  </div>
 </section>
 
 <!-- By wave -->
@@ -358,7 +418,13 @@
       <div class="empty-state">
         <div class="icon">~</div>
         <h3>No hours logged yet.</h3>
-        <p>The first row lands here as soon as the first work session ends. This page updates the moment a session is logged - refresh anytime.</p>
+        <p>The first row lands here as soon as a work session ends. This page updates the moment a session is logged - refresh anytime.</p>
+        <div class="empty-preview">
+          <strong>What a row will look like</strong>
+          <div class="row"><span>Piece 14/16 &middot; Materials cost sheet</span><em>1.50 hr</em></div>
+          <div class="row"><span>Verified prices from Hammond + Hancock against last 3 invoices</span><em>demo-ready</em></div>
+          <div class="row"><span>view artifact &rsaquo;</span><em>May 19</em></div>
+        </div>
       </div>`;
   } else {
     const sorted = rows.slice().sort((a, b) => (b['Date'] || '').localeCompare(a['Date'] || ''));

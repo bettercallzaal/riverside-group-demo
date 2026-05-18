@@ -960,3 +960,30 @@ select:focus-visible,
     scroll-behavior: auto !important;
   }
 }
+
+/* Consistent secondary nav across gated demo pages (Round 4a) */
+.nav-page {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--stone);
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+.nav-page:hover { color: var(--moss); background: rgba(139, 111, 58, 0.06); }
+.nav-page-active {
+  color: var(--moss);
+  background: rgba(139, 111, 58, 0.1);
+  font-weight: 500;
+}
+.nav-page-active::before {
+  content: '';
+  display: inline-block;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--brass);
+  margin-right: 6px;
+  vertical-align: middle;
+  transform: translateY(-1px);
+}
