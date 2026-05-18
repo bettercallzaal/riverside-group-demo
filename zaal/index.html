@@ -87,17 +87,23 @@
   .z-item .heard { font-style: italic; color: var(--stone); font-size: 15px; margin-bottom: 16px; border-left: 2px solid var(--brass); padding-left: 14px; }
   .z-item p { margin-bottom: 12px; font-size: 16px; line-height: 1.65; color: var(--charcoal); }
   .z-item .ships {
-    margin-top: 20px; padding: 16px 20px;
-    background: var(--bone); border-radius: 10px;
+    margin-top: 24px; padding: 18px 0 0;
+    border-top: 1px solid var(--rule);
   }
   .z-item .ships strong {
-    display: block; font-size: 11px; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--moss);
-    margin-bottom: 10px; font-weight: 600;
+    display: block; font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--brass);
+    margin-bottom: 12px; font-weight: 600;
   }
-  .z-item .ships ul { list-style: none; padding: 0; margin: 0; }
-  .z-item .ships li { padding: 6px 0 6px 22px; position: relative; font-size: 15px; color: var(--charcoal); }
-  .z-item .ships li::before { content: ''; position: absolute; left: 0; top: 14px; width: 12px; height: 1px; background: var(--brass); }
+  .z-item .ships ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+  .z-item .ships li { padding: 6px 0 6px 26px; position: relative; font-size: 15px; color: var(--charcoal); line-height: 1.5; }
+  .z-item .ships li::before {
+    content: ''; position: absolute; left: 0; top: 11px;
+    width: 14px; height: 7px;
+    border-left: 1.5px solid var(--brass);
+    border-bottom: 1.5px solid var(--brass);
+    transform: rotate(-45deg);
+  }
 
   .phase-tag {
     display: inline-block; padding: 4px 12px; border-radius: 999px;
@@ -315,7 +321,7 @@
       <p>Every tool gets a QR sticker. High-value gear gets an AirTag tied to the same record. Crew scans on check-out from the shop, scans on return. You see who has what, where, anytime - on your phone.</p>
       <p>For the things that walk off without anyone noticing: a weekly summary lands in your inbox listing anything not seen in seven days, plus anything high-value off-property.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>Tool list with QR + AirTag tags, photo, purchase date, value</li>
           <li>Scan-to-check-in/out from any phone, no app install</li>
@@ -338,7 +344,7 @@
       <p>One quick form per crew member at end of day - what jobs they were on, hours, what got done, photos if any. Takes ninety seconds on a phone.</p>
       <p>At 6pm every day, you get one email: who logged, who didn't, hours by job, purchases entered, anything flagged. Stops the "what happened today" phone calls.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>Mobile-first end-of-day form (iPhone and Android)</li>
           <li>Hours roll into the job they were worked on</li>
@@ -361,7 +367,7 @@
       <p>Already built. Take a look at the <a href="/" style="color: var(--brass); border-bottom: 1px solid var(--brass);">demo home</a> and the <a href="/capabilities.html" style="color: var(--brass); border-bottom: 1px solid var(--brass);">capabilities page</a> - moss and brass, Fraunces type, mobile-first, fast on coastal signal.</p>
       <p>If the direction is right, the rest is real photography, copy polish, and DNS. About a week to a clean launch.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>Home + capabilities deep-dive + portfolio + journal + service area</li>
           <li>Real project photography swapped for placeholders</li>
@@ -385,7 +391,7 @@
       <p>The blocker for everything you print. Three directions to react to - refined-coastal, heritage-craft, rugged-modern. Pick one, we refine. Full pack: primary mark, secondary, monogram, color system, type pairing.</p>
       <p>Then print-ready files for shirts, hats, jackets, truck signage, business cards. I coordinate the printer. You approve proofs.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>3 logo directions in roughly the first week</li>
           <li>Refined final mark + full brand pack</li>
@@ -409,7 +415,7 @@
       <p>Lead comes in - website form, phone call, referral, anywhere - lands in one board. Each has status, value, last-touch date. Anything sitting more than two days without action goes red. Morning email so nothing slips.</p>
       <p>Convert a won lead to a job in one click. Auto PO number, ready for purchases and time to start tracking.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>Lead board with status, value, last touch</li>
           <li>Stale-lead alerts</li>
@@ -432,7 +438,7 @@
       <p>Two separate funnels. For clients: targeted Meta + Houzz + local SEO around Mount Desert and coastal Hancock County. For hiring: Indeed, MDI community channels, and a College of the Atlantic pipeline.</p>
       <p>Built on the new brand pack so everything looks like Riverside, not stock contractor ads.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>Client acquisition: Meta + Houzz creative + local SEO</li>
           <li>Hiring: Indeed posting + community board templates + COA outreach</li>
@@ -455,7 +461,7 @@
       <p>Each piece of equipment gets a record - excavator, trucks, trailers, mowers. Hour-meter readings come in from the crew. The system computes what's due, coming up, overdue. Big dashboard tile on the home screen.</p>
       <p>Before the excavator goes on a job, the operator runs a short safety check from their phone. Pass, it goes. Fail, you get notified.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>Equipment list with hour meters + service schedules</li>
           <li>Pre-use safety check form for the excavator and tracked assets</li>
@@ -478,7 +484,7 @@
       <p>Every job has a budget you set when you win it. Every purchase the crew makes - Home Depot, suppliers - gets snapped on a phone, tagged to the job, PO attaches automatically. Every hour from the daily log adds against the job.</p>
       <p>Open the job, see one number: where you are on margin, live. No spreadsheet. No surprises at the end.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>Auto PO numbering at job creation</li>
           <li>Mobile receipt capture - photo, category, amount, done</li>
@@ -502,7 +508,7 @@
       <p>Fix the battery / charging issue at the Apple Store first. Then we set up the business number with a proper menu: press 1 for you, press 2 for Josh. You can answer from your existing iPhone without juggling a second device.</p>
       <p>One business number on signs, cards, ads, everywhere. Calls route to the right person without you in the middle.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>Phone hardware fixed</li>
           <li>Business line live with menu routing</li>
@@ -540,7 +546,7 @@
       <p>One place for every certificate: workers comp, general liability, auto, umbrella. Expiry dates with 30/60/90-day alerts so nothing lapses. Client COI requests answered in under 5 minutes by you, Josh, or a project manager.</p>
       <p>Same place: contractor license, equipment operator certifications, sub-contractor 1099 records, safety incident log (in case you ever need it).</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>Insurance vault with COIs ready to send by job or by client</li>
           <li>Expiry alerts before lapses bite</li>
@@ -564,7 +570,7 @@
       <p>Every PO, purchase, invoice, time entry exports clean to the accounting tool. End-of-month: one button, one export file, books closed without re-keying. End-of-year: 1099s for subs, tax-ready summary by job, by category.</p>
       <p>This is the boring layer that decides if Josh actually adopts the system or quietly keeps using his spreadsheet.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>QBO / accounting export per cadence Josh wants</li>
           <li>1099 tracking for sub-contractors</li>
@@ -588,7 +594,7 @@
       <p>Weekly client update goes out automatically per active job - this week's photos from the daily log, what got done, what's next. Branded, looks like Riverside. Cuts the "what's going on at my place" calls in half.</p>
       <p>Change orders go out the same way - signed digitally, no chasing paper. Customers approve, work continues, money's tracked.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>Weekly auto-generated client photo update per active job</li>
           <li>Digital change-order signoff (one-click approve)</li>
@@ -611,7 +617,7 @@
       <p>One library, organized per job. Every document searchable. Every photo geotagged. Every permit linked to the city it came from. The next time a client asks "what kind of stone did you use on our terrace in 2024" - you find it in five seconds.</p>
       <p>Also: estimate templates and material catalogs reusable across jobs, so you're not rebuilding from scratch each time.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>Per-job document library, searchable</li>
           <li>Reusable estimate templates + material catalog</li>
@@ -635,7 +641,7 @@
       <p>A living price sheet of what Riverside actually buys, from where, at what unit cost. Hammond Lumber, Hancock, Home Depot Brunswick, local stone yards, loam suppliers, fastener bins. Each line: SKU, unit, current cost, last-updated date, source.</p>
       <p>Plug it into estimates: quantity x unit cost = floor price. Add labor + margin = quote. The "what does that cost" question stops mid-sentence.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>Starter sheet: rough framing, drywall, dirt/loam, hardscape, hardware, plants</li>
           <li>30+ real SKUs sourced from Maine suppliers</li>
@@ -659,7 +665,7 @@
       <p>Accept the manager invite. Audit both pages. Merge the duplicate into the original (Facebook's page-merge flow keeps reviews and followers from the merged page). Delete the empty shell.</p>
       <p>Then a real photo refresh tied to the new logo + portfolio shoots. A simple posting cadence so the page doesn't go quiet between jobs - one before/after per finished project, one behind-the-scenes per active week.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>Manager access accepted, both pages audited</li>
           <li>Page merge completed (keep original, retire duplicate)</li>
@@ -683,7 +689,7 @@
       <p>The structure is right - before/after, short headline, three trust icons, brand strip on the bottom. What kills the AI look is real Riverside photography, hand-tuned typography (Fraunces, not the generic serif everyone uses), and copy in your voice, not a chatbot's.</p>
       <p>Build it as a template once. Drop in any project's before/after photos. Output sized for Facebook feed, Instagram square, and a 4x6 print postcard. Every finished job becomes an ad inside an hour.</p>
       <div class="ships">
-        <strong>What ships</strong>
+        <strong>Shipped when</strong>
         <ul>
           <li>One ad template in real design tool (not image-gen)</li>
           <li>Three sizes: FB feed (1200x628), IG square (1080x1080), print 4x6</li>
