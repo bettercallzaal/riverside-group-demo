@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Hours Log - Riverside Group / Zaal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/styles.css">
+<style>
+  body { background: var(--bone-light); }
+
+  /* Hero */
+  .h-hero { padding: 140px var(--gutter) 48px; max-width: var(--max); margin: 0 auto; }
+  .h-hero .crumb { font-size: 13px; color: var(--stone); }
+  .h-hero .crumb a { color: var(--brass); }
+  .h-hero h1 { font-size: clamp(36px, 6vw, 64px); margin: 18px 0 22px; line-height: 1.05; }
+  .h-hero h1 em { color: var(--brass); font-style: italic; }
+  .h-hero .lede { max-width: 680px; color: var(--charcoal); }
+  .h-hero .deal {
+    margin-top: 22px;
+    padding: 18px 22px;
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    font-size: 14px;
+    color: var(--charcoal);
+    line-height: 1.55;
+  }
+  .h-hero .deal strong { color: var(--moss); }
+
+  /* Stats strip */
+  .h-stats { background: var(--moss); color: var(--bone-light); padding: 48px var(--gutter); }
+  .h-stats-inner { max-width: var(--max); margin: 0 auto; }
+  .h-stats .eyebrow { color: var(--brass-light); display: block; margin-bottom: 14px; }
+  .h-stats h2 { color: var(--bone-light); font-size: clamp(24px, 4vw, 34px); margin-bottom: 22px; }
+  .h-stats h2 em { color: var(--brass-light); font-style: italic; }
+  .stats-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  .stat-card {
+    background: rgba(232, 228, 216, 0.06);
+    border: 1px solid rgba(232, 228, 216, 0.14);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .stat-card .label {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(232, 228, 216, 0.7); font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .stat-card .value {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 40px);
+    color: var(--brass-light);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.1;
+  }
+  .stat-card .sub {
+    font-size: 12px;
+    color: rgba(232, 228, 216, 0.55);
+    margin-top: 4px;
+  }
+
+  /* Table section */
+  .h-table { padding: 56px var(--gutter); max-width: var(--max); margin: 0 auto; }
+  .h-table .eyebrow { display: block; margin-bottom: 8px; }
+  .h-table h2 { font-size: clamp(24px, 4vw, 34px); color: var(--moss); margin-bottom: 8px; }
+  .h-table h2 em { color: var(--brass); font-style: italic; }
+  .h-table .tlede { color: var(--stone); margin-bottom: 24px; max-width: 640px; }
+
+  .empty-state {
+    background: white;
+    border: 1px dashed var(--rule);
+    border-radius: 12px;
+    padding: 48px 28px;
+    text-align: center;
+    margin-top: 16px;
+  }
+  .empty-state .icon {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--brass);
+    font-size: 56px;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+  .empty-state h3 { font-size: 22px; color: var(--moss); font-weight: 400; font-family: var(--font-display); margin-bottom: 10px; }
+  .empty-state p { color: var(--stone); font-size: 15px; max-width: 480px; margin: 0 auto 6px; line-height: 1.55; }
+
+  /* Row cards (mobile-first) */
+  .log-row {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .log-row[data-status="live"] { border-left: 3px solid #2d6b3a; }
+  .log-row[data-status="demo-ready"] { border-left: 3px solid var(--brass); }
+  .log-row[data-status="in-progress"] { border-left: 3px solid #c9a02d; }
+  .log-row[data-status="planned"] { border-left: 3px solid var(--stone); }
+  .log-row[data-status="shelved"] { border-left: 3px solid var(--rule); opacity: 0.65; }
+
+  .log-row-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .log-piece {
+    font-family: var(--font-display);
+    font-size: 19px;
+    color: var(--charcoal);
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  .log-piece .pnum { color: var(--brass); font-style: italic; font-weight: 400; }
+  .log-meta {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--stone);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .log-shipped { color: var(--charcoal); font-size: 14px; line-height: 1.55; }
+  .log-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--rule);
+    font-size: 12px;
+  }
+  .log-bottom .field strong { display: block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--stone); font-weight: 600; margin-bottom: 2px; }
+  .log-bottom .field span { color: var(--charcoal); font-weight: 500; }
+  .log-bottom .field span.hours { font-family: var(--font-display); font-style: italic; color: var(--moss); font-size: 16px; }
+  .log-status-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .log-status-pill[data-status="live"] { background: #d8e8db; color: #1e4a26; }
+  .log-status-pill[data-status="demo-ready"] { background: rgba(184, 147, 98, 0.18); color: var(--brass); }
+  .log-status-pill[data-status="in-progress"] { background: rgba(201, 160, 45, 0.15); color: #8a6d18; }
+  .log-status-pill[data-status="planned"] { background: rgba(122, 122, 110, 0.12); color: var(--stone); }
+  .log-status-pill[data-status="shelved"] { background: rgba(122, 122, 110, 0.08); color: var(--stone); text-decoration: line-through; }
+  .log-link { font-size: 12px; color: var(--brass); border-bottom: 1px solid rgba(139, 111, 58, 0.3); padding-bottom: 1px; }
+
+  /* By wave panel */
+  .h-waves { background: white; border-top: 1px solid var(--rule); padding: 56px var(--gutter); }
+  .h-waves-inner { max-width: var(--max); margin: 0 auto; }
+  .h-waves .eyebrow { display: block; margin-bottom: 8px; }
+  .h-waves h2 { font-size: clamp(24px, 4vw, 34px); color: var(--moss); margin-bottom: 24px; }
+  .h-waves h2 em { color: var(--brass); font-style: italic; }
+  .wave-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .wave-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 14px;
+    align-items: baseline;
+    padding: 12px 16px;
+    background: var(--bone);
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  .wave-row .wnum {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--brass);
+    font-size: 18px;
+    min-width: 24px;
+  }
+  .wave-row .wname { color: var(--charcoal); }
+  .wave-row .whours { color: var(--moss); font-family: var(--font-display); font-style: italic; font-size: 16px; }
+
+  /* CTA back */
+  .h-cta { background: var(--moss); color: var(--bone-light); padding: 64px var(--gutter); text-align: center; }
+  .h-cta-inner { max-width: 640px; margin: 0 auto; }
+  .h-cta .eyebrow { color: var(--brass-light); display: block; margin-bottom: 14px; }
+  .h-cta h2 { color: var(--bone-light); font-size: clamp(24px, 4vw, 34px); margin-bottom: 14px; }
+  .h-cta h2 em { color: var(--brass-light); font-style: italic; }
+  .h-cta p { color: rgba(232, 228, 216, 0.78); font-size: 15px; line-height: 1.55; }
+  .h-cta a { color: var(--brass-light); border-bottom: 1px solid rgba(184, 147, 98, 0.4); padding-bottom: 2px; display: inline-block; margin-top: 14px; font-size: 14px; }
+
+  @media (min-width: 720px) {
+    .stats-grid { grid-template-columns: repeat(4, 1fr); }
+    .log-bottom { grid-template-columns: repeat(4, 1fr); }
+    .wave-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="/" class="nav-logo">Riverside<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="/zaal/" style="font-size: 13px; color: var(--stone);">/zaal</a></li>
+    <li><a href="/materials/" style="font-size: 13px; color: var(--stone);">/materials</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<header class="h-hero">
+  <span class="crumb"><a href="/zaal/">/zaal</a> &rsaquo; Hours log</span>
+  <h1>Hours <em>log</em>.</h1>
+  <p class="lede">Every hour I spend on Riverside, what it produced, and a link to the artifact. Live - updates as I work. The numbers below are the running total of your monthly invoice.</p>
+  <div class="deal">
+    <strong>The deal:</strong> $40/hr for all hours logged here, invoiced monthly. Status describes the piece state - planned, in-progress, demo-ready, live, shelved - but does not affect billing. Flex-hours employment, not piece-rate. You can re-rank or shelve any piece at any check-in; the work already logged still counts.
+  </div>
+</header>
+
+<!-- Stats -->
+<section class="h-stats">
+  <div class="h-stats-inner">
+    <span class="eyebrow">This month</span>
+    <h2>Running <em>total</em>.</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="label">Hours this month</div>
+        <div class="value" id="stat-hours-month">0.00</div>
+        <div class="sub" id="stat-month-label">May 2026</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Invoice this month</div>
+        <div class="value" id="stat-invoice-month">$0</div>
+        <div class="sub">at $40/hr</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Lifetime hours</div>
+        <div class="value" id="stat-hours-total">0.00</div>
+        <div class="sub" id="stat-rows">0 sessions</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Lifetime billed</div>
+        <div class="value" id="stat-billed-total">$0</div>
+        <div class="sub">all sessions</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Log table -->
+<section class="h-table">
+  <span class="eyebrow">Every session, every artifact</span>
+  <h2>The <em>log</em>.</h2>
+  <p class="tlede">Each row is one work session. Most recent at the top. Tap an artifact link to see exactly what got built.</p>
+  <div id="log-list"></div>
+</section>
+
+<!-- By wave -->
+<section class="h-waves">
+  <div class="h-waves-inner">
+    <span class="eyebrow">By wave</span>
+    <h2>Hours by <em>build phase</em>.</h2>
+    <div id="wave-grid" class="wave-grid"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="h-cta">
+  <div class="h-cta-inner">
+    <span class="eyebrow">Questions on a row?</span>
+    <h2>Text me <em>anytime</em>.</h2>
+    <p>Hit me with the row date or piece number if something doesn't look right or you want to flip a status.</p>
+    <a href="/zaal/">&larr; Back to /zaal</a>
+  </div>
+</section>
+
+<footer class="footer" style="margin-top: 0;">
+  <div class="container">
+    <div style="text-align: center; padding: 24px 0; color: var(--stone); font-size: 13px;">
+      <p>Hours log for Riverside Group, by Zaal. Updates live with each session.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(async function() {
+  const WAVE_NAMES = {
+    0: 'Trust layer',
+    1: 'Quick wins',
+    2: 'Website live',
+    3: 'Field pilot',
+    4: 'Operations spine',
+    5: 'Field infrastructure',
+    6: 'Boring layer',
+    7: 'Polish + growth'
+  };
+
+  function parseCSV(text) {
+    const lines = text.trim().split('\n');
+    if (lines.length < 2) return [];
+    const headers = parseLine(lines[0]);
+    return lines.slice(1).map(line => {
+      const fields = parseLine(line);
+      const row = {};
+      headers.forEach((h, i) => { row[h] = fields[i] || ''; });
+      return row;
+    });
+  }
+
+  function parseLine(line) {
+    const out = [];
+    let cur = '';
+    let inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"' && (i === 0 || line[i-1] === ',')) { inQ = true; continue; }
+      if (c === '"' && inQ && (i === line.length-1 || line[i+1] === ',')) { inQ = false; continue; }
+      if (c === ',' && !inQ) { out.push(cur); cur = ''; continue; }
+      cur += c;
+    }
+    out.push(cur);
+    return out;
+  }
+
+  function fmtDate(s) {
+    if (!s) return '';
+    const d = new Date(s);
+    if (isNaN(d)) return s;
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function currentMonthLabel() {
+    const d = new Date();
+    return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  }
+
+  function isThisMonth(dateStr) {
+    if (!dateStr) return false;
+    const d = new Date(dateStr);
+    if (isNaN(d)) return false;
+    const now = new Date();
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  }
+
+  let rows = [];
+  try {
+    const res = await fetch('./data.csv', { cache: 'no-store' });
+    const text = await res.text();
+    rows = parseCSV(text);
+  } catch (err) {
+    rows = [];
+  }
+
+  // Stats
+  const monthRows = rows.filter(r => isThisMonth(r['Date']));
+  const monthHours = monthRows.reduce((s, r) => s + (parseFloat(r['Hours']) || 0), 0);
+  const totalHours = rows.reduce((s, r) => s + (parseFloat(r['Hours']) || 0), 0);
+  document.getElementById('stat-hours-month').textContent = monthHours.toFixed(2);
+  document.getElementById('stat-invoice-month').textContent = '$' + (monthHours * 40).toFixed(0);
+  document.getElementById('stat-hours-total').textContent = totalHours.toFixed(2);
+  document.getElementById('stat-billed-total').textContent = '$' + (totalHours * 40).toFixed(0);
+  document.getElementById('stat-month-label').textContent = currentMonthLabel();
+  document.getElementById('stat-rows').textContent = rows.length + ' session' + (rows.length === 1 ? '' : 's');
+
+  // Log list
+  const listEl = document.getElementById('log-list');
+  if (rows.length === 0) {
+    listEl.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">~</div>
+        <h3>No hours logged yet.</h3>
+        <p>The first row lands here as soon as the first work session ends. This page updates the moment a session is logged - refresh anytime.</p>
+      </div>`;
+  } else {
+    const sorted = rows.slice().sort((a, b) => (b['Date'] || '').localeCompare(a['Date'] || ''));
+    listEl.innerHTML = sorted.map(r => {
+      const status = (r['Status'] || 'in-progress').toLowerCase();
+      const piece = r['Piece #'] || '-';
+      const pieceName = r['Piece Name'] || 'Cross-cutting';
+      const hours = parseFloat(r['Hours']) || 0;
+      const link = r['Artifact Link'] || '';
+      const shipped = r['What Shipped'] || '';
+      return `
+        <div class="log-row" data-status="${status}">
+          <div class="log-row-top">
+            <div class="log-piece"><span class="pnum">${piece === '-' ? '—' : piece + '/16'}</span> &middot; ${pieceName}</div>
+            <div class="log-meta">${fmtDate(r['Date'])}</div>
+          </div>
+          ${shipped ? `<div class="log-shipped">${shipped}</div>` : ''}
+          <div class="log-bottom">
+            <div class="field"><strong>Hours</strong><span class="hours">${hours.toFixed(2)}</span></div>
+            <div class="field"><strong>Wave</strong><span>${r['Wave'] || '-'}</span></div>
+            <div class="field"><strong>Status</strong><span class="log-status-pill" data-status="${status}">${status}</span></div>
+            <div class="field"><strong>Artifact</strong>${link ? `<a class="log-link" href="${link}" target="_blank" rel="noopener">view &rsaquo;</a>` : '<span>-</span>'}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // Wave grid
+  const waveTotals = {};
+  rows.forEach(r => {
+    const w = r['Wave'];
+    waveTotals[w] = (waveTotals[w] || 0) + (parseFloat(r['Hours']) || 0);
+  });
+  const waveEl = document.getElementById('wave-grid');
+  waveEl.innerHTML = Object.keys(WAVE_NAMES).map(w => {
+    const h = waveTotals[w] || 0;
+    return `
+      <div class="wave-row">
+        <span class="wnum">${w}</span>
+        <span class="wname">${WAVE_NAMES[w]}</span>
+        <span class="whours">${h.toFixed(2)} hr</span>
+      </div>`;
+  }).join('');
+})();
+</script>
+
+</body>
+</html>
