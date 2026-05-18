@@ -987,3 +987,60 @@ select:focus-visible,
   vertical-align: middle;
   transform: translateY(-1px);
 }
+
+/* ============================================
+   Print stylesheet (Round 5) - for /zaal sharing
+   ============================================ */
+@media print {
+  body { background: white !important; color: #000 !important; }
+
+  /* Hide navigation chrome and interactive bits */
+  .nav, .nav-links, .gate-overlay, .m-filter, .z-pending,
+  .h-cta, .m-cta, .footer, .skeleton, .skip-link { display: none !important; }
+
+  /* Compact hero */
+  .z-hero, .m-hero, .h-hero { padding: 32px 24px 24px !important; }
+  .z-hero h1, .m-hero h1, .h-hero h1 { font-size: 28pt !important; line-height: 1.15 !important; }
+  .z-hero .lede, .m-hero .lede, .h-hero .lede { font-size: 11pt !important; }
+  .z-hero-meta, .m-hero-meta { font-size: 9pt !important; }
+
+  /* Sections: lighter padding, page-break friendly */
+  .z-strip, .z-items, .z-phases, .z-close, .m-ask, .m-method, .m-table,
+  .h-stats, .h-table, .h-waves { padding: 24px !important; background: white !important; }
+
+  /* Items + cards: avoid breaks inside */
+  .z-item, .phase-card, .role-card, .cat-group, .sku-row, .log-row, .stat-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    background: white !important;
+    color: #000 !important;
+    border-color: #999 !important;
+  }
+
+  /* Type colors revert to print-safe */
+  h1, h2, h3, h4, p, li, span, div, strong, em { color: #000 !important; }
+  em { color: #5a4a1f !important; } /* keep brass-italic differentiation */
+  .eyebrow, [class*="-meta"], [class*="label"] { color: #444 !important; }
+  .heard { color: #5a4a1f !important; }
+
+  /* Links: show URL inline */
+  a[href]:not([href^="#"]):not([href^="javascript"])::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #666;
+    word-break: break-all;
+  }
+
+  /* Avoid widow/orphan */
+  h1, h2, h3 { page-break-after: avoid; }
+  p { orphans: 3; widows: 3; }
+
+  /* No motion */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    box-shadow: none !important;
+  }
+}

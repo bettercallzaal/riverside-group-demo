@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Hours Log - Riverside Group / Zaal</title>
+<meta name="description" content="Every work session logged with what it produced and a link to the artifact. Updates as pieces ship.">
+<meta property="og:title" content="Riverside hours log">
+<meta property="og:description" content="Every work session logged - what shipped, link to the artifact, status. Updates as pieces ship.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://riverside-group-demo.vercel.app/hours-log/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#1f2e1a">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -236,9 +244,72 @@
 
   @media (min-width: 720px) {
     .stats-grid { grid-template-columns: repeat(4, 1fr); }
-    .log-bottom { grid-template-columns: repeat(4, 1fr); }
     .wave-grid { grid-template-columns: 1fr 1fr; }
   }
+
+  /* Container query: log-row fields adapt to row width, not viewport */
+  .log-row { container-type: inline-size; container-name: logrow; }
+  @container logrow (min-width: 540px) {
+    .log-bottom { grid-template-columns: repeat(4, 1fr); }
+  }
+  @container logrow (max-width: 380px) {
+    .log-bottom { grid-template-columns: 1fr; gap: 6px; }
+    .log-bottom .field { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .log-bottom .field strong { margin-bottom: 0; }
+  }
+
+  /* Week group headers */
+  .week-group { margin-top: 28px; }
+  .week-group:first-child { margin-top: 16px; }
+  .week-group-header {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--moss);
+    padding: 8px 0 6px;
+    margin: 0 0 4px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .week-group-header .meta {
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--stone);
+    font-weight: 600;
+  }
+
+  /* Error state */
+  .error-state {
+    background: white;
+    border: 1px solid rgba(200, 122, 77, 0.3);
+    border-left: 3px solid #c87a4d;
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-top: 16px;
+    color: var(--charcoal);
+  }
+  .error-state strong { color: #c87a4d; display: block; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .error-state p { margin: 0; font-size: 14px; line-height: 1.55; }
+  .error-state button {
+    margin-top: 14px;
+    appearance: none;
+    background: var(--moss);
+    color: var(--bone-light);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .error-state button:hover { background: var(--moss-deep); }
 </style>
 </head>
 <body>
@@ -322,10 +393,11 @@
   </div>
 </section>
 
-<footer class="footer" style="margin-top: 0;">
+<footer class="footer" style="margin-top: 0; border-top: 1px solid var(--rule);">
   <div class="container">
-    <div style="text-align: center; padding: 24px 0; color: var(--stone); font-size: 13px;">
-      <p>Hours log for Riverside Group, by Zaal. Updates live with each session.</p>
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 22px 0; color: var(--stone); font-size: 13px;">
+      <p style="margin: 0;">Hours log for Riverside Group, by Zaal. Updates with each session.</p>
+      <p style="margin: 0; display: flex; gap: 14px;"><a href="/zaal/" style="color: var(--brass);">&larr; /zaal</a> <a href="/materials/" style="color: var(--brass);">/materials &rarr;</a></p>
     </div>
   </div>
 </footer>
@@ -391,11 +463,14 @@
   }
 
   let rows = [];
+  let fetchFailed = false;
   try {
     const res = await fetch('./data.csv', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     const text = await res.text();
     rows = parseCSV(text);
   } catch (err) {
+    fetchFailed = true;
     rows = [];
   }
 
@@ -413,7 +488,62 @@
 
   // Log list
   const listEl = document.getElementById('log-list');
-  if (rows.length === 0) {
+
+  function renderRow(r) {
+    const status = (r['Status'] || 'in-progress').toLowerCase();
+    const piece = r['Piece #'] || '-';
+    const pieceName = r['Piece Name'] || 'Cross-cutting';
+    const hours = parseFloat(r['Hours']) || 0;
+    const link = r['Artifact Link'] || '';
+    const shipped = r['What Shipped'] || '';
+    return `
+      <div class="log-row" data-status="${status}">
+        <div class="log-row-top">
+          <div class="log-piece"><span class="pnum">${piece === '-' ? '—' : piece + '/16'}</span> &middot; ${pieceName}</div>
+          <div class="log-meta">${fmtDate(r['Date'])}</div>
+        </div>
+        ${shipped ? `<div class="log-shipped">${shipped}</div>` : ''}
+        <div class="log-bottom">
+          <div class="field"><strong>Hours</strong><span class="hours">${hours.toFixed(2)}</span></div>
+          <div class="field"><strong>Wave</strong><span>${r['Wave'] || '-'}</span></div>
+          <div class="field"><strong>Status</strong><span class="log-status-pill" data-status="${status}">${status}</span></div>
+          <div class="field"><strong>Artifact</strong>${link ? `<a class="log-link" href="${link}" target="_blank" rel="noopener">view &rsaquo;</a>` : '<span>-</span>'}</div>
+        </div>
+      </div>`;
+  }
+
+  function weekBucket(dateStr) {
+    if (!dateStr) return 'unknown';
+    const d = new Date(dateStr);
+    if (isNaN(d)) return 'unknown';
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const day = d.getDay(); // 0=Sun..6=Sat
+    const sundayOfRow = new Date(d.getFullYear(), d.getMonth(), d.getDate() - day);
+    const sundayOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
+    const diffDays = Math.round((sundayOfToday - sundayOfRow) / (1000 * 60 * 60 * 24));
+    if (diffDays === 0) return 'this-week';
+    if (diffDays === 7) return 'last-week';
+    if (d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()) return 'earlier-this-month';
+    return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  }
+
+  function bucketLabel(key) {
+    if (key === 'this-week') return 'This week';
+    if (key === 'last-week') return 'Last week';
+    if (key === 'earlier-this-month') return 'Earlier this month';
+    if (key === 'unknown') return 'Undated';
+    return key;
+  }
+
+  if (fetchFailed) {
+    listEl.innerHTML = `
+      <div class="error-state" role="alert">
+        <strong>Couldn't load the log</strong>
+        <p>The hours log data did not load. This usually means a network hiccup. Refresh to try again - if it keeps failing, text Zaal.</p>
+        <button onclick="window.location.reload()">Refresh</button>
+      </div>`;
+  } else if (rows.length === 0) {
     listEl.innerHTML = `
       <div class="empty-state">
         <div class="icon">~</div>
@@ -428,26 +558,23 @@
       </div>`;
   } else {
     const sorted = rows.slice().sort((a, b) => (b['Date'] || '').localeCompare(a['Date'] || ''));
-    listEl.innerHTML = sorted.map(r => {
-      const status = (r['Status'] || 'in-progress').toLowerCase();
-      const piece = r['Piece #'] || '-';
-      const pieceName = r['Piece Name'] || 'Cross-cutting';
-      const hours = parseFloat(r['Hours']) || 0;
-      const link = r['Artifact Link'] || '';
-      const shipped = r['What Shipped'] || '';
+    const groups = {};
+    const groupOrder = [];
+    sorted.forEach(r => {
+      const key = weekBucket(r['Date']);
+      if (!groups[key]) { groups[key] = []; groupOrder.push(key); }
+      groups[key].push(r);
+    });
+    listEl.innerHTML = groupOrder.map(key => {
+      const rs = groups[key];
+      const totalHrs = rs.reduce((s, r) => s + (parseFloat(r['Hours']) || 0), 0);
       return `
-        <div class="log-row" data-status="${status}">
-          <div class="log-row-top">
-            <div class="log-piece"><span class="pnum">${piece === '-' ? '—' : piece + '/16'}</span> &middot; ${pieceName}</div>
-            <div class="log-meta">${fmtDate(r['Date'])}</div>
-          </div>
-          ${shipped ? `<div class="log-shipped">${shipped}</div>` : ''}
-          <div class="log-bottom">
-            <div class="field"><strong>Hours</strong><span class="hours">${hours.toFixed(2)}</span></div>
-            <div class="field"><strong>Wave</strong><span>${r['Wave'] || '-'}</span></div>
-            <div class="field"><strong>Status</strong><span class="log-status-pill" data-status="${status}">${status}</span></div>
-            <div class="field"><strong>Artifact</strong>${link ? `<a class="log-link" href="${link}" target="_blank" rel="noopener">view &rsaquo;</a>` : '<span>-</span>'}</div>
-          </div>
+        <div class="week-group">
+          <h3 class="week-group-header">
+            <span>${bucketLabel(key)}</span>
+            <span class="meta">${rs.length} session${rs.length === 1 ? '' : 's'} &middot; ${totalHrs.toFixed(2)} hr</span>
+          </h3>
+          ${rs.map(renderRow).join('')}
         </div>`;
     }).join('');
   }

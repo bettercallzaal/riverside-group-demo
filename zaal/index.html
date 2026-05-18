@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>What I'm building for Riverside - Zaal, May 2026</title>
+<meta name="description" content="Living doc - 16-piece operating system for Riverside Group, what's shipped, what's in flight, what ships next.">
+<meta property="og:title" content="Riverside / Zaal - 16-piece system">
+<meta property="og:description" content="Living doc - 16-piece operating system for Riverside Group.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://riverside-group-demo.vercel.app/zaal/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#1f2e1a">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -112,6 +120,43 @@
   .z-items-head h2 { font-size: clamp(28px, 4vw, 44px); color: var(--moss); }
   .z-items-head h2 em { color: var(--brass); font-style: italic; }
   .z-items-head p { color: var(--stone); margin-top: 10px; max-width: 640px; }
+
+  /* Phase filter chips */
+  .phase-filter {
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    padding: 18px 0;
+    margin-bottom: 8px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .phase-filter .pf-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--stone); font-weight: 600; margin-right: 6px;
+  }
+  .phase-filter .chip {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--charcoal);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    min-height: 36px;
+  }
+  .phase-filter .chip:hover { border-color: var(--brass); color: var(--moss); }
+  .phase-filter .chip[aria-pressed="true"] {
+    background: var(--moss); border-color: var(--moss); color: var(--bone-light);
+  }
+  .phase-filter .chip .cnt {
+    margin-left: 6px;
+    font-family: var(--font-display);
+    font-style: italic;
+    opacity: 0.7;
+  }
+  .z-item[hidden] { display: none; }
 
   .z-item {
     display: grid; grid-template-columns: 1fr;
@@ -354,11 +399,19 @@
 </section>
 
 <!-- The nine, expanded -->
-<section class="z-items">
+<section class="z-items" id="items">
   <div class="z-items-head">
     <span class="eyebrow">Part one - your nine asks</span>
     <h2>What you asked for, <em>mapped out</em>.</h2>
     <p>Your SMS list, in your order. Each one with what I'd actually build, what ships, and which phase it lands in.</p>
+  </div>
+
+  <div class="phase-filter" role="group" aria-label="Filter items by phase">
+    <span class="pf-label">Filter</span>
+    <button class="chip" data-phase="all" aria-pressed="true">All <span class="cnt">16</span></button>
+    <button class="chip" data-phase="p1" aria-pressed="false">Phase 1 - now</button>
+    <button class="chip" data-phase="p2" aria-pressed="false">Phase 2 - system</button>
+    <button class="chip" data-phase="p3" aria-pressed="false">Phase 3 - growth</button>
   </div>
 
   <!-- 1 -->
@@ -958,6 +1011,48 @@
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 12);
   });
+
+  // Phase filter on items section
+  (function () {
+    const filter = document.querySelector('.phase-filter');
+    if (!filter) return;
+    const chips = filter.querySelectorAll('.chip');
+    const items = Array.from(document.querySelectorAll('.z-items .z-item'));
+
+    // Tag each item with its phase class for filtering
+    items.forEach(item => {
+      const tag = item.querySelector('.phase-tag');
+      if (!tag) { item.dataset.itemPhase = 'p1'; return; }
+      if (tag.classList.contains('p1')) item.dataset.itemPhase = 'p1';
+      else if (tag.classList.contains('p2')) item.dataset.itemPhase = 'p2';
+      else if (tag.classList.contains('p3')) item.dataset.itemPhase = 'p3';
+      else item.dataset.itemPhase = 'p1';
+    });
+
+    // Update counts on chips
+    const counts = { all: items.length, p1: 0, p2: 0, p3: 0 };
+    items.forEach(i => { counts[i.dataset.itemPhase] = (counts[i.dataset.itemPhase] || 0) + 1; });
+    chips.forEach(c => {
+      const ph = c.dataset.phase;
+      let cnt = c.querySelector('.cnt');
+      if (!cnt) {
+        cnt = document.createElement('span');
+        cnt.className = 'cnt';
+        c.appendChild(cnt);
+      }
+      cnt.textContent = counts[ph] || 0;
+    });
+
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const ph = chip.dataset.phase;
+        chips.forEach(c => c.setAttribute('aria-pressed', c.dataset.phase === ph ? 'true' : 'false'));
+        items.forEach(i => {
+          i.hidden = !(ph === 'all' || i.dataset.itemPhase === ph);
+        });
+      });
+    });
+  })();
 
   // Scroll-triggered fade-in for items, phase cards, wave-summary cards
   (function () {

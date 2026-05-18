@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Materials Cost Sheet v0 - Riverside Group</title>
+<meta name="description" content="30-SKU starter catalog across 9 categories - lumber, sheetrock, soil, mulch, stone, hardscape, plants, edging, hardware. Prices pending Cameron verification.">
+<meta property="og:title" content="Riverside materials cost sheet v0">
+<meta property="og:description" content="30 SKUs across 9 categories - waiting on supplier names + price check from Cameron.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://riverside-group-demo.vercel.app/materials/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#1f2e1a">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -143,7 +151,7 @@
     .m-filter .count { width: 100%; margin: 4px 0 0; }
   }
 
-  .cat-group { margin-bottom: 32px; }
+  .cat-group { margin-bottom: 32px; container-type: inline-size; container-name: cat; }
   .cat-group[hidden] { display: none; }
   .cat-header {
     display: flex; align-items: baseline; gap: 14px;
@@ -213,7 +221,18 @@
   @media (min-width: 720px) {
     .ask-grid { grid-template-columns: 1fr 1fr; }
     .markup-grid { grid-template-columns: 1fr 1fr; }
+  }
+  /* Container query: SKU fields adapt to the cat-group width, not viewport */
+  @container cat (min-width: 540px) {
     .sku-fields { grid-template-columns: repeat(4, 1fr); }
+  }
+  @container cat (min-width: 380px) and (max-width: 539.99px) {
+    .sku-fields { grid-template-columns: repeat(2, 1fr); }
+  }
+  @container cat (max-width: 379.99px) {
+    .sku-fields { grid-template-columns: 1fr; gap: 6px; }
+    .sku-field { display: flex; justify-content: space-between; align-items: baseline; }
+    .sku-field strong { margin-bottom: 0; }
   }
   @media (min-width: 1024px) {
     .ask-grid { grid-template-columns: repeat(4, 1fr); }
@@ -723,10 +742,11 @@
   </div>
 </section>
 
-<footer class="footer" style="margin-top: 0;">
+<footer class="footer" style="margin-top: 0; border-top: 1px solid var(--rule);">
   <div class="container">
-    <div style="text-align: center; padding: 24px 0; color: var(--stone); font-size: 13px;">
-      <p>Materials Cost Sheet v0 - built for Riverside Group by Zaal, May 2026.</p>
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 22px 0; color: var(--stone); font-size: 13px;">
+      <p style="margin: 0;">Materials Cost Sheet v0 - built for Riverside Group by Zaal, May 2026.</p>
+      <p style="margin: 0; display: flex; gap: 14px;"><a href="/zaal/" style="color: var(--brass);">&larr; /zaal</a> <a href="/hours-log/" style="color: var(--brass);">/hours-log &rarr;</a></p>
     </div>
   </div>
 </footer>
