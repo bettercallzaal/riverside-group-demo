@@ -1044,3 +1044,12 @@ select:focus-visible,
     box-shadow: none !important;
   }
 }
+
+/* Round 9b: scroll-padding for sticky nav + filter bars
+   When an anchor link jumps, leave breathing room above for the sticky chrome */
+html {
+  scroll-padding-top: 80px;
+}
+@media (max-width: 720px) {
+  html { scroll-padding-top: 70px; }
+}

@@ -180,6 +180,58 @@
     gap: 8px;
   }
   .sku-row.tbd { border-left: 3px solid var(--brass); }
+  .sku-row.verified { border-left: 3px solid #2d6b3a; background: #fbfdf6; }
+  .sku-row.verified .verified-badge { display: inline-flex; }
+  .verified-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(45, 107, 58, 0.12);
+    color: #1e4a26;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .verified-badge::before {
+    content: '';
+    width: 11px; height: 6px;
+    border-left: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(-45deg);
+    margin-top: -2px;
+  }
+
+  /* Verification counter banner */
+  .m-verified-banner {
+    margin: 20px 0 24px;
+    padding: 14px 18px;
+    background: white;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--brass);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--charcoal);
+  }
+  .m-verified-banner.has-verified { border-left-color: #2d6b3a; background: #fbfdf6; }
+  .m-verified-banner .ver-text strong { color: var(--moss); }
+  .m-verified-banner .ver-text em { color: var(--brass); font-style: italic; font-family: var(--font-display); font-size: 16px; }
+  .m-verified-banner .ver-cta {
+    font-size: 13px;
+    color: var(--brass);
+    border-bottom: 1px solid rgba(139, 111, 58, 0.4);
+    padding-bottom: 1px;
+    white-space: nowrap;
+  }
   .sku-name {
     font-family: var(--font-display);
     font-size: 18px;
@@ -351,11 +403,16 @@
   <h2>Starter <em>catalog</em>.</h2>
   <p class="tlede">Brass-bordered rows are TBD - waiting on supplier confirmation. Cost + price columns are placeholders until you verify.</p>
 
+  <div class="m-verified-banner" id="m-verified-banner" hidden>
+    <div class="ver-text"><em id="ver-count">0</em> <strong>of 30</strong> rows verified by you. Rows below show your real numbers in place of my placeholder guesses.</div>
+    <a class="ver-cta" href="/cost-check/">Update entries &rarr;</a>
+  </div>
+
   <!-- Lumber -->
   <div class="cat-group" data-cat="lumber">
     <div class="cat-header"><h3>Lumber</h3><span class="cat-meta">6 SKUs - 15-20% markup</span></div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="0">
       <div class="sku-name">Spruce 2x4x8 stud</div>
       <div class="sku-note">dimensional framing</div>
       <div class="sku-fields">
@@ -367,7 +424,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="1">
       <div class="sku-name">Spruce 2x6x12</div>
       <div class="sku-note">dimensional framing</div>
       <div class="sku-fields">
@@ -378,7 +435,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="2">
       <div class="sku-name">Pressure treated 2x6x12</div>
       <div class="sku-note">ground-contact rated</div>
       <div class="sku-fields">
@@ -389,7 +446,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="3">
       <div class="sku-name">Pressure treated 6x6x8</div>
       <div class="sku-note">post material</div>
       <div class="sku-fields">
@@ -401,7 +458,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="4">
       <div class="sku-name">5/4 PT decking 12'</div>
       <div class="sku-note">radius edge</div>
       <div class="sku-fields">
@@ -412,7 +469,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="5">
       <div class="sku-name">Cedar 2x6x12</div>
       <div class="sku-note">naturally rot-resistant</div>
       <div class="sku-fields">
@@ -429,7 +486,7 @@
   <div class="cat-group" data-cat="sheetrock">
     <div class="cat-header"><h3>Sheetrock</h3><span class="cat-meta">3 SKUs - 15% markup</span></div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="6">
       <div class="sku-name">1/2 inch drywall 4x8</div>
       <div class="sku-note">standard</div>
       <div class="sku-fields">
@@ -441,7 +498,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="7">
       <div class="sku-name">5/8 inch fire-rated 4x8</div>
       <div class="sku-note">fire-rated</div>
       <div class="sku-fields">
@@ -452,7 +509,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="8">
       <div class="sku-name">Joint compound 4.5 gal</div>
       <div class="sku-note">pre-mixed</div>
       <div class="sku-fields">
@@ -468,7 +525,7 @@
   <div class="cat-group" data-cat="soil">
     <div class="cat-header"><h3>Soil</h3><span class="cat-meta">3 SKUs - 15% markup - needs loam yard name</span></div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="9">
       <div class="sku-name">Loam (screened topsoil)</div>
       <div class="sku-fields">
         <div class="sku-field"><strong>Unit</strong><span>cubic yard</span></div>
@@ -478,7 +535,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="10">
       <div class="sku-name">Fill dirt (unscreened)</div>
       <div class="sku-fields">
         <div class="sku-field"><strong>Unit</strong><span>cubic yard</span></div>
@@ -488,7 +545,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="11">
       <div class="sku-name">Compost (leaf + manure)</div>
       <div class="sku-fields">
         <div class="sku-field"><strong>Unit</strong><span>cubic yard</span></div>
@@ -503,7 +560,7 @@
   <div class="cat-group" data-cat="mulch">
     <div class="cat-header"><h3>Mulch</h3><span class="cat-meta">3 SKUs - 18% markup - needs stone yard name</span></div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="12">
       <div class="sku-name">Hardwood mulch</div>
       <div class="sku-note">bulk</div>
       <div class="sku-fields">
@@ -515,7 +572,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="13">
       <div class="sku-name">Dyed black mulch</div>
       <div class="sku-note">bulk</div>
       <div class="sku-fields">
@@ -526,7 +583,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="14">
       <div class="sku-name">Pine bark mulch</div>
       <div class="sku-note">bulk</div>
       <div class="sku-fields">
@@ -542,7 +599,7 @@
   <div class="cat-group" data-cat="stone">
     <div class="cat-header"><h3>Stone</h3><span class="cat-meta">3 SKUs - 20-25% markup - needs stone yard name</span></div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="15">
       <div class="sku-name">Crushed stone 3/4 inch</div>
       <div class="sku-fields">
         <div class="sku-field"><strong>Unit</strong><span>cubic yard</span></div>
@@ -553,7 +610,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="16">
       <div class="sku-name">Pea gravel</div>
       <div class="sku-fields">
         <div class="sku-field"><strong>Unit</strong><span>cubic yard</span></div>
@@ -563,7 +620,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="17">
       <div class="sku-name">River rock 2-4 inch</div>
       <div class="sku-note">decorative</div>
       <div class="sku-fields">
@@ -579,7 +636,7 @@
   <div class="cat-group" data-cat="hardscape">
     <div class="cat-header"><h3>Hardscape</h3><span class="cat-meta">4 SKUs - 18-25% markup - needs hardscape supplier</span></div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="18">
       <div class="sku-name">Concrete paver 12x12</div>
       <div class="sku-note">standard gray</div>
       <div class="sku-fields">
@@ -591,7 +648,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="19">
       <div class="sku-name">Retaining wall block</div>
       <div class="sku-note">standard gray</div>
       <div class="sku-fields">
@@ -603,7 +660,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="20">
       <div class="sku-name">Polymeric joint sand</div>
       <div class="sku-note">55 lb bag</div>
       <div class="sku-fields">
@@ -614,7 +671,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="21">
       <div class="sku-name">Geotextile fabric 6x100</div>
       <div class="sku-note">woven</div>
       <div class="sku-fields">
@@ -630,7 +687,7 @@
   <div class="cat-group" data-cat="plants">
     <div class="cat-header"><h3>Plants</h3><span class="cat-meta">5 SKUs - 30-35% markup - needs nursery name</span></div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="22">
       <div class="sku-name">Arborvitae 'Green Giant' 6-7 ft</div>
       <div class="sku-note">privacy screen</div>
       <div class="sku-fields">
@@ -642,7 +699,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="23">
       <div class="sku-name">Hydrangea 3 gal</div>
       <div class="sku-fields">
         <div class="sku-field"><strong>Unit</strong><span>each</span></div>
@@ -652,7 +709,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="24">
       <div class="sku-name">Day lily 1 gal</div>
       <div class="sku-fields">
         <div class="sku-field"><strong>Unit</strong><span>each</span></div>
@@ -662,7 +719,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="25">
       <div class="sku-name">Hosta 1 gal</div>
       <div class="sku-fields">
         <div class="sku-field"><strong>Unit</strong><span>each</span></div>
@@ -672,7 +729,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="26">
       <div class="sku-name">White pine 6 ft B&B</div>
       <div class="sku-note">balled + burlapped</div>
       <div class="sku-fields">
@@ -689,7 +746,7 @@
   <div class="cat-group" data-cat="edging">
     <div class="cat-header"><h3>Edging</h3><span class="cat-meta">2 SKUs - 20-25% markup</span></div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="27">
       <div class="sku-name">Aluminum landscape edging 16'</div>
       <div class="sku-note">heavy gauge</div>
       <div class="sku-fields">
@@ -700,7 +757,7 @@
       </div>
     </div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="28">
       <div class="sku-name">Landscape fabric 3x300 roll</div>
       <div class="sku-note">pro-grade</div>
       <div class="sku-fields">
@@ -716,7 +773,7 @@
   <div class="cat-group" data-cat="hardware">
     <div class="cat-header"><h3>Hardware</h3><span class="cat-meta">1 SKU - 15% markup</span></div>
 
-    <div class="sku-row tbd">
+    <div class="sku-row tbd" data-sku-idx="29">
       <div class="sku-name">GRK structural screw 5 inch</div>
       <div class="sku-note">box of 100</div>
       <div class="sku-fields">
@@ -748,7 +805,7 @@
 <footer class="footer" style="margin-top: 0; border-top: 1px solid var(--rule);">
   <div class="container">
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 22px 0; color: var(--stone); font-size: 13px;">
-      <p style="margin: 0;">Materials Cost Sheet v0 - built for Riverside Group by Zaal, May 2026.</p>
+      <p style="margin: 0;">Materials Cost Sheet v0 - built for Riverside Group by Zaal. Updated May 19, 2026.</p>
       <p style="margin: 0; display: flex; gap: 14px;"><a href="/zaal/" style="color: var(--brass);">&larr; /zaal</a> <a href="/hours-log/" style="color: var(--brass);">/hours-log &rarr;</a></p>
     </div>
   </div>
@@ -831,6 +888,101 @@
 
   // Init count
   applyFilter();
+})();
+
+// Round 9a: cost-check integration - read Cameron's filled costs from localStorage
+(function () {
+  const STORAGE_KEY = 'rs_costcheck_v1';
+
+  function readState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { return {}; }
+  }
+
+  // SKU markup % matching cost-check / materials-cost-sheet-v0
+  // Index -> markup decimal
+  const MARKUP = [
+    0.15, 0.15, 0.15, 0.15, 0.20, 0.20,    // Lumber 0-5
+    0.15, 0.15, 0.15,                       // Sheetrock 6-8
+    0.15, 0.15, 0.15,                       // Soil 9-11
+    0.18, 0.18, 0.18,                       // Mulch 12-14
+    0.20, 0.20, 0.25,                       // Stone 15-17
+    0.25, 0.25, 0.20, 0.18,                 // Hardscape 18-21
+    0.35, 0.35, 0.35, 0.35, 0.30,           // Plants 22-26
+    0.25, 0.20,                             // Edging 27-28
+    0.15                                    // Hardware 29
+  ];
+
+  function applyVerifiedState() {
+    const state = readState();
+    const rows = document.querySelectorAll('.sku-row[data-sku-idx]');
+    let verified = 0;
+    rows.forEach(row => {
+      const idx = parseInt(row.dataset.skuIdx, 10);
+      const v = state[idx];
+      if (!v || !v.cost || !v.supplier) {
+        // Reset to TBD if cleared
+        row.classList.remove('verified');
+        row.classList.add('tbd');
+        return;
+      }
+      verified++;
+      row.classList.remove('tbd');
+      row.classList.add('verified');
+
+      const cost = parseFloat(v.cost);
+      const markup = MARKUP[idx] || 0.20;
+      const price = cost * (1 + markup);
+
+      // Update displayed cost
+      const costEl = row.querySelector('.sku-field span.cost');
+      if (costEl) costEl.textContent = '$' + cost.toFixed(2);
+
+      // Update displayed customer price
+      const priceEl = row.querySelector('.sku-field span.price');
+      if (priceEl) priceEl.textContent = '$' + price.toFixed(2);
+
+      // Update supplier field
+      const supplierFields = row.querySelectorAll('.sku-field');
+      supplierFields.forEach(field => {
+        const label = field.querySelector('strong');
+        if (label && label.textContent.trim() === 'Supplier') {
+          const span = field.querySelector('span');
+          if (span) {
+            span.textContent = v.supplier;
+            span.classList.remove('tbd');
+          }
+        }
+      });
+
+      // Add verified badge next to SKU name (if not already there)
+      const nameEl = row.querySelector('.sku-name');
+      if (nameEl && !row.querySelector('.verified-badge')) {
+        const badge = document.createElement('span');
+        badge.className = 'verified-badge';
+        badge.textContent = 'verified';
+        nameEl.appendChild(badge);
+      }
+    });
+
+    // Update banner
+    const banner = document.getElementById('m-verified-banner');
+    const countEl = document.getElementById('ver-count');
+    if (banner && countEl) {
+      countEl.textContent = verified;
+      banner.hidden = verified === 0;
+      banner.classList.toggle('has-verified', verified > 0);
+    }
+  }
+
+  applyVerifiedState();
+
+  // Cross-tab/page sync: if Cameron fills cost-check in another tab, this updates
+  window.addEventListener('storage', (e) => {
+    if (e.key === STORAGE_KEY) applyVerifiedState();
+  });
+
+  // Re-apply on focus (covers same-tab navigation back)
+  window.addEventListener('focus', applyVerifiedState);
 })();
 </script>
 
