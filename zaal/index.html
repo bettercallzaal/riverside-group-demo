@@ -21,6 +21,57 @@
 <style>
   body { background: var(--bone-light); }
 
+  /* Latest-from-hours-log strip */
+  .z-latest {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 14px;
+    align-items: center;
+    margin-top: 22px;
+    padding: 14px 18px;
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    color: var(--charcoal);
+    text-decoration: none;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  .z-latest.loaded { opacity: 1; transform: translateY(0); transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.15s, box-shadow 0.15s; }
+  .z-latest:hover { border-color: var(--brass); box-shadow: 0 2px 12px rgba(31, 46, 26, 0.05); }
+  .z-latest .pulse {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #2d6b3a;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .z-latest .pulse::after {
+    content: '';
+    position: absolute; inset: -4px;
+    border-radius: 50%;
+    border: 1px solid rgba(45, 107, 58, 0.5);
+    animation: latest-pulse 2.2s ease-out infinite;
+  }
+  @keyframes latest-pulse {
+    0% { transform: scale(1); opacity: 0.65; }
+    100% { transform: scale(2.4); opacity: 0; }
+  }
+  .z-latest .label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brass);
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .z-latest .body { color: var(--charcoal); font-size: 14px; line-height: 1.5; }
+  .z-latest .body strong { color: var(--moss); font-weight: 600; }
+  .z-latest .body em { font-style: italic; color: var(--stone); font-family: var(--font-display); font-size: 13px; }
+  .z-latest .arrow { color: var(--brass); font-size: 16px; flex-shrink: 0; }
+  @media (max-width: 540px) { .z-latest { grid-template-columns: auto 1fr; } .z-latest .arrow { display: none; } }
+
   /* Pending-from-Cameron callout */
   .z-pending {
     display: grid;
@@ -112,6 +163,31 @@
   .nine-grid a span { flex: 1; }
   .nine-grid a::after { content: '→'; color: var(--brass); opacity: 0.6; }
   .nine-grid a.extra::before { color: var(--stone); }
+  .ng-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .ng-status[data-status="live"] { background: rgba(45, 107, 58, 0.14); color: #1e4a26; }
+  .ng-status[data-status="demo-ready"] { background: rgba(184, 147, 98, 0.18); color: var(--brass); }
+  .ng-status[data-status="in-progress"] { background: rgba(201, 160, 45, 0.16); color: #8a6d18; }
+  .ng-status[data-status="planned"] { background: rgba(122, 122, 110, 0.12); color: var(--stone); }
+  .ng-status[data-status="shelved"] { background: rgba(122, 122, 110, 0.08); color: var(--stone); text-decoration: line-through; }
+  .ng-status .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  @media (max-width: 540px) {
+    .ng-status { font-size: 9px; padding: 2px 7px; letter-spacing: 0.1em; }
+  }
 
   /* Items */
   .z-items { max-width: var(--max); margin: 0 auto; padding: 96px var(--gutter); }
@@ -359,6 +435,16 @@
     </div>
   </div>
 
+  <!-- Latest activity from hours-log (populated via JS) -->
+  <a class="z-latest" id="z-latest" href="/hours-log/" hidden>
+    <div class="pulse" aria-hidden="true"></div>
+    <div>
+      <div class="label">Last shipped</div>
+      <div class="body" id="z-latest-body"></div>
+    </div>
+    <div class="arrow" aria-hidden="true">&rarr;</div>
+  </a>
+
   <!-- Pending from Cameron callout -->
   <a class="z-pending" href="#handoff">
     <div class="z-pending-dot" aria-hidden="true"></div>
@@ -379,22 +465,22 @@
     <h2>Everything I'm building, <em>in one place</em>.</h2>
     <p class="strip-lede">First nine from your text - in your order. Next four are the infrastructure I'd add. Last three came out of our follow-up: materials estimating, your Facebook page, and ad creative. Tap any to jump.</p>
     <div class="nine-grid">
-      <a href="#one"><span>Tool & inventory tracking</span></a>
-      <a href="#two"><span>Daily log + shared updates</span></a>
-      <a href="#three"><span>Website refresh</span></a>
-      <a href="#four"><span>New logo + merch pack</span></a>
-      <a href="#five"><span>Client intake + work orders</span></a>
-      <a href="#six"><span>Advertising - clients & hiring</span></a>
-      <a href="#seven"><span>Equipment maintenance schedules</span></a>
-      <a href="#eight"><span>Budgets, POs, profit per job</span></a>
-      <a href="#nine"><span>Business phone + call routing</span></a>
-      <a href="#ten" class="extra"><span>Insurance, COIs, compliance</span></a>
-      <a href="#eleven" class="extra"><span>Books + financial integration</span></a>
-      <a href="#twelve" class="extra"><span>Client communication & updates</span></a>
-      <a href="#thirteen" class="extra"><span>Document & contract library</span></a>
-      <a href="#fourteen" class="extra"><span>Materials cost sheet + estimating</span></a>
-      <a href="#fifteen" class="extra"><span>Facebook business page</span></a>
-      <a href="#sixteen" class="extra"><span>Ad creative system</span></a>
+      <a href="#one" data-piece-num="1"><span>Tool & inventory tracking</span></a>
+      <a href="#two" data-piece-num="2"><span>Daily log + shared updates</span></a>
+      <a href="#three" data-piece-num="3"><span>Website refresh</span></a>
+      <a href="#four" data-piece-num="4"><span>New logo + merch pack</span></a>
+      <a href="#five" data-piece-num="5"><span>Client intake + work orders</span></a>
+      <a href="#six" data-piece-num="6"><span>Advertising - clients & hiring</span></a>
+      <a href="#seven" data-piece-num="7"><span>Equipment maintenance schedules</span></a>
+      <a href="#eight" data-piece-num="8"><span>Budgets, POs, profit per job</span></a>
+      <a href="#nine" data-piece-num="9"><span>Business phone + call routing</span></a>
+      <a href="#ten" class="extra" data-piece-num="10"><span>Insurance, COIs, compliance</span></a>
+      <a href="#eleven" class="extra" data-piece-num="11"><span>Books + financial integration</span></a>
+      <a href="#twelve" class="extra" data-piece-num="12"><span>Client communication & updates</span></a>
+      <a href="#thirteen" class="extra" data-piece-num="13"><span>Document & contract library</span></a>
+      <a href="#fourteen" class="extra" data-piece-num="14"><span>Materials cost sheet + estimating</span></a>
+      <a href="#fifteen" class="extra" data-piece-num="15"><span>Facebook business page</span></a>
+      <a href="#sixteen" class="extra" data-piece-num="16"><span>Ad creative system</span></a>
     </div>
   </div>
 </section>
@@ -1012,6 +1098,82 @@
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 12);
   });
+
+  // Shared CSV fetch + parse for /zaal data overlays
+  function parseLine(line) {
+    const out = []; let cur = ''; let inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"' && (i === 0 || line[i-1] === ',')) { inQ = true; continue; }
+      if (c === '"' && inQ && (i === line.length-1 || line[i+1] === ',')) { inQ = false; continue; }
+      if (c === ',' && !inQ) { out.push(cur); cur = ''; continue; }
+      cur += c;
+    }
+    out.push(cur);
+    return out;
+  }
+
+  async function fetchLogRows() {
+    try {
+      const res = await fetch('/hours-log/data.csv', { cache: 'no-store' });
+      if (!res.ok) return [];
+      const text = await res.text();
+      const lines = text.trim().split('\n');
+      if (lines.length < 2) return [];
+      const headers = parseLine(lines[0]);
+      return lines.slice(1).map(line => {
+        const f = parseLine(line);
+        const r = {};
+        headers.forEach((h, i) => { r[h] = f[i] || ''; });
+        return r;
+      });
+    } catch (e) {
+      return [];
+    }
+  }
+
+  // Single CSV fetch shared between "Last shipped" callout + per-piece status pills
+  (async function () {
+    const rows = await fetchLogRows();
+
+    // Round 11: latest callout
+    const el = document.getElementById('z-latest');
+    const body = document.getElementById('z-latest-body');
+    if (el && body && rows.length > 0) {
+      const sorted = rows.slice().sort((a, b) => (b['Date'] || '').localeCompare(a['Date'] || ''));
+      const latest = sorted[0];
+      const dt = new Date(latest['Date']);
+      const dateLabel = isNaN(dt) ? latest['Date'] : dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const piece = latest['Piece #'] === '-' ? '—' : (latest['Piece #'] + '/16');
+      const pieceName = latest['Piece Name'] || 'Cross-cutting';
+      const shipped = (latest['What Shipped'] || '').replace(/<[^>]*>/g, '').slice(0, 140);
+      const hours = parseFloat(latest['Hours']) || 0;
+      body.innerHTML = '<strong>' + pieceName + '</strong> &middot; ' +
+        '<em>' + dateLabel + ' &middot; ' + hours.toFixed(2) + ' hr &middot; piece ' + piece + '</em>' +
+        (shipped ? '<br>' + shipped + (latest['What Shipped'].length > 140 ? '&hellip;' : '') : '');
+      el.hidden = false;
+      requestAnimationFrame(() => el.classList.add('loaded'));
+    }
+
+    // Round 12: derive latest status per piece # and inject pills into nine-grid
+    if (rows.length > 0) {
+      const latestByPiece = {};
+      rows.slice().sort((a, b) => (a['Date'] || '').localeCompare(b['Date'] || '')).forEach(r => {
+        const p = r['Piece #'];
+        if (!p || p === '-') return;
+        latestByPiece[p] = r['Status'] || 'in-progress';
+      });
+      document.querySelectorAll('.nine-grid a[data-piece-num]').forEach(a => {
+        const num = a.dataset.pieceNum;
+        const status = (latestByPiece[num] || 'planned').toLowerCase();
+        const pill = document.createElement('span');
+        pill.className = 'ng-status';
+        pill.dataset.status = status;
+        pill.innerHTML = '<span class="dot" aria-hidden="true"></span>' + status;
+        a.appendChild(pill);
+      });
+    }
+  })();
 
   // Phase filter on items section
   (function () {
