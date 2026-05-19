@@ -307,6 +307,66 @@
   }
   /* Space at bottom so estimator doesn't hide last category */
   body.estimator-padding { padding-bottom: 100px; }
+  body.has-saved-list.estimator-padding { padding-bottom: 100px; }
+
+  /* Saved estimates panel - shows above the bar */
+  .m-saved {
+    margin: 24px 0 8px;
+    padding: 16px 18px;
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+  }
+  .m-saved h4 {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--brass); font-weight: 600; margin-bottom: 12px;
+  }
+  .m-saved-list { display: grid; gap: 6px; }
+  .m-saved-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    gap: 14px;
+    align-items: baseline;
+    padding: 10px 12px;
+    background: var(--bone-light);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .m-saved-row .name { color: var(--moss); font-family: var(--font-display); font-style: italic; font-size: 15px; }
+  .m-saved-row .meta { color: var(--stone); font-size: 12px; }
+  .m-saved-row .total { color: var(--brass); font-family: var(--font-display); font-style: italic; font-size: 15px; }
+  .m-saved-row button {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--charcoal);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    cursor: pointer;
+    min-height: 32px;
+  }
+  .m-saved-row button:hover { border-color: var(--brass); color: var(--moss); }
+  .m-saved-row button.del { color: #c87a4d; }
+  .m-saved-row button.del:hover { border-color: #c87a4d; color: #c87a4d; }
+  @media (max-width: 540px) {
+    .m-saved-row { grid-template-columns: 1fr auto; gap: 8px 14px; }
+    .m-saved-row .meta { grid-column: 1; font-size: 11px; }
+    .m-saved-row .total { grid-column: 2; grid-row: 1; }
+    .m-saved-row button { grid-column: 2; }
+    .m-saved-row .load { grid-row: 2; }
+    .m-saved-row .del { grid-row: 3; }
+  }
+
+  /* Add "Save" button to estimator bar */
+  .m-estimator-bar button.btn-save-est {
+    background: var(--brass);
+    color: var(--moss);
+    border-color: var(--brass);
+    font-weight: 600;
+  }
+  .m-estimator-bar button.btn-save-est:hover { background: var(--brass-light); border-color: var(--brass-light); }
 
   /* Verification counter banner */
   .m-verified-banner {
@@ -508,6 +568,11 @@
   <div class="m-verified-banner" id="m-verified-banner" hidden>
     <div class="ver-text"><em id="ver-count">0</em> <strong>of 30</strong> rows verified by you. Rows below show your real numbers in place of my placeholder guesses.</div>
     <a class="ver-cta" href="/cost-check/">Update entries &rarr;</a>
+  </div>
+
+  <div class="m-saved" id="m-saved" hidden>
+    <h4>Your saved estimates</h4>
+    <div class="m-saved-list" id="m-saved-list"></div>
   </div>
 
   <!-- Lumber -->
@@ -1081,7 +1146,10 @@
       <div class="val" id="est-margin">$0.00</div>
       <div class="sub" id="est-margin-pct">-</div>
     </div>
-    <button id="est-reset" type="button">Reset</button>
+    <div style="display: flex; gap: 8px;">
+      <button id="est-save" type="button" class="btn-save-est">Save</button>
+      <button id="est-reset" type="button">Reset</button>
+    </div>
   </div>
 </div>
 
@@ -1387,13 +1455,116 @@
     recompute();
   });
 
+  // Save / load named estimates
+  const SAVED_KEY = 'rs_estimator_saved_v1';
+  const savedEl = document.getElementById('m-saved');
+  const savedListEl = document.getElementById('m-saved-list');
+  const saveBtn = document.getElementById('est-save');
+
+  function readSaved() {
+    try { return JSON.parse(localStorage.getItem(SAVED_KEY) || '[]'); } catch (e) { return []; }
+  }
+  function writeSaved(arr) {
+    try { localStorage.setItem(SAVED_KEY, JSON.stringify(arr)); } catch (e) {}
+  }
+  function fmt(n) { return '$' + (Number(n) || 0).toFixed(2); }
+
+  function renderSaved() {
+    const saved = readSaved();
+    if (saved.length === 0) {
+      savedEl.hidden = true;
+      document.body.classList.remove('has-saved-list');
+      return;
+    }
+    savedEl.hidden = false;
+    document.body.classList.add('has-saved-list');
+    savedListEl.innerHTML = saved.map((s, i) => `
+      <div class="m-saved-row" data-saved-idx="${i}">
+        <div>
+          <div class="name">${(s.name || 'Untitled').replace(/</g, '&lt;')}</div>
+          <div class="meta">${s.lineCount || 0} line${s.lineCount === 1 ? '' : 's'} &middot; saved ${s.date || ''}</div>
+        </div>
+        <div class="total">${fmt(s.totalPrice)}</div>
+        <button type="button" class="load" data-load-idx="${i}">Load</button>
+        <button type="button" class="del" data-del-idx="${i}">Delete</button>
+      </div>
+    `).join('');
+  }
+
+  saveBtn.addEventListener('click', () => {
+    // Snapshot current qty + totals
+    const filled = Object.keys(qty).filter(k => qty[k] && parseFloat(qty[k]) > 0);
+    if (filled.length === 0) {
+      alert('Add at least one line item before saving.');
+      return;
+    }
+    const name = prompt('Name this estimate (e.g. "Smith driveway 6/15"):');
+    if (!name || !name.trim()) return;
+
+    // Re-derive totals
+    let totalCost = 0, totalPrice = 0, lineCount = 0;
+    inputs.forEach(input => {
+      const idx = parseInt(input.dataset.qtyIdx, 10);
+      const q = parseFloat(qty[idx]);
+      if (!q || q <= 0) return;
+      const cost = costFor(idx);
+      const markup = MARKUP[idx] || 0.20;
+      totalCost += cost * q;
+      totalPrice += cost * q * (1 + markup);
+      lineCount++;
+    });
+
+    const saved = readSaved();
+    saved.unshift({
+      name: name.trim(),
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      ts: Date.now(),
+      qty: { ...qty },
+      totalCost,
+      totalPrice,
+      lineCount
+    });
+    writeSaved(saved.slice(0, 20)); // cap at 20 saved
+    renderSaved();
+  });
+
+  savedListEl.addEventListener('click', (e) => {
+    const loadIdx = e.target.dataset.loadIdx;
+    const delIdx = e.target.dataset.delIdx;
+    if (loadIdx !== undefined) {
+      const saved = readSaved();
+      const s = saved[parseInt(loadIdx, 10)];
+      if (!s || !s.qty) return;
+      if (Object.keys(qty).length > 0 && !confirm('Load "' + s.name + '"? This replaces your current line items.')) return;
+      qty = { ...s.qty };
+      saveQty(qty);
+      inputs.forEach(input => {
+        const idx = parseInt(input.dataset.qtyIdx, 10);
+        input.value = qty[idx] || '';
+      });
+      recompute();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    if (delIdx !== undefined) {
+      const saved = readSaved();
+      const s = saved[parseInt(delIdx, 10)];
+      if (!s) return;
+      if (!confirm('Delete saved estimate "' + s.name + '"?')) return;
+      saved.splice(parseInt(delIdx, 10), 1);
+      writeSaved(saved);
+      renderSaved();
+    }
+  });
+
   // Re-recompute when verified prices change (storage event from cost-check)
   window.addEventListener('storage', (e) => {
     if (e.key === COSTCHECK_KEY) recompute();
+    if (e.key === SAVED_KEY) renderSaved();
   });
-  window.addEventListener('focus', recompute);
+  window.addEventListener('focus', () => { recompute(); renderSaved(); });
 
   recompute();
+  renderSaved();
 })();
 </script>
 
