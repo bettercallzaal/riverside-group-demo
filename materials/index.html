@@ -350,14 +350,22 @@
   .m-saved-row button:hover { border-color: var(--brass); color: var(--moss); }
   .m-saved-row button.del { color: #c87a4d; }
   .m-saved-row button.del:hover { border-color: #c87a4d; color: #c87a4d; }
+  .m-saved-row button.quote { color: var(--moss); border-color: var(--brass); background: rgba(184, 147, 98, 0.08); }
+  .m-saved-row button.quote:hover { background: var(--brass); color: var(--moss); }
+  .m-saved-row button.quote.copied { background: #2d6b3a; color: var(--bone-light); border-color: #2d6b3a; }
   @media (max-width: 540px) {
     .m-saved-row { grid-template-columns: 1fr auto; gap: 8px 14px; }
     .m-saved-row .meta { grid-column: 1; font-size: 11px; }
     .m-saved-row .total { grid-column: 2; grid-row: 1; }
     .m-saved-row button { grid-column: 2; }
-    .m-saved-row .load { grid-row: 2; }
-    .m-saved-row .del { grid-row: 3; }
+    .m-saved-row .quote { grid-row: 2; }
+    .m-saved-row .load { grid-row: 3; }
+    .m-saved-row .del { grid-row: 4; }
   }
+
+  /* Margin warning - shows when margin < floor */
+  .est-cell .val.warn { color: #d89878; }
+  .est-cell .sub.warn { color: #d89878; }
 
   /* Add "Save" button to estimator bar */
   .m-estimator-bar button.btn-save-est {
@@ -1331,6 +1339,32 @@
 (function () {
   const STORAGE_KEY = 'rs_estimator_v1';
   const COSTCHECK_KEY = 'rs_costcheck_v1';
+  const MARGIN_FLOOR_PCT = 15; // warn if total margin drops below this
+
+  // SKU names + units indexed to PLACEHOLDER order (matches /cost-check SKUS array)
+  const SKU_NAMES = [
+    'Spruce 2x4x8 stud', 'Spruce 2x6x12', 'Pressure treated 2x6x12',
+    'Pressure treated 6x6x8', '5/4 PT decking 12 ft', 'Cedar 2x6x12',
+    '1/2 inch drywall 4x8', '5/8 inch fire-rated 4x8', 'Joint compound 4.5 gal',
+    'Loam (screened topsoil)', 'Fill dirt (unscreened)', 'Compost (leaf + manure)',
+    'Hardwood mulch', 'Dyed black mulch', 'Pine bark mulch',
+    'Crushed stone 3/4 inch', 'Pea gravel', 'River rock 2-4 inch',
+    'Concrete paver 12x12', 'Retaining wall block', 'Polymeric joint sand 55 lb bag', 'Geotextile fabric 6x100',
+    "Arborvitae 'Green Giant' 6-7 ft", 'Hydrangea 3 gal', 'Day lily 1 gal', 'Hosta 1 gal', 'White pine 6 ft B&B',
+    'Aluminum landscape edging 16 ft', 'Landscape fabric 3x300 roll',
+    'GRK structural screw 5 inch (box of 100)'
+  ];
+  const SKU_UNITS = [
+    'each','each','each','each','each','each',
+    'each','each','each',
+    'cubic yard','cubic yard','cubic yard',
+    'cubic yard','cubic yard','cubic yard',
+    'cubic yard','cubic yard','cubic yard',
+    'each','each','each','each',
+    'each','each','each','each','each',
+    'each','each',
+    'each'
+  ];
 
   // Placeholder costs by index (matches /cost-check SKUS order + materials-cost-sheet-v0.csv)
   const PLACEHOLDER = [
@@ -1409,17 +1443,25 @@
       totalPrice += lineCustomerTotal;
       lineCount++;
       if (lineTotalEl) {
-        lineTotalEl.textContent = '$' + lineCustomerTotal.toFixed(2);
+        lineTotalEl.textContent = fmtMoney(lineCustomerTotal);
         lineTotalEl.classList.remove('zero');
       }
     });
     const margin = totalPrice - totalCost;
     const marginPct = totalPrice > 0 ? (margin / totalPrice) * 100 : 0;
-    costEl.textContent = '$' + totalCost.toFixed(2);
-    priceEl.textContent = '$' + totalPrice.toFixed(2);
-    marginEl.textContent = '$' + margin.toFixed(2);
+    costEl.textContent = fmtMoney(totalCost);
+    priceEl.textContent = fmtMoney(totalPrice);
+    marginEl.textContent = fmtMoney(margin);
     marginPctEl.textContent = lineCount === 0 ? '-' : marginPct.toFixed(1) + '%';
     countEl.textContent = lineCount + ' line item' + (lineCount === 1 ? '' : 's');
+
+    // Margin warning: below floor
+    const underFloor = lineCount > 0 && marginPct < MARGIN_FLOOR_PCT;
+    marginEl.classList.toggle('warn', underFloor);
+    marginPctEl.classList.toggle('warn', underFloor);
+    if (underFloor) {
+      marginPctEl.textContent = marginPct.toFixed(1) + '% - below ' + MARGIN_FLOOR_PCT + '% floor';
+    }
 
     // Show/hide bar
     if (lineCount > 0) {
@@ -1467,7 +1509,39 @@
   function writeSaved(arr) {
     try { localStorage.setItem(SAVED_KEY, JSON.stringify(arr)); } catch (e) {}
   }
-  function fmt(n) { return '$' + (Number(n) || 0).toFixed(2); }
+  function fmt(n) { return fmtMoney(n); }
+  function fmtMoney(n) {
+    const v = Number(n) || 0;
+    return '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function buildQuoteText(estimate) {
+    const q = estimate.qty || {};
+    const lines = [];
+    lines.push('Riverside Group estimate');
+    if (estimate.name) lines.push(estimate.name);
+    lines.push('Date: ' + (estimate.date || new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })));
+    lines.push('');
+
+    let total = 0;
+    Object.keys(q).forEach(idxStr => {
+      const idx = parseInt(idxStr, 10);
+      const qv = parseFloat(q[idxStr]);
+      if (!qv || qv <= 0) return;
+      const name = SKU_NAMES[idx] || ('SKU #' + idx);
+      const unit = SKU_UNITS[idx] || 'unit';
+      const cost = costFor(idx);
+      const markup = MARKUP[idx] || 0.20;
+      const lineTotal = cost * qv * (1 + markup);
+      total += lineTotal;
+      lines.push(qv + ' ' + unit + (qv === 1 ? '' : 's') + '  ' + name + '  ' + fmtMoney(lineTotal));
+    });
+    lines.push('');
+    lines.push('Total: ' + fmtMoney(total));
+    lines.push('');
+    lines.push('Estimate based on current material costs - final invoice may adjust for actual quantities used. Labor and any subs billed separately.');
+    return lines.join('\n');
+  }
 
   function renderSaved() {
     const saved = readSaved();
@@ -1485,6 +1559,7 @@
           <div class="meta">${s.lineCount || 0} line${s.lineCount === 1 ? '' : 's'} &middot; saved ${s.date || ''}</div>
         </div>
         <div class="total">${fmt(s.totalPrice)}</div>
+        <button type="button" class="quote" data-quote-idx="${i}">Copy quote</button>
         <button type="button" class="load" data-load-idx="${i}">Load</button>
         <button type="button" class="del" data-del-idx="${i}">Delete</button>
       </div>
@@ -1528,9 +1603,10 @@
     renderSaved();
   });
 
-  savedListEl.addEventListener('click', (e) => {
+  savedListEl.addEventListener('click', async (e) => {
     const loadIdx = e.target.dataset.loadIdx;
     const delIdx = e.target.dataset.delIdx;
+    const quoteIdx = e.target.dataset.quoteIdx;
     if (loadIdx !== undefined) {
       const saved = readSaved();
       const s = saved[parseInt(loadIdx, 10)];
@@ -1553,6 +1629,25 @@
       saved.splice(parseInt(delIdx, 10), 1);
       writeSaved(saved);
       renderSaved();
+    }
+    if (quoteIdx !== undefined) {
+      const saved = readSaved();
+      const s = saved[parseInt(quoteIdx, 10)];
+      if (!s) return;
+      const text = buildQuoteText(s);
+      const btn = e.target;
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy quote';
+          btn.classList.remove('copied');
+        }, 1800);
+      } catch (err) {
+        // Fallback: prompt with the text so Cameron can copy manually
+        prompt('Could not auto-copy. Select all + copy this:', text);
+      }
     }
   });
 
