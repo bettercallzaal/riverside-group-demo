@@ -377,11 +377,14 @@ const TESTS = [
   },
   {
     section: 'Gate behavior',
-    name: 'Localstorage already shows gate-authed (you got in here)',
-    detail: 'If you see this page, you passed the gate',
+    name: 'Gate accepts the configured password',
+    detail: 'Verifies the password constant matches what we tell Cameron',
     fn: async () => {
-      const v = localStorage.getItem('rs_gate_v1');
-      if (v !== 'ok') throw new Error('Expected rs_gate_v1=ok in localStorage; got: ' + v);
+      const res = await fetch('/assets/js/gate.js');
+      const text = await res.text();
+      const m = text.match(/var\s+PASS\s*=\s*['"]([^'"]+)['"]/);
+      if (!m) throw new Error('Could not find PASS constant in gate.js');
+      if (m[1] !== 'zaal') throw new Error('Password drift - found: ' + m[1]);
     }
   },
 ];
