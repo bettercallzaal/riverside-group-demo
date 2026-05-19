@@ -206,6 +206,108 @@
     margin-top: -2px;
   }
 
+  /* Estimator: qty input on each SKU + sticky bottom totals */
+  .sku-qty {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--rule);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .sku-qty label {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--stone); font-weight: 600;
+  }
+  .sku-qty input {
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--bone-light);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 8px 10px;
+    width: 90px;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--moss);
+    min-height: 36px;
+    text-align: right;
+  }
+  .sku-qty input:focus { outline: 2px solid var(--brass); outline-offset: 2px; background: white; }
+  .sku-qty .line-total {
+    margin-left: auto;
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--brass);
+    font-size: 17px;
+    min-width: 80px;
+    text-align: right;
+  }
+  .sku-qty .line-total.zero { color: var(--rule); }
+
+  .m-estimator-bar {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 60;
+    background: var(--moss);
+    color: var(--bone-light);
+    border-top: 1px solid rgba(232, 228, 216, 0.18);
+    padding: 14px var(--gutter);
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(.22,.61,.36,1);
+    box-shadow: 0 -2px 16px rgba(31, 46, 26, 0.18);
+  }
+  .m-estimator-bar.active { transform: translateY(0); }
+  .m-estimator-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: center;
+  }
+  .est-cell .label {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(232, 228, 216, 0.65); font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .est-cell .val {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--brass-light);
+    font-size: clamp(20px, 3.5vw, 28px);
+    font-weight: 400;
+    line-height: 1.1;
+  }
+  .est-cell .sub {
+    font-size: 11px;
+    color: rgba(232, 228, 216, 0.55);
+    margin-top: 2px;
+  }
+  .m-estimator-bar button {
+    appearance: none;
+    background: transparent;
+    color: rgba(232, 228, 216, 0.78);
+    border: 1px solid rgba(232, 228, 216, 0.22);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    min-height: 40px;
+  }
+  .m-estimator-bar button:hover { color: var(--bone-light); border-color: rgba(232, 228, 216, 0.45); }
+  @media (max-width: 720px) {
+    .m-estimator-inner { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .m-estimator-bar button { grid-column: 1 / -1; }
+    .est-cell .label { font-size: 9px; }
+  }
+  /* Space at bottom so estimator doesn't hide last category */
+  body.estimator-padding { padding-bottom: 100px; }
+
   /* Verification counter banner */
   .m-verified-banner {
     margin: 20px 0 24px;
@@ -422,7 +524,12 @@
         <div class="sku-field"><strong>Price</strong><span class="price">$5.18</span></div>
         <div class="sku-deep-note">Bunk pricing better; ask for 100ct bunk rate</div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-0">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-0" data-qty-idx="0" placeholder="0">
+        <span class="line-total zero" data-line-total="0">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="1">
       <div class="sku-name">Spruce 2x6x12</div>
@@ -433,7 +540,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$11.50</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$13.23</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-1">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-1" data-qty-idx="1" placeholder="0">
+        <span class="line-total zero" data-line-total="1">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="2">
       <div class="sku-name">Pressure treated 2x6x12</div>
@@ -444,7 +556,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$18.50</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$21.28</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-2">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-2" data-qty-idx="2" placeholder="0">
+        <span class="line-total zero" data-line-total="2">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="3">
       <div class="sku-name">Pressure treated 6x6x8</div>
@@ -456,7 +573,12 @@
         <div class="sku-field"><strong>Price</strong><span class="price">$36.80</span></div>
         <div class="sku-deep-note">For deck posts + pergola</div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-3">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-3" data-qty-idx="3" placeholder="0">
+        <span class="line-total zero" data-line-total="3">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="4">
       <div class="sku-name">5/4 PT decking 12'</div>
@@ -467,7 +589,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$28.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$33.60</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-4">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-4" data-qty-idx="4" placeholder="0">
+        <span class="line-total zero" data-line-total="4">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="5">
       <div class="sku-name">Cedar 2x6x12</div>
@@ -479,7 +606,12 @@
         <div class="sku-field"><strong>Price</strong><span class="price">$45.60</span></div>
         <div class="sku-deep-note">Hancock owns timberland; check pricing</div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-5">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-5" data-qty-idx="5" placeholder="0">
+        <span class="line-total zero" data-line-total="5">$0.00</span>
+      </div>
+        </div>
   </div>
 
   <!-- Sheetrock -->
@@ -496,7 +628,12 @@
         <div class="sku-field"><strong>Price</strong><span class="price">$16.68</span></div>
         <div class="sku-deep-note">Bunk of 50 for project work</div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-6">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-6" data-qty-idx="6" placeholder="0">
+        <span class="line-total zero" data-line-total="6">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="7">
       <div class="sku-name">5/8 inch fire-rated 4x8</div>
@@ -507,7 +644,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$19.50</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$22.43</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-7">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-7" data-qty-idx="7" placeholder="0">
+        <span class="line-total zero" data-line-total="7">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="8">
       <div class="sku-name">Joint compound 4.5 gal</div>
@@ -518,7 +660,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$22.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$25.30</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-8">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-8" data-qty-idx="8" placeholder="0">
+        <span class="line-total zero" data-line-total="8">$0.00</span>
+      </div>
+        </div>
   </div>
 
   <!-- Soil -->
@@ -533,7 +680,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$38.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$43.70</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-9">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-9" data-qty-idx="9" placeholder="0">
+        <span class="line-total zero" data-line-total="9">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="10">
       <div class="sku-name">Fill dirt (unscreened)</div>
@@ -543,7 +695,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$18.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$20.70</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-10">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-10" data-qty-idx="10" placeholder="0">
+        <span class="line-total zero" data-line-total="10">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="11">
       <div class="sku-name">Compost (leaf + manure)</div>
@@ -553,7 +710,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$42.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$48.30</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-11">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-11" data-qty-idx="11" placeholder="0">
+        <span class="line-total zero" data-line-total="11">$0.00</span>
+      </div>
+        </div>
   </div>
 
   <!-- Mulch -->
@@ -570,7 +732,12 @@
         <div class="sku-field"><strong>Price</strong><span class="price">$44.84</span></div>
         <div class="sku-deep-note">$30-45 range per GreenMargins 2025</div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-12">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-12" data-qty-idx="12" placeholder="0">
+        <span class="line-total zero" data-line-total="12">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="13">
       <div class="sku-name">Dyed black mulch</div>
@@ -581,7 +748,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$44.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$51.92</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-13">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-13" data-qty-idx="13" placeholder="0">
+        <span class="line-total zero" data-line-total="13">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="14">
       <div class="sku-name">Pine bark mulch</div>
@@ -592,7 +764,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$40.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$47.20</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-14">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-14" data-qty-idx="14" placeholder="0">
+        <span class="line-total zero" data-line-total="14">$0.00</span>
+      </div>
+        </div>
   </div>
 
   <!-- Stone -->
@@ -608,7 +785,12 @@
         <div class="sku-field"><strong>Price</strong><span class="price">$50.40</span></div>
         <div class="sku-deep-note">Drainage + base layer</div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-15">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-15" data-qty-idx="15" placeholder="0">
+        <span class="line-total zero" data-line-total="15">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="16">
       <div class="sku-name">Pea gravel</div>
@@ -618,7 +800,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$55.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$66.00</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-16">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-16" data-qty-idx="16" placeholder="0">
+        <span class="line-total zero" data-line-total="16">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="17">
       <div class="sku-name">River rock 2-4 inch</div>
@@ -629,7 +816,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$85.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$106.25</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-17">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-17" data-qty-idx="17" placeholder="0">
+        <span class="line-total zero" data-line-total="17">$0.00</span>
+      </div>
+        </div>
   </div>
 
   <!-- Hardscape -->
@@ -646,7 +838,12 @@
         <div class="sku-field"><strong>Price</strong><span class="price">$5.63</span></div>
         <div class="sku-deep-note">$3-12 range per GreenMargins; $4.50 is mid-tier</div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-18">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-18" data-qty-idx="18" placeholder="0">
+        <span class="line-total zero" data-line-total="18">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="19">
       <div class="sku-name">Retaining wall block</div>
@@ -658,7 +855,12 @@
         <div class="sku-field"><strong>Price</strong><span class="price">$6.88</span></div>
         <div class="sku-deep-note">$3-8 range; $5.50 mid-tier</div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-19">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-19" data-qty-idx="19" placeholder="0">
+        <span class="line-total zero" data-line-total="19">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="20">
       <div class="sku-name">Polymeric joint sand</div>
@@ -669,7 +871,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$32.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$38.40</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-20">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-20" data-qty-idx="20" placeholder="0">
+        <span class="line-total zero" data-line-total="20">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="21">
       <div class="sku-name">Geotextile fabric 6x100</div>
@@ -680,7 +887,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$140.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$165.20</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-21">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-21" data-qty-idx="21" placeholder="0">
+        <span class="line-total zero" data-line-total="21">$0.00</span>
+      </div>
+        </div>
   </div>
 
   <!-- Plants -->
@@ -697,7 +909,12 @@
         <div class="sku-field"><strong>Price</strong><span class="price">$128.25</span></div>
         <div class="sku-deep-note">Maine staple; popular for MDI estate work</div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-22">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-22" data-qty-idx="22" placeholder="0">
+        <span class="line-total zero" data-line-total="22">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="23">
       <div class="sku-name">Hydrangea 3 gal</div>
@@ -707,7 +924,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$42.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$56.70</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-23">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-23" data-qty-idx="23" placeholder="0">
+        <span class="line-total zero" data-line-total="23">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="24">
       <div class="sku-name">Day lily 1 gal</div>
@@ -717,7 +939,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$12.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$16.20</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-24">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-24" data-qty-idx="24" placeholder="0">
+        <span class="line-total zero" data-line-total="24">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="25">
       <div class="sku-name">Hosta 1 gal</div>
@@ -727,7 +954,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$10.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$13.50</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-25">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-25" data-qty-idx="25" placeholder="0">
+        <span class="line-total zero" data-line-total="25">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="26">
       <div class="sku-name">White pine 6 ft B&B</div>
@@ -739,7 +971,12 @@
         <div class="sku-field"><strong>Price</strong><span class="price">$214.50</span></div>
         <div class="sku-deep-note">Hancock's main species</div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-26">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-26" data-qty-idx="26" placeholder="0">
+        <span class="line-total zero" data-line-total="26">$0.00</span>
+      </div>
+        </div>
   </div>
 
   <!-- Edging -->
@@ -755,7 +992,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$38.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$47.50</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-27">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-27" data-qty-idx="27" placeholder="0">
+        <span class="line-total zero" data-line-total="27">$0.00</span>
+      </div>
+        </div>
 
     <div class="sku-row tbd" data-sku-idx="28">
       <div class="sku-name">Landscape fabric 3x300 roll</div>
@@ -766,7 +1008,12 @@
         <div class="sku-field"><strong>Cost</strong><span class="cost">$55.00</span></div>
         <div class="sku-field"><strong>Price</strong><span class="price">$66.00</span></div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-28">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-28" data-qty-idx="28" placeholder="0">
+        <span class="line-total zero" data-line-total="28">$0.00</span>
+      </div>
+        </div>
   </div>
 
   <!-- Hardware -->
@@ -783,7 +1030,12 @@
         <div class="sku-field"><strong>Price</strong><span class="price">$48.30</span></div>
         <div class="sku-deep-note">Bulk savings on contractor packs</div>
       </div>
-    </div>
+      <div class="sku-qty">
+        <label for="qty-29">Qty</label>
+        <input type="number" inputmode="decimal" step="0.01" min="0" id="qty-29" data-qty-idx="29" placeholder="0">
+        <span class="line-total zero" data-line-total="29">$0.00</span>
+      </div>
+        </div>
   </div>
 
 </section>
@@ -810,6 +1062,28 @@
     </div>
   </div>
 </footer>
+
+<!-- Estimator sticky bottom bar -->
+<div class="m-estimator-bar" id="m-estimator-bar" role="region" aria-label="Job estimate totals">
+  <div class="m-estimator-inner">
+    <div class="est-cell">
+      <div class="label">Cost (yours)</div>
+      <div class="val" id="est-cost">$0.00</div>
+      <div class="sub" id="est-count">0 line items</div>
+    </div>
+    <div class="est-cell">
+      <div class="label">Customer price</div>
+      <div class="val" id="est-price">$0.00</div>
+      <div class="sub">cost &times; markup</div>
+    </div>
+    <div class="est-cell">
+      <div class="label">Margin</div>
+      <div class="val" id="est-margin">$0.00</div>
+      <div class="sub" id="est-margin-pct">-</div>
+    </div>
+    <button id="est-reset" type="button">Reset</button>
+  </div>
+</div>
 
 <script>
 (function () {
@@ -983,6 +1257,143 @@
 
   // Re-apply on focus (covers same-tab navigation back)
   window.addEventListener('focus', applyVerifiedState);
+})();
+
+// Round 10: Estimator - qty input per SKU + sticky bottom totals
+(function () {
+  const STORAGE_KEY = 'rs_estimator_v1';
+  const COSTCHECK_KEY = 'rs_costcheck_v1';
+
+  // Placeholder costs by index (matches /cost-check SKUS order + materials-cost-sheet-v0.csv)
+  const PLACEHOLDER = [
+    4.50, 11.50, 18.50, 32.00, 28.00, 38.00,    // Lumber 0-5
+    14.50, 19.50, 22.00,                          // Sheetrock 6-8
+    38.00, 18.00, 42.00,                          // Soil 9-11
+    38.00, 44.00, 40.00,                          // Mulch 12-14
+    42.00, 55.00, 85.00,                          // Stone 15-17
+    4.50, 5.50, 32.00, 140.00,                    // Hardscape 18-21
+    95.00, 42.00, 12.00, 10.00, 165.00,           // Plants 22-26
+    38.00, 55.00,                                 // Edging 27-28
+    42.00                                         // Hardware 29
+  ];
+  const MARKUP = [
+    0.15, 0.15, 0.15, 0.15, 0.20, 0.20,
+    0.15, 0.15, 0.15,
+    0.15, 0.15, 0.15,
+    0.18, 0.18, 0.18,
+    0.20, 0.20, 0.25,
+    0.25, 0.25, 0.20, 0.18,
+    0.35, 0.35, 0.35, 0.35, 0.30,
+    0.25, 0.20,
+    0.15
+  ];
+
+  function readQty() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { return {}; }
+  }
+  function saveQty(q) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(q)); } catch (e) {}
+  }
+  function readVerified() {
+    try { return JSON.parse(localStorage.getItem(COSTCHECK_KEY) || '{}'); } catch (e) { return {}; }
+  }
+
+  function costFor(idx) {
+    const v = readVerified()[idx];
+    if (v && v.cost) {
+      const c = parseFloat(v.cost);
+      if (!isNaN(c) && c > 0) return c;
+    }
+    return PLACEHOLDER[idx] || 0;
+  }
+
+  const bar = document.getElementById('m-estimator-bar');
+  const costEl = document.getElementById('est-cost');
+  const priceEl = document.getElementById('est-price');
+  const marginEl = document.getElementById('est-margin');
+  const marginPctEl = document.getElementById('est-margin-pct');
+  const countEl = document.getElementById('est-count');
+  const resetBtn = document.getElementById('est-reset');
+  const inputs = document.querySelectorAll('input[data-qty-idx]');
+
+  let qty = readQty();
+
+  function recompute() {
+    let totalCost = 0;
+    let totalPrice = 0;
+    let lineCount = 0;
+    inputs.forEach(input => {
+      const idx = parseInt(input.dataset.qtyIdx, 10);
+      const q = parseFloat(qty[idx]);
+      const lineTotalEl = document.querySelector('[data-line-total="' + idx + '"]');
+      if (!q || isNaN(q) || q <= 0) {
+        if (lineTotalEl) {
+          lineTotalEl.textContent = '$0.00';
+          lineTotalEl.classList.add('zero');
+        }
+        return;
+      }
+      const cost = costFor(idx);
+      const markup = MARKUP[idx] || 0.20;
+      const lineCost = cost * q;
+      const lineCustomerTotal = lineCost * (1 + markup);
+      totalCost += lineCost;
+      totalPrice += lineCustomerTotal;
+      lineCount++;
+      if (lineTotalEl) {
+        lineTotalEl.textContent = '$' + lineCustomerTotal.toFixed(2);
+        lineTotalEl.classList.remove('zero');
+      }
+    });
+    const margin = totalPrice - totalCost;
+    const marginPct = totalPrice > 0 ? (margin / totalPrice) * 100 : 0;
+    costEl.textContent = '$' + totalCost.toFixed(2);
+    priceEl.textContent = '$' + totalPrice.toFixed(2);
+    marginEl.textContent = '$' + margin.toFixed(2);
+    marginPctEl.textContent = lineCount === 0 ? '-' : marginPct.toFixed(1) + '%';
+    countEl.textContent = lineCount + ' line item' + (lineCount === 1 ? '' : 's');
+
+    // Show/hide bar
+    if (lineCount > 0) {
+      bar.classList.add('active');
+      document.body.classList.add('estimator-padding');
+    } else {
+      bar.classList.remove('active');
+      document.body.classList.remove('estimator-padding');
+    }
+  }
+
+  // Restore saved quantities into inputs
+  inputs.forEach(input => {
+    const idx = parseInt(input.dataset.qtyIdx, 10);
+    if (qty[idx]) input.value = qty[idx];
+    input.addEventListener('input', () => {
+      const v = input.value.trim();
+      if (!v || parseFloat(v) <= 0) {
+        delete qty[idx];
+      } else {
+        qty[idx] = v;
+      }
+      saveQty(qty);
+      recompute();
+    });
+  });
+
+  resetBtn.addEventListener('click', () => {
+    if (!confirm('Reset all quantities? Your verified prices stay - this only clears the estimator inputs.')) return;
+    qty = {};
+    saveQty(qty);
+    inputs.forEach(i => { i.value = ''; });
+    recompute();
+  });
+
+  // Re-recompute when verified prices change (storage event from cost-check)
+  window.addEventListener('storage', (e) => {
+    if (e.key === COSTCHECK_KEY) recompute();
+  });
+  window.addEventListener('focus', recompute);
+
+  recompute();
 })();
 </script>
 
