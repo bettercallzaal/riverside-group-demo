@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Cost Check - Riverside Group</title>
+<meta name="description" content="Quick form for Cameron to fill in real material costs against the v0 starter sheet.">
+<meta property="og:title" content="Riverside cost check - fill what you can">
+<meta property="og:description" content="30 SKUs - tap and type your actual cost + supplier on each. Send when done.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://riverside-group-demo.vercel.app/cost-check/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#1f2e1a">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/gate.js"></script>
+<style>
+  body { background: var(--bone-light); }
+
+  .c-hero { padding: 140px var(--gutter) 32px; max-width: var(--max); margin: 0 auto; }
+  .c-hero .crumb { font-size: 13px; color: var(--stone); }
+  .c-hero .crumb a { color: var(--brass); }
+  .c-hero h1 { font-size: clamp(32px, 5.5vw, 56px); margin: 18px 0 18px; line-height: 1.05; }
+  .c-hero h1 em { color: var(--brass); font-style: italic; }
+  .c-hero .lede { max-width: 680px; color: var(--charcoal); font-size: 16px; line-height: 1.55; }
+  .c-hero .tip {
+    margin-top: 22px;
+    padding: 16px 20px;
+    background: white;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--brass);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--charcoal);
+    line-height: 1.55;
+  }
+  .c-hero .tip strong { color: var(--moss); }
+
+  /* Sticky action bar */
+  .c-actionbar {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bone-light);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 12px var(--gutter);
+    box-shadow: 0 1px 0 var(--rule);
+  }
+  .c-actionbar-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .c-progress { font-family: var(--font-display); font-style: italic; color: var(--moss); font-size: 16px; }
+  .c-progress strong { color: var(--brass); font-style: normal; font-weight: 400; }
+  .c-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn-send {
+    appearance: none;
+    background: var(--moss);
+    color: var(--bone-light);
+    border: none;
+    padding: 11px 18px;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 44px;
+  }
+  .btn-send:hover { background: var(--moss-deep); }
+  .btn-send:disabled { background: var(--stone); cursor: not-allowed; opacity: 0.6; }
+  .btn-clear {
+    appearance: none;
+    background: transparent;
+    color: var(--stone);
+    border: 1px solid var(--rule);
+    padding: 11px 16px;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    cursor: pointer;
+    min-height: 44px;
+  }
+  .btn-clear:hover { color: var(--moss); border-color: var(--brass); }
+
+  /* Form rows */
+  .c-form { padding: 32px var(--gutter) 80px; max-width: var(--max); margin: 0 auto; }
+  .c-cat-group { margin-bottom: 28px; container-type: inline-size; container-name: cc; }
+  .c-cat-header {
+    display: flex; align-items: baseline; gap: 14px;
+    padding: 14px 0 10px;
+    border-bottom: 2px solid var(--brass);
+    margin-bottom: 0;
+  }
+  .c-cat-header h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--moss);
+    font-weight: 400;
+    font-style: italic;
+  }
+  .c-cat-header .meta { font-size: 11px; color: var(--stone); letter-spacing: 0.14em; text-transform: uppercase; }
+
+  .c-row {
+    background: white;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--rule);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-top: 10px;
+    transition: border-left-color 0.2s, background 0.2s;
+  }
+  .c-row.filled { border-left-color: #2d6b3a; background: #fbfaf3; }
+  .c-row.partial { border-left-color: var(--brass); }
+  .c-row-top {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    margin-bottom: 4px;
+  }
+  .c-row-name {
+    font-family: var(--font-display);
+    font-size: 17px;
+    color: var(--charcoal);
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  .c-row-meta { font-size: 11px; color: var(--stone); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+  .c-row-note { font-size: 13px; color: var(--stone); font-style: italic; margin-bottom: 10px; }
+  .c-row-hint {
+    font-size: 12px; color: var(--stone);
+    margin-bottom: 10px;
+  }
+  .c-row-hint em { color: var(--brass); font-style: italic; font-family: var(--font-display); font-size: 14px; }
+
+  .c-inputs {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  @container cc (min-width: 480px) {
+    .c-inputs { grid-template-columns: 1fr 1.4fr; }
+  }
+  .c-field { display: flex; flex-direction: column; gap: 4px; }
+  .c-field label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--stone);
+    font-weight: 600;
+  }
+  .c-field input {
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--bone-light);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--charcoal);
+    min-height: 44px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .c-field input:focus {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+    background: white;
+  }
+  .c-field input[type="number"] { font-family: var(--font-display); font-style: italic; font-size: 17px; color: var(--moss); }
+  .c-field input::placeholder { color: var(--stone); opacity: 0.6; }
+
+  /* Toast for clipboard confirmation */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120px);
+    background: var(--moss);
+    color: var(--bone-light);
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+    z-index: 100;
+    max-width: calc(100% - 32px);
+    text-align: center;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 720px) {
+    .c-progress { font-size: 14px; }
+    .btn-send, .btn-clear { font-size: 13px; padding: 10px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="/" class="nav-logo">Riverside<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="/zaal/" class="nav-page">/zaal</a></li>
+    <li><a href="/materials/" class="nav-page nav-page-active" aria-current="page">/materials</a></li>
+    <li><a href="/hours-log/" class="nav-page">/hours-log</a></li>
+  </ul>
+</nav>
+
+<header class="c-hero">
+  <span class="crumb"><a href="/zaal/">/zaal</a> &rsaquo; <a href="/materials/">/materials</a> &rsaquo; Cost check</span>
+  <h1>Your <em>real numbers</em>.</h1>
+  <p class="lede">Tap any row, type what you actually pay + which supplier you buy it from. Skip anything you do not know. When you have filled what you can, hit "Send to Zaal" - it copies a clean note to your clipboard for you to paste back in our text thread.</p>
+  <div class="tip">
+    <strong>How this works:</strong> your entries save in your browser as you type, so you can fill in batches. Nothing gets sent until you tap the send button. If filling 30 rows feels like too much, just send me screenshots of your last 3 supplier invoices and I will do the data entry.
+  </div>
+</header>
+
+<div class="c-actionbar">
+  <div class="c-actionbar-inner">
+    <div class="c-progress"><strong id="filled-count">0</strong> of <span id="total-count">30</span> rows filled</div>
+    <div class="c-buttons">
+      <button class="btn-clear" id="btn-clear" type="button">Clear all</button>
+      <button class="btn-send" id="btn-send" type="button" disabled>Send to Zaal</button>
+    </div>
+  </div>
+</div>
+
+<form class="c-form" id="cost-form" onsubmit="return false">
+  <!-- Form rows injected by JS from SKU data -->
+  <div id="cost-rows"></div>
+</form>
+
+<footer class="footer" style="margin-top: 0; border-top: 1px solid var(--rule);">
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 22px 0; color: var(--stone); font-size: 13px;">
+      <p style="margin: 0;">Cost check form for Riverside - prepared by Zaal, May 2026.</p>
+      <p style="margin: 0; display: flex; gap: 14px;"><a href="/materials/" style="color: var(--brass);">&larr; /materials</a> <a href="/zaal/" style="color: var(--brass);">/zaal &rarr;</a></p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">Copied to clipboard - paste it back in our text thread.</div>
+
+<script>
+(function () {
+  const STORAGE_KEY = 'rs_costcheck_v1';
+
+  // SKU data - keep in sync with /materials/index.html
+  const SKUS = [
+    { cat: 'Lumber', name: 'Spruce 2x4x8 stud', note: 'dimensional framing', unit: 'each', placeholder: 4.50, hint: 'Hammond Lumber primary' },
+    { cat: 'Lumber', name: 'Spruce 2x6x12', note: 'dimensional framing', unit: 'each', placeholder: 11.50, hint: 'Hammond Lumber primary' },
+    { cat: 'Lumber', name: 'Pressure treated 2x6x12', note: 'ground-contact rated', unit: 'each', placeholder: 18.50, hint: 'Hammond Lumber primary' },
+    { cat: 'Lumber', name: 'Pressure treated 6x6x8', note: 'post material - deck posts, pergola', unit: 'each', placeholder: 32.00, hint: 'Hammond Lumber primary' },
+    { cat: 'Lumber', name: '5/4 PT decking 12 ft', note: 'radius edge', unit: 'each', placeholder: 28.00, hint: 'Hammond Lumber primary' },
+    { cat: 'Lumber', name: 'Cedar 2x6x12', note: 'naturally rot-resistant', unit: 'each', placeholder: 38.00, hint: 'Hancock Lumber primary' },
+
+    { cat: 'Sheetrock', name: '1/2 inch drywall 4x8', note: 'standard', unit: 'each', placeholder: 14.50, hint: 'Hammond Lumber primary' },
+    { cat: 'Sheetrock', name: '5/8 inch fire-rated 4x8', note: 'fire-rated', unit: 'each', placeholder: 19.50, hint: 'Hammond Lumber primary' },
+    { cat: 'Sheetrock', name: 'Joint compound 4.5 gal', note: 'pre-mixed', unit: 'each', placeholder: 22.00, hint: 'Hammond Lumber primary' },
+
+    { cat: 'Soil', name: 'Loam (screened topsoil)', note: 'screened topsoil', unit: 'cubic yard', placeholder: 38.00, hint: 'your loam yard' },
+    { cat: 'Soil', name: 'Fill dirt (unscreened)', note: 'unscreened', unit: 'cubic yard', placeholder: 18.00, hint: 'your loam yard' },
+    { cat: 'Soil', name: 'Compost (leaf + manure)', note: '', unit: 'cubic yard', placeholder: 42.00, hint: 'your loam yard' },
+
+    { cat: 'Mulch', name: 'Hardwood mulch', note: 'bulk', unit: 'cubic yard', placeholder: 38.00, hint: 'your stone yard' },
+    { cat: 'Mulch', name: 'Dyed black mulch', note: 'bulk', unit: 'cubic yard', placeholder: 44.00, hint: 'your stone yard' },
+    { cat: 'Mulch', name: 'Pine bark mulch', note: 'bulk', unit: 'cubic yard', placeholder: 40.00, hint: 'your stone yard' },
+
+    { cat: 'Stone', name: 'Crushed stone 3/4 inch', note: 'drainage + base layer', unit: 'cubic yard', placeholder: 42.00, hint: 'your stone yard' },
+    { cat: 'Stone', name: 'Pea gravel', note: '', unit: 'cubic yard', placeholder: 55.00, hint: 'your stone yard' },
+    { cat: 'Stone', name: 'River rock 2-4 inch', note: 'decorative', unit: 'cubic yard', placeholder: 85.00, hint: 'your stone yard' },
+
+    { cat: 'Hardscape', name: 'Concrete paver 12x12', note: 'standard gray', unit: 'each', placeholder: 4.50, hint: 'your hardscape supplier' },
+    { cat: 'Hardscape', name: 'Retaining wall block', note: 'standard gray', unit: 'each', placeholder: 5.50, hint: 'your hardscape supplier' },
+    { cat: 'Hardscape', name: 'Polymeric joint sand', note: '55 lb bag', unit: 'each', placeholder: 32.00, hint: 'your hardscape supplier' },
+    { cat: 'Hardscape', name: 'Geotextile fabric 6x100', note: 'woven', unit: 'each', placeholder: 140.00, hint: 'Hammond Lumber primary' },
+
+    { cat: 'Plants', name: "Arborvitae 'Green Giant' 6-7 ft", note: 'privacy screen', unit: 'each', placeholder: 95.00, hint: 'your nursery' },
+    { cat: 'Plants', name: 'Hydrangea 3 gal', note: '', unit: 'each', placeholder: 42.00, hint: 'your nursery' },
+    { cat: 'Plants', name: 'Day lily 1 gal', note: '', unit: 'each', placeholder: 12.00, hint: 'your nursery' },
+    { cat: 'Plants', name: 'Hosta 1 gal', note: '', unit: 'each', placeholder: 10.00, hint: 'your nursery' },
+    { cat: 'Plants', name: 'White pine 6 ft B&B', note: 'balled + burlapped', unit: 'each', placeholder: 165.00, hint: 'your nursery' },
+
+    { cat: 'Edging', name: 'Aluminum landscape edging 16 ft', note: 'heavy gauge', unit: 'each', placeholder: 38.00, hint: 'Hammond Lumber primary' },
+    { cat: 'Edging', name: 'Landscape fabric 3x300 roll', note: 'pro-grade', unit: 'each', placeholder: 55.00, hint: 'Hammond Lumber primary' },
+
+    { cat: 'Hardware', name: 'GRK structural screw 5 inch', note: 'box of 100', unit: 'each', placeholder: 42.00, hint: 'Hammond Lumber primary' },
+  ];
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { return {}; }
+  }
+  function saveState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  let state = loadState();
+  const totalEl = document.getElementById('total-count');
+  const filledEl = document.getElementById('filled-count');
+  const sendBtn = document.getElementById('btn-send');
+  const clearBtn = document.getElementById('btn-clear');
+  const rowsEl = document.getElementById('cost-rows');
+  totalEl.textContent = SKUS.length;
+
+  // Group rows by category
+  const byCategory = {};
+  SKUS.forEach((sku, idx) => {
+    if (!byCategory[sku.cat]) byCategory[sku.cat] = [];
+    byCategory[sku.cat].push({ ...sku, idx });
+  });
+
+  function renderRows() {
+    rowsEl.innerHTML = Object.keys(byCategory).map(cat => {
+      const skus = byCategory[cat];
+      return `
+        <div class="c-cat-group">
+          <div class="c-cat-header">
+            <h3>${cat}</h3>
+            <span class="meta">${skus.length} item${skus.length === 1 ? '' : 's'}</span>
+          </div>
+          ${skus.map(sku => {
+            const v = state[sku.idx] || {};
+            const cost = v.cost || '';
+            const supplier = v.supplier || '';
+            const filled = !!(cost && supplier);
+            const partial = !filled && !!(cost || supplier);
+            return `
+              <div class="c-row${filled ? ' filled' : (partial ? ' partial' : '')}" data-idx="${sku.idx}">
+                <div class="c-row-top">
+                  <div class="c-row-name">${sku.name}</div>
+                  <div class="c-row-meta">${sku.unit}</div>
+                </div>
+                ${sku.note ? `<div class="c-row-note">${sku.note}</div>` : ''}
+                <div class="c-row-hint">My guess from research: <em>$${sku.placeholder.toFixed(2)}/${sku.unit}</em> &middot; suggested supplier: ${sku.hint}</div>
+                <div class="c-inputs">
+                  <div class="c-field">
+                    <label for="cost-${sku.idx}">Your cost ($ per ${sku.unit})</label>
+                    <input type="number" inputmode="decimal" step="0.01" min="0" id="cost-${sku.idx}" data-field="cost" data-idx="${sku.idx}" value="${cost}" placeholder="e.g. ${sku.placeholder.toFixed(2)}">
+                  </div>
+                  <div class="c-field">
+                    <label for="sup-${sku.idx}">Your supplier</label>
+                    <input type="text" id="sup-${sku.idx}" data-field="supplier" data-idx="${sku.idx}" value="${supplier.replace(/"/g, '&quot;')}" placeholder="e.g. ${sku.hint.replace(/"/g, '&quot;')}">
+                  </div>
+                </div>
+              </div>`;
+          }).join('')}
+        </div>`;
+    }).join('');
+  }
+
+  function recompute() {
+    let n = 0;
+    Object.values(state).forEach(v => {
+      if (v && v.cost && v.supplier) n++;
+    });
+    filledEl.textContent = n;
+    sendBtn.disabled = n === 0;
+  }
+
+  function attachInputs() {
+    rowsEl.querySelectorAll('input').forEach(input => {
+      input.addEventListener('input', (e) => {
+        const idx = parseInt(input.dataset.idx, 10);
+        const field = input.dataset.field;
+        if (!state[idx]) state[idx] = {};
+        state[idx][field] = input.value;
+        if (!state[idx].cost && !state[idx].supplier) delete state[idx];
+        saveState(state);
+
+        // Update row class
+        const rowEl = input.closest('.c-row');
+        const v = state[idx] || {};
+        const filled = !!(v.cost && v.supplier);
+        const partial = !filled && !!(v.cost || v.supplier);
+        rowEl.classList.toggle('filled', filled);
+        rowEl.classList.toggle('partial', partial);
+
+        recompute();
+      });
+    });
+  }
+
+  function buildMessage() {
+    const filled = [];
+    SKUS.forEach((sku, idx) => {
+      const v = state[idx];
+      if (!v) return;
+      if (!v.cost && !v.supplier) return;
+      filled.push({ ...sku, cost: v.cost, supplier: v.supplier });
+    });
+
+    if (filled.length === 0) return '';
+
+    const byCat = {};
+    filled.forEach(f => {
+      if (!byCat[f.cat]) byCat[f.cat] = [];
+      byCat[f.cat].push(f);
+    });
+
+    const lines = ['cameron cost check - ' + new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ':', ''];
+    Object.keys(byCat).forEach(cat => {
+      lines.push(cat.toLowerCase() + ':');
+      byCat[cat].forEach(f => {
+        const cost = f.cost ? '$' + parseFloat(f.cost).toFixed(2) : '?';
+        const sup = f.supplier || '?';
+        lines.push('  ' + f.name + ' - ' + cost + '/' + f.unit + ' @ ' + sup);
+      });
+      lines.push('');
+    });
+    lines.push('(' + filled.length + ' of ' + SKUS.length + ' filled)');
+    return lines.join('\n');
+  }
+
+  sendBtn.addEventListener('click', async () => {
+    const msg = buildMessage();
+    if (!msg) return;
+    try {
+      await navigator.clipboard.writeText(msg);
+      showToast('Copied to clipboard - paste it back in our text thread.');
+    } catch (e) {
+      // Fallback: open native share if available
+      if (navigator.share) {
+        try {
+          await navigator.share({ text: msg });
+          return;
+        } catch (e2) {}
+      }
+      // Last resort: open mail compose
+      window.location.href = 'sms:?body=' + encodeURIComponent(msg);
+    }
+  });
+
+  clearBtn.addEventListener('click', () => {
+    if (!confirm('Clear all entries? This cannot be undone.')) return;
+    state = {};
+    saveState(state);
+    renderRows();
+    attachInputs();
+    recompute();
+  });
+
+  function showToast(text) {
+    const t = document.getElementById('toast');
+    t.textContent = text;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2400);
+  }
+
+  renderRows();
+  attachInputs();
+  recompute();
+})();
+
+// Nav scroll behavior
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 12);
+});
+</script>
+
+</body>
+</html>
